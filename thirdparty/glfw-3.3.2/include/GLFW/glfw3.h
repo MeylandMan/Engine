@@ -459,11 +459,6 @@ extern "C" {
 #define GLFW_KEY_F23                312
 #define GLFW_KEY_F24                313
 #define GLFW_KEY_F25                314
-#define GLFW_KEY_F26                315
-#define GLFW_KEY_F27                316
-#define GLFW_KEY_F28                317
-#define GLFW_KEY_F29                318
-#define GLFW_KEY_F30                319
 #define GLFW_KEY_KP_0               320
 #define GLFW_KEY_KP_1               321
 #define GLFW_KEY_KP_2               322
