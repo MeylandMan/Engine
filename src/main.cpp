@@ -2,7 +2,7 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include <openglDebug.h>
-#include <demoShader.h>
+#include <demoShaderLoader.h>
 #include <iostream>
 
 
@@ -23,8 +23,11 @@ static void key_callback(GLFWwindow *window, int key, int scancode, int action, 
 int main(void)
 {
 
-	if (!glfwInit())
+	if (!glfwInit()) {
+		std::cout << "glfw not initiated." << std::endl;
 		return -1;
+	}
+		
 
 
 #pragma region report opengl errors to std
@@ -39,8 +42,10 @@ int main(void)
 
 
 	GLFWwindow *window = window = glfwCreateWindow(640, 480, "Simple example", NULL, NULL);
+
 	if (!window)
 	{
+		std::cout << "Window is not created. window name : " << window << std::endl;
 		glfwTerminate();
 		return -1;
 	}
@@ -72,6 +77,8 @@ int main(void)
 		glViewport(0, 0, width, height);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		//I'm using the old pipeline here just to test, you shouldn't learn this,
+		//Also It might not work on apple
 		glBegin(GL_TRIANGLES);
 		glColor3f(1, 0, 0);
 		glVertex2f(0,1);
