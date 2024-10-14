@@ -304,57 +304,164 @@ GLint getUniform(GLuint shaderId, const char *name)
 	return uniform;
 }
 
-void setUniform1f(const char* name, float arg1) {
-	int location = getUniform(this->id, name);
+// ---- Modifying a Uniform
+void Shader::setUniform1f(const char* name, float arg1) {
+	int location = getUniform(name);
+	_ASSERT(location != -1);
 	glUniform1f(location, arg1);
 }
 
 void Shader::setUniform2f(const char* name, float arg1, float arg2) {
-
+	int location = getUniform(name);
+	_ASSERT(location != -1);
+	glUniform2f(location, arg1, arg2);
 }
 
 void Shader::setUniform3f(const char* name, float arg1, float arg2, float arg3) {
-
+	int location = getUniform(name);
+	_ASSERT(location != -1);
+	glUniform3f(location, arg1, arg2, arg3);
 }
 
 void Shader::setUniform4f(const char* name, float arg1, float arg2, float arg3, float arg4) {
+	int location = getUniform(name);
+	_ASSERT(location != -1);
+	glUniform4f(location, arg1, arg2, arg3, arg4);
+}
 
+void setUniform1f(GLuint shaderId, const char* name, float arg1) {
+	int location = getUniform(shaderId, name);
+	_ASSERT(location != -1);
+	glUniform1f(location, arg1);
+}
+
+void setUniform2f(GLuint shaderId, const char* name, float arg1, float arg2) {
+	int location = getUniform(shaderId, name);
+	_ASSERT(location != -1);
+	glUniform2f(location, arg1, arg2);
+}
+
+void setUniform3f(GLuint shaderId, const char* name, float arg1, float arg2, float arg3) {
+	int location = getUniform(shaderId, name);
+	_ASSERT(location != -1);
+	glUniform3f(location, arg1, arg2, arg3);
+}
+
+void setUniform4f(GLuint shaderId, const char* name, float arg1, float arg2, float arg3, float arg4) {
+	int location = getUniform(shaderId, name);
+	_ASSERT(location != -1);
+	glUniform4f(location, arg1, arg2, arg3, arg4);
 }
 
 
 void Shader::setUniform1i(const char* name, int arg1) {
-
+	int location = getUniform(name);
+	_ASSERT(location != -1);
+	glUniform1i(location, arg1);
 }
 
 void Shader::setUniform2i(const char* name, int arg1, int arg2) {
-
+	int location = getUniform(name);
+	_ASSERT(location != -1);
+	glUniform2i(location, arg1, arg2);
 }
 
 void Shader::setUniform3i(const char* name, int arg1, int arg2, int arg3) {
-
+	int location = getUniform(name);
+	_ASSERT(location != -1);
+	glUniform3i(location, arg1, arg2, arg3);
 }
 
 void Shader::setUniform4i(const char* name, int arg1, int arg2, int arg3, int arg4) {
-
+	int location = getUniform(name);
+	_ASSERT(location != -1);
+	glUniform4i(location, arg1, arg2, arg3, arg4);
 }
 
 void Shader::setUniform1iv(const char* name, int count, int* arg1) {
+	int location = getUniform(name);
+	_ASSERT(location != -1);
+	glUniform1iv(location, count, arg1);
 
 }
 
 void Shader::setUniform2iv(const char* name, int count, int* arg1) {
-
+	int location = getUniform(name);
+	_ASSERT(location != -1);
+	glUniform2iv(location, count, arg1);
 }
 
 void Shader::setUniform3iv(const char* name, int count, int* arg1) {
-
+	int location = getUniform(name);
+	_ASSERT(location != -1);
+	glUniform3iv(location, count, arg1);
 }
 
 void Shader::setUniform4iv(const char* name, int count, int* arg1) {
-
+	int location = getUniform(name);
+	_ASSERT(location != -1);
+	glUniform4iv(location, count, arg1);
 }
 
 
-void Shader::setUniformMatrix4f(const char* name, mat4 arg) {
+void setUniform1i(GLuint shaderId, const char* name, int arg1) {
+	int location = getUniform(shaderId, name);
+	_ASSERT(location != -1);
+	glUniform1i(location, arg1);
+}
 
+void setUniform2i(GLuint shaderId, const char* name, int arg1, int arg2) {
+	int location = getUniform(shaderId, name);
+	_ASSERT(location != -1);
+	glUniform2i(location, arg1, arg2);
+}
+
+void setUniform3i(GLuint shaderId, const char* name, int arg1, int arg2, int arg3) {
+	int location = getUniform(shaderId, name);
+	_ASSERT(location != -1);
+	glUniform3i(location, arg1, arg2, arg3);
+}
+
+void setUniform4i(GLuint shaderId, const char* name, int arg1, int arg2, int arg3, int arg4) {
+	int location = getUniform(shaderId, name);
+	_ASSERT(location != -1);
+	glUniform4i(location, arg1, arg2, arg3, arg4);
+}
+
+void setUniform1iv(GLuint shaderId, const char* name, int count, int* arg1) {
+	int location = getUniform(shaderId, name);
+	_ASSERT(location != -1);
+	glUniform1iv(location, count, arg1);
+
+}
+
+void setUniform2iv(GLuint shaderId, const char* name, int count, int* arg1) {
+	int location = getUniform(shaderId, name);
+	_ASSERT(location != -1);
+	glUniform2iv(location, count, arg1);
+}
+
+void setUniform3iv(GLuint shaderId, const char* name, int count, int* arg1) {
+	int location = getUniform(shaderId, name);
+	_ASSERT(location != -1);
+	glUniform3iv(location, count, arg1);
+}
+
+void setUniform4iv(GLuint shaderId, const char* name, int count, int* arg1) {
+	int location = getUniform(shaderId, name);
+	_ASSERT(location != -1);
+	glUniform4iv(location, count, arg1);
+}
+
+// ------ END ------
+void Shader::setUniformMatrix4f(const char* name, mat4 arg) {
+	int location = getUniform(name);
+	_ASSERT(location != -1);
+	glUniformMatrix4fv(location, 1, GL_TRUE, arg.asArray);
+}
+
+void setUniformMatrix4f(GLuint shaderId, const char* name, mat4 arg) {
+	int location = getUniform(shaderId, name);
+	_ASSERT(location != -1);
+	glUniformMatrix4fv(location, 1, GL_TRUE, arg.asArray);
 }
