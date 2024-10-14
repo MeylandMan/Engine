@@ -1,8 +1,8 @@
 #include <glad/glad.h>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
-#include <openglDebug.h>
-#include <demoShaderLoader.h>
+#include <renderer/openglDebug.h>
+#include <renderer/shader.h>
 #include <iostream>
 
 
