@@ -17,6 +17,7 @@ add_subdirectory(thirdparty/stb_image)			#loading immaged
 add_subdirectory(thirdparty/stb_truetype)		#loading ttf files
 add_subdirectory(thirdparty/glm)				#math
 add_subdirectory(thirdparty/imgui-docking)		#ui
+add_subdirectory(thirdparty/assimp-5.4.3)		#Model Loader
 
 
 # Define MY_SOURCES to be a list of all the source files for my game 
