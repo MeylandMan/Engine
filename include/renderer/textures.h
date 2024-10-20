@@ -15,6 +15,7 @@ public:
 	inline int GetWidth() const { return m_Width; }
 	inline int GetHeight() const { return m_Height; }
 	inline unsigned int GetID() const { return ID; }
+	inline std::string Texture::getPath() { return m_FilePath; }
 
 private:
 	unsigned int ID;

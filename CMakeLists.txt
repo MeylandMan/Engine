@@ -1,5 +1,3 @@
-#https://github.com/meemknight/cmakeSetup
-
 cmake_minimum_required(VERSION 3.16)
 
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>") #we want to use the static runtime
@@ -20,7 +18,6 @@ add_subdirectory(thirdparty/imgui-docking)		#ui
 add_subdirectory(thirdparty/assimp-5.4.3)		#Model Loader
 
 
-# Define MY_SOURCES to be a list of all the source files for my game 
 file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 
 
@@ -31,6 +28,13 @@ set_property(TARGET "${CMAKE_PROJECT_NAME}" PROPERTY CXX_STANDARD 17)
 target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/resources/") # This is useful to get an ASSETS_PATH in your IDE during development but you should comment this if you compile a release version and uncomment the next line
 #target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="./resources/") # Uncomment this line to setup the ASSETS_PATH macro to the final assets directory when you share the game
 
+target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC SHADERS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/shaders/")
+target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC VERTEX_SHADER="vertex.vert")
+target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC FRAGMENT_SHADER="fragment.frag")
+
+#target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC SHADERS_PATH="./shaders/")
+#target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC VERTEX_SHADER="./vertex.vert")
+#target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC FRAGMENT_SHADER="./fragment.frag")
 
 target_sources("${CMAKE_PROJECT_NAME}" PRIVATE ${MY_SOURCES}  "include/renderer/renderer.h" "include/renderer/textures.h" "include/renderer/vao.h" "include/renderer/vbo.h" "include/renderer/Vertex.h" "include/renderer/VertexBufferLayout.h")
 
