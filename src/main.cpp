@@ -100,7 +100,7 @@ float look_dir, look_pitch;
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
 
-bool is_locked = true;
+bool is_locked = false;
 
 void centerCursorPosition(GLFWwindow* window) {
 	glfwSetCursorPos(window, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
@@ -275,21 +275,23 @@ int main(void)
 	Texture tex("Default/textures/dirt.png");
 	tex.Bind();
 
-	std::cout << tex.getPath() << std::endl;
-
 	s.setUniform1i("u_Texture", 0);
 	Renderer renderer;
 
 	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-	test::TestClearColor test;
+	test::Test* CurrentTest = nullptr;
+	test::Testmenu* menu = new test::Testmenu(CurrentTest);
+
+	CurrentTest = menu;
+
+	menu->RegisterTest<test::TestClearColor>("Clear Color");
 
 	while (!glfwWindowShouldClose(window))
 	{
+		glClearColor(0.3f,0.58f,0.3f,1.f);
 		renderer.Clear();
-
-		test.onUpdate(1 / io.Framerate);
 
 		processInput(window);
 		glfwPollEvents();
@@ -325,8 +327,7 @@ int main(void)
 
 		}
 
-		test.onRender(renderer);
-		renderer.Draw(va, ib, s);
+		//renderer.Draw(va, ib, s);
 
 		// Start the Dear ImGui frame
 		ImGui_ImplOpenGL3_NewFrame();
@@ -336,14 +337,25 @@ int main(void)
 		//Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
 		{
 
-			ImGui::Begin("Hello, world!");
+			
+			if (CurrentTest) {
+				CurrentTest->onUpdate(1/io.Framerate);
+				CurrentTest->onRender(renderer);
 
-			ImGui::Text("Camera Position : Vector3(%.1f, %.1f, %.1f)", Camera.x, Camera.y, Camera.z);
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-			ImGui::SliderFloat4("Clear Color", &clear_color.x, 0.f, 1.f);
-			test.onImGUI();
+				ImGui::Begin("Test");
 
-			ImGui::End();
+				ImGui::Text("Camera Position : Vector3(%.1f, %.1f, %.1f)", Camera.x, Camera.y, Camera.z);
+				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+				if (CurrentTest != menu && ImGui::Button("<-")) {
+					delete CurrentTest;
+					CurrentTest = menu;
+				}
+				CurrentTest->onImGUI();
+
+				ImGui::End();
+			}
+
+			
 		}
 
 		// Rendering
@@ -361,5 +373,8 @@ int main(void)
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+	delete CurrentTest;
+	if (CurrentTest != menu)
+		delete menu;
 	return 0;
 }
