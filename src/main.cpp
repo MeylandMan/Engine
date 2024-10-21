@@ -10,6 +10,8 @@
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 
+#include "tests/TestClearColor.h"
+
 #define USE_GPU_ENGINE 0
 
 //imgui_impl_glfw.h
@@ -276,14 +278,18 @@ int main(void)
 	std::cout << tex.getPath() << std::endl;
 
 	s.setUniform1i("u_Texture", 0);
-
 	Renderer renderer;
 
 	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+	test::TestClearColor test;
+
 	while (!glfwWindowShouldClose(window))
 	{
+		renderer.Clear();
+
+		test.onUpdate(1 / io.Framerate);
 
 		processInput(window);
 		glfwPollEvents();
@@ -308,9 +314,7 @@ int main(void)
 		proj = Projection(DEFAULT_FOV, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, DEFAULT_ZNEAR, DEFAULT_ZFAR);
 		model = Transform(scl, RT, pos);
 
-		renderer.Clear();
-		float w = 1.f;
-		glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+		
 		{
 
 			s.setUniform1i("u_Texture", 0);
@@ -321,6 +325,7 @@ int main(void)
 
 		}
 
+		test.onRender(renderer);
 		renderer.Draw(va, ib, s);
 
 		// Start the Dear ImGui frame
@@ -336,6 +341,7 @@ int main(void)
 			ImGui::Text("Camera Position : Vector3(%.1f, %.1f, %.1f)", Camera.x, Camera.y, Camera.z);
 			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 			ImGui::SliderFloat4("Clear Color", &clear_color.x, 0.f, 1.f);
+			test.onImGUI();
 
 			ImGui::End();
 		}
