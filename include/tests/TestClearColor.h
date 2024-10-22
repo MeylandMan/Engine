@@ -10,10 +10,8 @@ namespace test {
 	class TestClearColor : public Test {
 	public:
 		TestClearColor();
-		~TestClearColor();
 
-		void onUpdate(float deltaTime) override;
-		void onRender(Renderer& renderer) override;
+		void onRender(GLFWwindow* window, Renderer renderer, mat4* view) override;
 		void onImGUI() override;
 	private:
 		float m_ClearColor[4];

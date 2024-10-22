@@ -11,6 +11,7 @@
 #include <backends/imgui_impl_opengl3.h>
 
 #include "tests/TestClearColor.h"
+#include "tests/TestCubeDrawing.h"
 
 #define USE_GPU_ENGINE 0
 
@@ -39,60 +40,6 @@ float view_y = 0.0f;
 
 vec3 Camera;
 vec3 TargetTo;
-
-float vertices[312] = {
-	// POSITION					  COLOR				TEXTURES COORDS		TEXTURE INDEX
-	-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,	0.0f, 0.0f,				0.f,		0.0f, 0.0f, 0.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				0.f,		0.0f, 0.0f, 0.0f, // FRONT
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				0.f,		0.0f, 0.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				0.f,		0.0f, 0.0f, 0.0f,
-
-	-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,	1.0f, 0.0f,				1.f,		0.0f, 0.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				1.f,		0.0f, 0.0f, 0.0f, // BACK
-	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				1.f,		0.0f, 0.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				1.f,		0.0f, 0.0f, 0.0f,
-
-	-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				2.f,		0.0f, 0.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				2.f,		0.0f, 0.0f, 0.0f, // LEFT
-	-0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				2.f,		0.0f, 0.0f, 0.0f,
-	-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				2.f,		0.0f, 0.0f, 0.0f,
-
-	 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				2.f,		0.0f, 0.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				2.f,		0.0f, 0.0f, 0.0f, // RIGHT
-	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				2.f,		0.0f, 0.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				2.f,		0.0f, 0.0f, 0.0f,
-
-	-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				4.f,		0.0f, 0.0f, 0.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				4.f,		0.0f, 0.0f, 0.0f, // DOWN
-	 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				4.f,		0.0f, 0.0f, 0.0f,
-	-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				4.f,		0.0f, 0.0f, 0.0f,
-
-	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				3.f,		0.0f, 0.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				3.f,		0.0f, 0.0f, 0.0f, // UP
-	-0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				3.f,		0.0f, 0.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				3.f,		0.0f, 0.0f, 0.0f,
-};
-
-unsigned int indices[] = {
-	// front and back
-	0, 3, 2,
-	2, 1, 0,
-
-	4, 5, 6,
-	6, 7 ,4,
-	// left and right
-	11, 8, 9,
-	9, 10, 11,
-
-	12, 13, 14,
-	14, 15, 12,
-	// bottom and top
-	16, 17, 18,
-	18, 19, 16,
-
-	20, 21, 22,
-	22, 23, 20
-};
 
 int WINDOW_WIDTH = 0, WINDOW_HEIGHT = 0;
 float look_dir, look_pitch;
@@ -243,43 +190,11 @@ int main(void)
 	glDebugMessageCallback(glDebugOutput, 0);
 	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 #pragma endregion
-	
-	vec3 pos;
-	vec3 scl(1.f, 1.f, 1.f);
-	vec3 RT;
 
-	mat4 model;
 	mat4 view;
-	mat4 proj;
-
-	//shader loading example
-	Shader s;
-	s.loadShaderProgramFromFile(SHADERS_PATH "Default/" VERTEX_SHADER, SHADERS_PATH "Default/" FRAGMENT_SHADER);
-	s.bind();
-
-	vao va;
-	vbo vb(vertices, sizeof(vertices));
-
-	
-
-	VertexBufferLayout layout;
-	layout.Push<float>(3);
-	layout.Push<float>(4);
-	layout.Push<float>(2);
-	layout.Push<float>(1);
-	layout.Push<float>(3);
-	va.AddBuffer(vb, layout);
-
-	ibo ib(indices, sizeof(indices));
-
-	Texture tex("Default/textures/dirt.png");
-	tex.Bind();
-
-	s.setUniform1i("u_Texture", 0);
 	Renderer renderer;
 
 	bool show_another_window = false;
-	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 	test::Test* CurrentTest = nullptr;
 	test::Testmenu* menu = new test::Testmenu(CurrentTest);
@@ -287,7 +202,8 @@ int main(void)
 	CurrentTest = menu;
 
 	menu->RegisterTest<test::TestClearColor>("Clear Color");
-
+	menu->RegisterTest<test::TestCubeDrawing>("Drawing a Cube");
+	
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.3f,0.58f,0.3f,1.f);
@@ -313,34 +229,18 @@ int main(void)
 		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		view = LookAt(Camera, TargetTo, vec3(0.0f, 1.0f, 0.0f));
-		proj = Projection(DEFAULT_FOV, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, DEFAULT_ZNEAR, DEFAULT_ZFAR);
-		model = Transform(scl, RT, pos);
-
-		
-		{
-
-			s.setUniform1i("u_Texture", 0);
-
-			s.setUniformMatrix4f("u_Model", model);
-			s.setUniformMatrix4f("u_View", view);
-			s.setUniformMatrix4f("u_Proj", proj);
-
-		}
-
-		//renderer.Draw(va, ib, s);
 
 		// Start the Dear ImGui frame
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		//Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
 		{
 
 			
 			if (CurrentTest) {
 				CurrentTest->onUpdate(1/io.Framerate);
-				CurrentTest->onRender(renderer);
+				CurrentTest->onRender(window, renderer, &view);
 
 				ImGui::Begin("Test");
 

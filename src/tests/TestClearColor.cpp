@@ -5,15 +5,7 @@ namespace test {
 
 	}
 
-	TestClearColor::~TestClearColor() {
-
-	}
-
-	void TestClearColor::onUpdate(float deltaTime) {
-
-	}
-
-	void TestClearColor::onRender(Renderer &renderer) {
+	void TestClearColor::onRender(GLFWwindow* window, Renderer renderer, mat4* view) {
 		glClearColor(m_ClearColor[0], m_ClearColor[1], m_ClearColor[2], m_ClearColor[3]);
 		renderer.Clear();
 	}

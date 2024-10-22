@@ -4,6 +4,8 @@
 #include <functional>
 #include <iostream>
 
+#include <GLFW/glfw3.h>
+
 #include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
@@ -15,7 +17,7 @@ namespace test {
 		virtual ~Test() {}
 
 		virtual void onUpdate(float deltaTime) {}
-		virtual void onRender(Renderer& renderer) {}
+		virtual void onRender(GLFWwindow* window, Renderer renderer, mat4* view) {}
 		virtual void onImGUI() {}
 	};
 
@@ -25,7 +27,7 @@ namespace test {
 		~Testmenu();
 
 		void onUpdate(float deltaTime) override;
-		void onRender(Renderer& renderer) override;
+		void onRender(GLFWwindow* window, Renderer renderer, mat4* view) override;
 		void onImGUI() override;
 
 		template<typename T>
