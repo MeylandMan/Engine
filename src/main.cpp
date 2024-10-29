@@ -12,6 +12,12 @@
 
 #include "tests/TestClearColor.h"
 #include "tests/TestCubeDrawing.h"
+#include "tests/TestBasicLight.h"
+#include "tests/TestBasicLights.h"
+#include "tests/TestLightCasters.h"
+#include "tests/TestLightingMap.h"
+#include "tests/TestLoadModel.h"
+#include "tests/TestMaterials.h"
 
 #define USE_GPU_ENGINE 0
 
@@ -197,13 +203,16 @@ int main(void)
 	bool show_another_window = false;
 
 	test::Test* CurrentTest = nullptr;
-	test::Testmenu* menu = new test::Testmenu(CurrentTest);
 
-	CurrentTest = menu;
+	test::Testmenu* menuTest = new test::Testmenu(CurrentTest);
 
-	menu->RegisterTest<test::TestClearColor>("Clear Color");
-	menu->RegisterTest<test::TestCubeDrawing>("Drawing a Cube");
+	CurrentTest = menuTest;
+
+	//BasicMenuTest->RegisterTest<test::TestClearColor>("Clear Color");
+	//BasicMenuTest->RegisterTest<test::TestCubeDrawing>("Drawing a Cube");
 	
+	short menu_index = 0;
+
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.3f,0.58f,0.3f,1.f);
@@ -246,11 +255,47 @@ int main(void)
 
 				ImGui::Text("Camera Position : Vector3(%.1f, %.1f, %.1f)", Camera.x, Camera.y, Camera.z);
 				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
-				if (CurrentTest != menu && ImGui::Button("<-")) {
-					delete CurrentTest;
-					CurrentTest = menu;
+				switch (menu_index) {
+				case 0:
+					if (ImGui::Button("Basic")) {
+						menuTest->RegisterTest<test::TestClearColor>("Clear Color");
+						menuTest->RegisterTest<test::TestCubeDrawing>("Drawing a Cube");
+						menuTest->RegisterTest<test::TestBasicLight>("Basic Lighting");
+						menuTest->RegisterTest<test::TestMaterials>("Materials");
+						menuTest->RegisterTest<test::TestLightingMap>("Lighting maps");
+						menuTest->RegisterTest<test::TestLightCasters>("Light Casters");
+						menuTest->RegisterTest<test::TestLoadModel>("Loading Models");
+
+						CurrentTest = menuTest;
+						menu_index = 1;
+					}
+					else if (ImGui::Button("Advanced")) {
+						//Do nothing for now
+					}
+					else if (ImGui::Button("Lighting")) {
+						//Do nothing for now
+					}
+					else if (ImGui::Button("Shadow")) {
+						//Do nothing for now
+					}
+					else if (ImGui::Button("VFX")) {
+						//Do nothing for now
+					}
+					break;
+				case 1:
+					if (ImGui::Button("<-")) {
+						if (CurrentTest == menuTest) {
+							menu_index = 0;
+							menuTest->clear();
+						}
+						else {
+							delete CurrentTest;
+							CurrentTest = menuTest;
+						}
+					}
+					CurrentTest->onImGUI();
+					break;
 				}
-				CurrentTest->onImGUI();
 
 				ImGui::End();
 			}
@@ -274,7 +319,7 @@ int main(void)
 		glfwPollEvents();
 	}
 	delete CurrentTest;
-	if (CurrentTest != menu)
-		delete menu;
+	if (CurrentTest != menuTest)
+		delete menuTest;
 	return 0;
 }

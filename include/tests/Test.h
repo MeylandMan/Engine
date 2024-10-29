@@ -36,6 +36,12 @@ namespace test {
 
 			m_Tests.push_back(std::make_pair(name, []() { return new T; }));
 		}
+
+		void clear() {
+			std::cout << "clearing the list : " << std::endl;
+			m_Tests.clear();
+		}
+
 	private:
 		Test*& m_CurrentTest;
 		std::vector<std::pair<std::string, std::function<Test* ()>>> m_Tests;
