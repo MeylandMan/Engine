@@ -9,10 +9,15 @@ collaborate on this project. I want to learn new things by my own experience.
 
 ## Features
 
-- [x] Drawing a cube
+Basic
+  - [x] Drawing a cube
 ![](https://github.com/MeylandMan/photos/blob/main/0-5-SuperEngine-1.png)
-- [x] Change background color
+  - [x] Change background color
 ![](https://github.com/MeylandMan/photos/blob/main/0-5-SuperEngine-0.png)
-
+  - [ ] Basic Lighting
+  - [ ] Materials
+  - [ ] Lighting Maps
+  - [ ] Light Casters
+  - [ ] Loading Models
 There will be more updates next time. This was just a prototype to have the basic things in a openGL pipeline.
 
