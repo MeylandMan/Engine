@@ -19,5 +19,6 @@ Basic
   - [ ] Lighting Maps
   - [ ] Light Casters
   - [ ] Loading Models
+
 There will be more updates next time. This was just a prototype to have the basic things in a openGL pipeline.
 
