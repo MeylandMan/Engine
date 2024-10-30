@@ -46,6 +46,8 @@ namespace test {
 			m_Shader.setUniform4f("u_ObjectColor", 1.f, 1.f, 1.f, 1.f);
 			m_Shader.setUniform1i("u_IsLight", 1);
 
+			m_Shader.setUniform3f("u_ViewPosition", camera->getPosition().x, camera->getPosition().y, camera->getPosition().z);
+
 			m_LightModel = Transform(m_LightScale, m_LightRotation, m_LightPosition);
 			m_Shader.setUniformMatrix4f("u_Model", m_LightModel);
 
