@@ -3,7 +3,7 @@
 namespace test {
 	TestCubeDrawing::TestCubeDrawing() : m_Ibo(ibo(indices, sizeof(indices))),
 		m_Vbo(vbo(m_Vertices, sizeof(m_Vertices))),
-		m_Texture(Texture("Default/textures/dirt.png")) {
+		m_Texture(Texture("dirt.png")) {
 		m_Scale = vec3(1.f, 1.f, 1.f);
 
 		m_Shader.loadShaderProgramFromFile(SHADERS_PATH "Default/" VERTEX_SHADER, SHADERS_PATH "Default/" FRAGMENT_SHADER);
