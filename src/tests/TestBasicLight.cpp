@@ -19,6 +19,7 @@ namespace test {
 		m_ObjVao.AddBuffer(m_Vbo, m_Layout);
 
 
+		m_Shader.setUniform3f("u_LightPosition", m_LightPosition.x, m_LightPosition.y, m_LightPosition.z);
 		m_Shader.setUniform4f("u_LightColor", LightColor.x, LightColor.y, LightColor.z, LightColor.w);
 		m_Shader.setUniform4f("u_ObjectColor", ObjColor.x, ObjColor.y, ObjColor.z, ObjColor.w);
 	}
@@ -38,6 +39,7 @@ namespace test {
 
 		//Light
 		{
+			m_Shader.setUniform3f("u_LightPosition", m_LightPosition.x, m_LightPosition.y, m_LightPosition.z);
 			m_Shader.setUniform4f("u_LightColor", LightColor.x, LightColor.y, LightColor.z, LightColor.w);
 			m_Shader.setUniform4f("u_ObjectColor", 1.f, 1.f, 1.f, 1.f);
 			m_Shader.setUniform1i("u_IsLight", 1);
