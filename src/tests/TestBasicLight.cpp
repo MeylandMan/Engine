@@ -2,18 +2,27 @@
 
 namespace test {
 	TestBasicLight::TestBasicLight() : m_Ibo(ibo(indices, sizeof(indices))),
-		m_LightVbo(vbo(m_LightVertices, sizeof(m_LightVertices))) {
+		m_Vbo(vbo(m_Vertices, sizeof(m_Vertices))) {
 
-		m_LightScale = vec3(1.f, 1.f, 1.f);
+		m_LightPosition = vec3(0.5f, 1.f, 0.f);
+		LightColor = vec4(1.f, 1.f, 1.f, 1.f);
+		m_LightScale = vec3(0.2f, 0.2f, 0.2f);
+
+		ObjColor = vec4(1.f, 0.5f, 0.31f, 1.f);
+		m_ObjScale = vec3(1.f, 1.f, 1.f);
 
 		m_Shader.loadShaderProgramFromFile(SHADERS_PATH "BasicLight/" VERTEX_SHADER, SHADERS_PATH "BasicLight/" FRAGMENT_SHADER);
 		m_Shader.bind();
 
 		m_Layout.Push<float>(3);
 		m_Layout.Push<float>(4);
+		m_Layout.Push<float>(2);
+		m_Layout.Push<float>(1);
 		m_Layout.Push<float>(3);
-		m_LightVao.AddBuffer(m_LightVbo, m_Layout);
+		m_ObjVao.AddBuffer(m_Vbo, m_Layout);
 
+		m_Shader.setUniform4f("u_LightColor", LightColor.x, LightColor.y, LightColor.z, LightColor.w);
+		m_Shader.setUniform4f("u_ObjectColor", ObjColor.x, ObjColor.y, ObjColor.z, ObjColor.w);
 	}
 
 	void TestBasicLight::onRender(GLFWwindow* window, Renderer renderer, mat4* view) {
@@ -26,17 +35,28 @@ namespace test {
 
 		m_Projection = Projection(DEFAULT_FOV, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, DEFAULT_ZNEAR, DEFAULT_ZFAR);
 
-		//Light
-		{
-			m_LightModel = Transform(m_LightScale, m_LightRotation, m_LightPosition);
-			m_Shader.setUniformMatrix4f("u_Model", m_LightModel);
-		}
-		
-
 		m_Shader.setUniformMatrix4f("u_View", *view);
 		m_Shader.setUniformMatrix4f("u_Proj", m_Projection);
 
-		renderer.Draw(m_LightVao, m_Ibo, m_Shader);
+		//Light
+		{
+			m_Shader.setUniform4f("u_LightColor", LightColor.x, LightColor.y, LightColor.z, LightColor.w);
+			m_Shader.setUniform4f("u_ObjectColor", 1.f, 1.f, 1.f, 1.f);
+
+			m_LightModel = Transform(m_LightScale, m_LightRotation, m_LightPosition);
+			m_Shader.setUniformMatrix4f("u_Model", m_LightModel);
+
+			renderer.Draw(m_ObjVao, m_Ibo, m_Shader);
+		}
+
+		//Object
+		{
+			m_Shader.setUniform4f("u_ObjectColor", ObjColor.x, ObjColor.y, ObjColor.z, ObjColor.w);
+			m_ObjModel = Transform(m_ObjScale, m_ObjRotation, m_ObjPosition);
+			m_Shader.setUniformMatrix4f("u_Model", m_ObjModel);
+
+			renderer.Draw(m_ObjVao, m_Ibo, m_Shader);
+		}
 	}
 
 	void TestBasicLight::onImGUI() {

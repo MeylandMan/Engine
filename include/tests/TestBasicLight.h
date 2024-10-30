@@ -20,37 +20,37 @@ namespace test {
 		void onRender(GLFWwindow* window, Renderer renderer, mat4* view) override;
 		void onImGUI() override;
 	private:
-		float m_LightVertices[240] = {
-			// POSITION					  COLOR				NORMALS
-			-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-			 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, // FRONT
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-			-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+		float m_Vertices[312] = {
+			// POSITION					  COLOR				TEXTURES COORDS		TEXTURE INDEX
+			-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,	0.0f, 0.0f,				0.f,		0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				0.f,		0.0f, 0.0f, 0.0f, // FRONT
+			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				0.f,		0.0f, 0.0f, 0.0f,
+			-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				0.f,		0.0f, 0.0f, 0.0f,
 
-			-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-			 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, // BACK
-			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-			-0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+			-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,	1.0f, 0.0f,				1.f,		0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				1.f,		0.0f, 0.0f, 0.0f, // BACK
+			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				1.f,		0.0f, 0.0f, 0.0f,
+			-0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				1.f,		0.0f, 0.0f, 0.0f,
 
-			-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-			-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, // LEFT
-			-0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-			-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+			-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				2.f,		0.0f, 0.0f, 0.0f,
+			-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				2.f,		0.0f, 0.0f, 0.0f, // LEFT
+			-0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				2.f,		0.0f, 0.0f, 0.0f,
+			-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				2.f,		0.0f, 0.0f, 0.0f,
 
-			 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, // RIGHT
-			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-			 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				2.f,		0.0f, 0.0f, 0.0f,
+			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				2.f,		0.0f, 0.0f, 0.0f, // RIGHT
+			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				2.f,		0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				2.f,		0.0f, 0.0f, 0.0f,
 
-			-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-			 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, // DOWN
-			 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-			-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+			-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				4.f,		0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				4.f,		0.0f, 0.0f, 0.0f, // DOWN
+			 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				4.f,		0.0f, 0.0f, 0.0f,
+			-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				4.f,		0.0f, 0.0f, 0.0f,
 
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-			-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, // UP
-			-0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f
+			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				3.f,		0.0f, 0.0f, 0.0f,
+			-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				3.f,		0.0f, 0.0f, 0.0f, // UP
+			-0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				3.f,		0.0f, 0.0f, 0.0f,
+			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				3.f,		0.0f, 0.0f, 0.0f,
 		};
 		unsigned int indices[36] = {
 			// front and back
@@ -74,15 +74,24 @@ namespace test {
 		};
 		Shader m_Shader;
 		VertexBufferLayout m_Layout;
+		vbo m_Vbo;
 		ibo m_Ibo;
 		mat4 m_Projection;
 
-		vao m_LightVao;
-		vbo m_LightVbo;
+		// Light
+		vao m_ObjVao;
+		vec4 LightColor;
 		vec3 m_LightPosition;
 		vec3 m_LightScale;
 		vec3 m_LightRotation;
 		mat4 m_LightModel;
+
+		//Object
+		vec4 ObjColor;
+		vec3 m_ObjPosition;
+		vec3 m_ObjScale;
+		vec3 m_ObjRotation;
+		mat4 m_ObjModel;
 	};
 
 }
