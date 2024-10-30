@@ -1,5 +1,7 @@
 #include "tests/TestBasicLight.h"
-
+/*
+	Might be useful if I use a Normal Matrix for better realism. Might cause your pc to blow up though...
+*/
 namespace test {
 	TestBasicLight::TestBasicLight() : m_Ibo(ibo(indices, sizeof(indices))),
 		m_Vbo(vbo(m_Vertices, sizeof(m_Vertices))) {
@@ -62,6 +64,7 @@ namespace test {
 	}
 
 	void TestBasicLight::onImGUI() {
-		
+		ImGui::ColorEdit4("Light Color : ", &LightColor.x);
+		ImGui::SliderFloat3("Light position : ", &m_LightPosition.x, -10.f, 10.f);
 	}
 }

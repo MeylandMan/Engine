@@ -4,6 +4,7 @@
 #include <renderer/renderer.h>
 #include <renderer/openglDebug.h>
 #include <renderer/shader.h>
+#include <Camera.h>
 #include <iostream>
 
 #include <imgui.h>
@@ -44,8 +45,10 @@ extern "C"
 
 float view_y = 0.0f;
 
-vec3 Camera;
-vec3 TargetTo;
+
+Camera cam(vec3(0.f, 0.f, 0.f), vec3(0.f,0.f,0.f));
+//vec3 Camera;
+//vec3 TargetTo;
 
 int WINDOW_WIDTH = 0, WINDOW_HEIGHT = 0;
 float look_dir, look_pitch;
@@ -83,26 +86,26 @@ void processInput(GLFWwindow* window)
 
 	if (is_locked) {
 		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-			Camera.y += spd;
+			cam.setPositionYaxis(cam.getPosition().y + spd);
 		else if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-			Camera.y -= spd;
+			cam.setPositionYaxis(cam.getPosition().y - spd);
 
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { // LEFT
-			Camera.z -= sin(deg_to_rad(look_dir)) * spd;
-			Camera.x -= cos(deg_to_rad(look_dir)) * spd;
+			cam.setPositionZaxis(cam.getPosition().z - sin(deg_to_rad(look_dir)) * spd);
+			cam.setPositionXaxis(cam.getPosition().x - cos(deg_to_rad(look_dir)) * spd);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) { // DOWN
-			Camera.z += sin(deg_to_rad(look_dir)) * spd;
-			Camera.x += cos(deg_to_rad(look_dir)) * spd;
+			cam.setPositionZaxis(cam.getPosition().z + sin(deg_to_rad(look_dir)) * spd);
+			cam.setPositionXaxis(cam.getPosition().x + cos(deg_to_rad(look_dir)) * spd);
 		}
 		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { // RIGHT
-			Camera.z += cos(deg_to_rad(look_dir)) * spd;
-			Camera.x -= sin(deg_to_rad(look_dir)) * spd;
+			cam.setPositionZaxis(cam.getPosition().z + cos(deg_to_rad(look_dir)) * spd);
+			cam.setPositionXaxis(cam.getPosition().x - sin(deg_to_rad(look_dir)) * spd);
 		}
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { // UP
-			Camera.z -= cos(deg_to_rad(look_dir)) * spd;
-			Camera.x += sin(deg_to_rad(look_dir)) * spd;
+			cam.setPositionZaxis(cam.getPosition().z - cos(deg_to_rad(look_dir)) * spd);
+			cam.setPositionXaxis(cam.getPosition().x + sin(deg_to_rad(look_dir)) * spd);
 		}
 	}
 
@@ -209,10 +212,9 @@ int main(void)
 		if (is_locked) {
 			cursor_position(window);
 			centerCursorPosition(window);
-
-			TargetTo.x = Camera.x - cos(deg_to_rad(look_dir));
-			TargetTo.y = Camera.y - sin(deg_to_rad(look_pitch));
-			TargetTo.z = Camera.z - sin(deg_to_rad(look_dir));
+			cam.setTargetXaxis(cam.getPosition().x - cos(deg_to_rad(look_dir)));
+			cam.setTargetYaxis(cam.getPosition().y - sin(deg_to_rad(look_pitch)));
+			cam.setTargetZaxis(cam.getPosition().z - sin(deg_to_rad(look_dir)));
 		}
 
 
@@ -220,7 +222,7 @@ int main(void)
 
 		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-		view = LookAt(Camera, TargetTo, vec3(0.0f, 1.0f, 0.0f));
+		view = LookAt(cam.getPosition(), cam.getTarget(), vec3(0.0f, 1.0f, 0.0f));
 
 		// Start the Dear ImGui frame
 		ImGui_ImplOpenGL3_NewFrame();
@@ -239,7 +241,7 @@ int main(void)
 
 				ImGui::Begin("Test");
 
-				ImGui::Text("Camera Position : Vector3(%.1f, %.1f, %.1f)", Camera.x, Camera.y, Camera.z);
+				ImGui::Text("Camera Position : Vector3(%.1f, %.1f, %.1f)", cam.getPosition().x, cam.getPosition().y, cam.getPosition().z);
 				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 				switch (menu_index) {
 				case 0:
