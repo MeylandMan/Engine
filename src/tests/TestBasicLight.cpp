@@ -11,15 +11,13 @@ namespace test {
 		ObjColor = vec4(1.f, 0.5f, 0.31f, 1.f);
 		m_ObjScale = vec3(1.f, 1.f, 1.f);
 
-		m_Shader.loadShaderProgramFromFile(SHADERS_PATH "BasicLight/" VERTEX_SHADER, SHADERS_PATH "BasicLight/" FRAGMENT_SHADER);
+		m_Shader.loadShaderProgramFromFile(SHADERS_PATH "BasicLight" VERTEX_SHADER, SHADERS_PATH "BasicLight" FRAGMENT_SHADER);
 		m_Shader.bind();
 
-		m_Layout.Push<float>(3);
-		m_Layout.Push<float>(4);
-		m_Layout.Push<float>(2);
-		m_Layout.Push<float>(1);
-		m_Layout.Push<float>(3);
+		m_Layout.PushShort<float>(3,0);
+		m_Layout.PushShort<float>(3,0);
 		m_ObjVao.AddBuffer(m_Vbo, m_Layout);
+
 
 		m_Shader.setUniform4f("u_LightColor", LightColor.x, LightColor.y, LightColor.z, LightColor.w);
 		m_Shader.setUniform4f("u_ObjectColor", ObjColor.x, ObjColor.y, ObjColor.z, ObjColor.w);

@@ -6,13 +6,12 @@ namespace test {
 		m_Texture(Texture("dirt.png")) {
 		m_Scale = vec3(1.f, 1.f, 1.f);
 
-		m_Shader.loadShaderProgramFromFile(SHADERS_PATH "Default/" VERTEX_SHADER, SHADERS_PATH "Default/" FRAGMENT_SHADER);
+		m_Shader.loadShaderProgramFromFile(SHADERS_PATH "DrawingCube" VERTEX_SHADER, SHADERS_PATH "DrawingCube" FRAGMENT_SHADER);
 		m_Shader.bind();
 
 		m_Layout.Push<float>(3);
 		m_Layout.Push<float>(4);
 		m_Layout.Push<float>(2);
-		m_Layout.Push<float>(1);
 		m_Layout.Push<float>(3);
 		m_Vao.AddBuffer(m_Vbo, m_Layout);
 

@@ -75,13 +75,6 @@ void processInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
 
-	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-		is_locked = !is_locked;
-	}
-
-	if (glfwGetKey(window, GLFW_KEY_F11) == GLFW_PRESS) {
-		// FullScreen
-	}
 	float currentFrame = glfwGetTime();
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
@@ -115,24 +108,15 @@ void processInput(GLFWwindow* window)
 
 }
 
-void getMatrix4String(mat4 mat) {
-	float j = 0;
-	for (int i = 0; i < 16; ++i) {
-		if (j > 3) {
-			j = 0;
-			std::cout << std::endl;
-		}
-		std::cout << "[" << mat.asArray[i] << "]";
-
-		j++;
-	}
-	std::cout << std::endl;
-}
-
 static void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+		is_locked = !is_locked;
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_F11) == GLFW_PRESS) {
+		// FullScreen
+	}
 }
 
 int main(void)
@@ -161,6 +145,7 @@ int main(void)
 	glfwMakeContextCurrent(window);
 	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 	glfwSwapInterval(1);
+	glfwSetKeyCallback(window, key_callback);
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -215,8 +200,6 @@ int main(void)
 
 	while (!glfwWindowShouldClose(window))
 	{
-		glClearColor(0.3f,0.58f,0.3f,1.f);
-		renderer.Clear();
 
 		processInput(window);
 		glfwPollEvents();
@@ -249,6 +232,9 @@ int main(void)
 			
 			if (CurrentTest) {
 				CurrentTest->onUpdate(1/io.Framerate);
+
+				
+				renderer.Clear();
 				CurrentTest->onRender(window, renderer, &view);
 
 				ImGui::Begin("Test");

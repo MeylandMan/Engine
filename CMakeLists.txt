@@ -29,8 +29,8 @@ target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="${CMAK
 #target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC RESOURCES_PATH="./resources/") # Uncomment this line to setup the ASSETS_PATH macro to the final assets directory when you share the game
 
 target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC SHADERS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/shaders/")
-target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC VERTEX_SHADER="vertex.vert")
-target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC FRAGMENT_SHADER="fragment.frag")
+target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC VERTEX_SHADER="/vertex.vert")
+target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC FRAGMENT_SHADER="/fragment.frag")
 
 #target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC SHADERS_PATH="./shaders/")
 #target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC VERTEX_SHADER="./vertex.vert")
