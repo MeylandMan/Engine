@@ -26,7 +26,7 @@ namespace test {
 		m_Shader.setUniform4f("u_ObjectColor", ObjColor.x, ObjColor.y, ObjColor.z, ObjColor.w);
 	}
 
-	void TestBasicLight::onRender(GLFWwindow* window, Renderer renderer, mat4* view) {
+	void TestBasicLight::onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) {
 		int WINDOW_WIDTH = 0, WINDOW_HEIGHT = 0;
 
 		glfwGetFramebufferSize(window, &WINDOW_WIDTH, &WINDOW_HEIGHT);

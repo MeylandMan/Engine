@@ -237,7 +237,7 @@ int main(void)
 
 				
 				renderer.Clear();
-				CurrentTest->onRender(window, renderer, &view);
+				CurrentTest->onRender(window, renderer, &view, &cam);
 
 				ImGui::Begin("Test");
 

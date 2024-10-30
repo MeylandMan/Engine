@@ -5,7 +5,7 @@ namespace test {
 
 	}
 
-	void TestLightingMap::onRender(GLFWwindow* window, Renderer renderer, mat4* view) {
+	void TestLightingMap::onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) {
 		
 	}
 

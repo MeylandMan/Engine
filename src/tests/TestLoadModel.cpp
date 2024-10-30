@@ -5,7 +5,7 @@ namespace test {
 
 	}
 
-	void TestLoadModel::onRender(GLFWwindow* window, Renderer renderer, mat4* view) {
+	void TestLoadModel::onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) {
 		
 	}
 

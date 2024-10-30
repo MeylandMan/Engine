@@ -10,6 +10,8 @@
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
 
+#include <Camera.h>
+
 namespace test {
 	class Test {
 	public:
@@ -17,7 +19,7 @@ namespace test {
 		virtual ~Test() {}
 
 		virtual void onUpdate(float deltaTime) {}
-		virtual void onRender(GLFWwindow* window, Renderer renderer, mat4* view) {}
+		virtual void onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) {}
 		virtual void onImGUI() {}
 	};
 
@@ -27,7 +29,7 @@ namespace test {
 		~Testmenu();
 
 		void onUpdate(float deltaTime) override;
-		void onRender(GLFWwindow* window, Renderer renderer, mat4* view) override;
+		void onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) override;
 		void onImGUI() override;
 
 		template<typename T>

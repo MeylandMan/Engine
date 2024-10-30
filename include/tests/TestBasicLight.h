@@ -17,7 +17,7 @@ namespace test {
 	public:
 		TestBasicLight();
 
-		void onRender(GLFWwindow* window, Renderer renderer, mat4* view) override;
+		void onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) override;
 		void onImGUI() override;
 	private:
 		float m_Vertices[144] = {

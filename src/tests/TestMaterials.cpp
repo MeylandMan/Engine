@@ -5,7 +5,7 @@ namespace test {
 
 	}
 
-	void TestMaterials::onRender(GLFWwindow* window, Renderer renderer, mat4* view) {
+	void TestMaterials::onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) {
 
 	}
 

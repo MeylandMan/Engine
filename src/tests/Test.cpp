@@ -13,7 +13,7 @@ namespace test {
 
 	}
 
-	void Testmenu::onRender(GLFWwindow* window, Renderer renderer, mat4* view) {
+	void Testmenu::onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* cam) {
 
 	}
 

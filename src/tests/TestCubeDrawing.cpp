@@ -20,7 +20,7 @@ namespace test {
 		m_Shader.setUniform1i("u_Texture", 0);
 	}
 
-	void TestCubeDrawing::onRender(GLFWwindow* window, Renderer renderer, mat4* view) {
+	void TestCubeDrawing::onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) {
 
 		int WINDOW_WIDTH = 0, WINDOW_HEIGHT = 0;
 

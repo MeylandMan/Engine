@@ -5,7 +5,7 @@ namespace test {
 
 	}
 
-	void TestLightCasters::onRender(GLFWwindow* window, Renderer renderer, mat4* view) {
+	void TestLightCasters::onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) {
 		
 	}
 
