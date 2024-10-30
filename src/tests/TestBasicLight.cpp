@@ -29,7 +29,7 @@ namespace test {
 		glfwGetFramebufferSize(window, &WINDOW_WIDTH, &WINDOW_HEIGHT);
 
 		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glClearColor(0.11f, 0.113f, 0.12f, 1.f);
 
 		m_Projection = Projection(DEFAULT_FOV, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, DEFAULT_ZNEAR, DEFAULT_ZFAR);
 
@@ -40,6 +40,7 @@ namespace test {
 		{
 			m_Shader.setUniform4f("u_LightColor", LightColor.x, LightColor.y, LightColor.z, LightColor.w);
 			m_Shader.setUniform4f("u_ObjectColor", 1.f, 1.f, 1.f, 1.f);
+			m_Shader.setUniform1i("u_IsLight", 1);
 
 			m_LightModel = Transform(m_LightScale, m_LightRotation, m_LightPosition);
 			m_Shader.setUniformMatrix4f("u_Model", m_LightModel);
@@ -52,6 +53,7 @@ namespace test {
 			m_Shader.setUniform4f("u_ObjectColor", ObjColor.x, ObjColor.y, ObjColor.z, ObjColor.w);
 			m_ObjModel = Transform(m_ObjScale, m_ObjRotation, m_ObjPosition);
 			m_Shader.setUniformMatrix4f("u_Model", m_ObjModel);
+			m_Shader.setUniform1i("u_IsLight", 0);
 
 			renderer.Draw(m_ObjVao, m_Ibo, m_Shader);
 		}
