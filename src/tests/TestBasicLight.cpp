@@ -4,7 +4,8 @@
 */
 namespace test {
 	TestBasicLight::TestBasicLight() : m_Ibo(ibo(indices, sizeof(indices))),
-		m_Vbo(vbo(m_Vertices, sizeof(m_Vertices))) {
+		m_Vbo(vbo(m_Vertices, sizeof(m_Vertices))),
+		specularStrength(0.5f), ambiantStrength(0.1f) {
 
 		m_LightPosition = vec3(0.5f, 1.f, 0.f);
 		LightColor = vec4(1.f, 1.f, 1.f, 1.f);
@@ -44,7 +45,9 @@ namespace test {
 			m_Shader.setUniform3f("u_LightPosition", m_LightPosition.x, m_LightPosition.y, m_LightPosition.z);
 			m_Shader.setUniform4f("u_LightColor", LightColor.x, LightColor.y, LightColor.z, LightColor.w);
 			m_Shader.setUniform4f("u_ObjectColor", 1.f, 1.f, 1.f, 1.f);
-			m_Shader.setUniform1i("u_IsLight", 1);
+
+			m_Shader.setUniform1f("specularStrength", specularStrength);
+			m_Shader.setUniform1f("ambiantStrength", ambiantStrength);
 
 			m_Shader.setUniform3f("u_ViewPosition", camera->getPosition().x, camera->getPosition().y, camera->getPosition().z);
 
@@ -59,14 +62,16 @@ namespace test {
 			m_Shader.setUniform4f("u_ObjectColor", ObjColor.x, ObjColor.y, ObjColor.z, ObjColor.w);
 			m_ObjModel = Transform(m_ObjScale, m_ObjRotation, m_ObjPosition);
 			m_Shader.setUniformMatrix4f("u_Model", m_ObjModel);
-			m_Shader.setUniform1i("u_IsLight", 0);
 
 			renderer.Draw(m_ObjVao, m_Ibo, m_Shader);
 		}
 	}
 
 	void TestBasicLight::onImGUI() {
-		ImGui::ColorEdit4("Light Color : ", &LightColor.x);
-		ImGui::SliderFloat3("Light position : ", &m_LightPosition.x, -10.f, 10.f);
+		ImGui::ColorEdit4("Light Color", &LightColor.x);
+		ImGui::SliderFloat3("Light position", &m_LightPosition.x, -10.f, 10.f);
+
+		ImGui::SliderFloat("specular strength", &specularStrength, 0.f, 1.f);
+		ImGui::SliderFloat("ambiant strength", &ambiantStrength, 0.f, 1.f);
 	}
 }

@@ -86,12 +86,15 @@ namespace test {
 		vec3 m_LightRotation;
 		mat4 m_LightModel;
 
+		float specularStrength;
+		float ambiantStrength;
 		//Object
 		vec4 ObjColor;
 		vec3 m_ObjPosition;
 		vec3 m_ObjScale;
 		vec3 m_ObjRotation;
 		mat4 m_ObjModel;
+
 	};
 
 }
