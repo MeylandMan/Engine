@@ -72,14 +72,18 @@ namespace test {
 			20, 21, 22,
 			22, 23, 20
 		};
-		Shader m_Shader;
+		
 		VertexBufferLayout m_Layout;
 		vbo m_Vbo;
 		ibo m_Ibo;
 		mat4 m_Projection;
 
-		// Light
 		vao m_ObjVao;
+		Shader m_ObjShader;
+
+		// Light
+		vao m_LightVao;
+		Shader m_LightShader;
 		vec4 LightColor;
 		vec3 m_LightPosition;
 		vec3 m_LightScale;

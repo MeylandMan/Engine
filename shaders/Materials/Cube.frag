@@ -15,7 +15,6 @@ vec3 specular;
 };
 
 out vec4 fragColor;
-uniform vec4 u_ObjectColor;
 
 uniform vec3 u_LightPosition;
 uniform vec4 u_LightColor;
@@ -31,7 +30,6 @@ in vec3 v_Normal;
 void main()
 {
 	vec3 lightColor = vec3(u_LightColor.x, u_LightColor.y, u_LightColor.z);
-	vec3 ObjectColor = u_ObjectColor.xyz;
 
 	// Ambiant
 	vec3 ambiant =  light.ambient * material.ambient;
@@ -48,5 +46,5 @@ void main()
 	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
 	vec3 specular = light.specular * (material.specular * spec) ;
 
-	fragColor = vec4((ambiant + diffuse + specular) * ObjectColor, 1.0);
+	fragColor = vec4(ambiant + diffuse + specular, 1.0);
 }
