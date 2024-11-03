@@ -17,6 +17,7 @@ namespace test {
 	public:
 		TestMaterials();
 
+		void onUpdate(float deltaTime) override;
 		void onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) override;
 		void onImGUI() override;
 	private:

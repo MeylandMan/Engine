@@ -233,7 +233,7 @@ int main(void)
 
 			
 			if (CurrentTest) {
-				CurrentTest->onUpdate(1/io.Framerate);
+				CurrentTest->onUpdate(glfwGetTime());
 
 				
 				renderer.Clear();

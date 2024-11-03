@@ -23,6 +23,18 @@ namespace test {
 		m_ObjVao.AddBuffer(m_Vbo, m_Layout);
 		m_LightVao.AddBuffer(m_Vbo, m_Layout);
 	}
+	void TestMaterials::onUpdate(float deltaTime) {
+		/*
+		{
+			LightColor.x = sin(deltaTime * 2.f);
+			LightColor.y = sin(deltaTime * 0.7f);
+			LightColor.z = sin(deltaTime * 1.3f);
+		}
+		*/
+
+		m_LightDiffuse = vec3(LightColor.x, LightColor.y, LightColor.z) * vec3(0.5f, 0.5f, 0.5f);
+		m_LightAmbient = m_LightDiffuse * vec3(0.2f, 0.2f, 0.2f);
+	}
 
 	void TestMaterials::onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) {
 		int WINDOW_WIDTH = 0, WINDOW_HEIGHT = 0;
@@ -59,7 +71,7 @@ namespace test {
 			m_ObjShader.setUniform3f("light.specular", m_LightSpecular);
 
 			m_ObjModel = Transform(m_ObjScale, m_ObjRotation, m_ObjPosition);
-			m_ObjShader.setUniformMatrix4f("u_Model", m_LightModel);
+			m_ObjShader.setUniformMatrix4f("u_Model", m_ObjModel);
 
 			renderer.Draw(m_ObjVao, m_Ibo, m_ObjShader);
 		}
@@ -70,9 +82,10 @@ namespace test {
 
 			m_LightShader.setUniformMatrix4f("u_View", *view);
 			m_LightShader.setUniformMatrix4f("u_Proj", m_Projection);
+			m_LightShader.setUniform4f("u_LightColor", LightColor);
 
-			m_ObjModel = Transform(m_LightScale, m_LightRotation, m_LightPosition);
-			m_LightShader.setUniformMatrix4f("u_Model", m_ObjModel);
+			m_LightModel = Transform(m_LightScale, m_LightRotation, m_LightPosition);
+			m_LightShader.setUniformMatrix4f("u_Model", m_LightModel);
 
 			renderer.Draw(m_LightVao, m_Ibo, m_LightShader);
 		}
