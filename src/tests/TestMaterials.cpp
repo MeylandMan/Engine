@@ -5,7 +5,8 @@
 namespace test {
 	TestMaterials::TestMaterials() : m_Ibo(ibo(indices, sizeof(indices))),
 		m_Vbo(vbo(m_Vertices, sizeof(m_Vertices))),
-		m_Ambient(vec3(1.f, 0.5f, 0.31f)), m_Diffuse(vec3(1.f, 0.5f, 0.31f)), m_Specular(vec3(0.5f, 0.5f, 0.5f)), m_Shininess(32.f) {
+		m_Ambient(vec3(1.f, 0.5f, 0.31f)), m_Diffuse(vec3(1.f, 0.5f, 0.31f)), m_Specular(vec3(0.5f, 0.5f, 0.5f)), m_Shininess(32.f), 
+		m_LightAmbient(vec3(0.2f, 0.2f, 0.2f)), m_LightDiffuse(vec3(0.5f, 0.5f, 0.5f)), m_LightSpecular(vec3(1.0f, 1.0f, 1.0f)) {
 
 		m_LightPosition = vec3(0.5f, 1.f, 0.f);
 		LightColor = vec4(1.f, 1.f, 1.f, 1.f);
@@ -42,16 +43,23 @@ namespace test {
 
 		//Light
 		{
-			m_Shader.setUniform3f("u_LightPosition", m_LightPosition.x, m_LightPosition.y, m_LightPosition.z);
-			m_Shader.setUniform4f("u_LightColor", LightColor.x, LightColor.y, LightColor.z, LightColor.w);
+			m_Shader.setUniform4f("u_ObjectColor", LightColor);
+
+			m_Shader.setUniform3f("u_LightPosition", m_LightPosition);
+			m_Shader.setUniform4f("u_LightColor", LightColor);
 			m_Shader.setUniform4f("u_ObjectColor", 1.f, 1.f, 1.f, 1.f);
 
 			m_Shader.setUniform3f("u_ViewPosition", camera->getPosition().x, camera->getPosition().y, camera->getPosition().z);
 
-			m_Shader.setUniform3f("material.ambient", m_Ambient.x, m_Ambient.y, m_Ambient.z);
-			m_Shader.setUniform3f("material.diffuse", m_Diffuse.x, m_Diffuse.y, m_Diffuse.z);
-			m_Shader.setUniform3f("material.specular", m_Specular.x, m_Specular.y, m_Specular.z);
+			m_Shader.setUniform3f("material.ambient", m_Ambient);
+			m_Shader.setUniform3f("material.diffuse", m_Diffuse);
+			m_Shader.setUniform3f("material.specular", m_Specular);
 			m_Shader.setUniform1f("material.shininess", m_Shininess);
+
+			m_Shader.setUniform3f("light.ambient", m_LightAmbient);
+			m_Shader.setUniform3f("light.diffuse", m_LightDiffuse); // darkened
+			m_Shader.setUniform3f("light.specular", m_LightSpecular);
+
 
 
 			m_LightModel = Transform(m_LightScale, m_LightRotation, m_LightPosition);
@@ -62,7 +70,7 @@ namespace test {
 
 		//Object
 		{
-			m_Shader.setUniform4f("u_ObjectColor", ObjColor.x, ObjColor.y, ObjColor.z, ObjColor.w);
+			m_Shader.setUniform4f("u_ObjectColor", ObjColor);
 			m_ObjModel = Transform(m_ObjScale, m_ObjRotation, m_ObjPosition);
 			m_Shader.setUniformMatrix4f("u_Model", m_ObjModel);
 

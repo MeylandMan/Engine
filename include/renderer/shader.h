@@ -36,6 +36,10 @@ struct Shader
 	void setUniform4iv(const char* name, int count, int* arg1);
 
 	void setUniformMatrix4f(const char* name, mat4 arg);
+
+	void setUniform2f(const char* name, vec2 arg);
+	void setUniform3f(const char* name, vec3 arg);
+	void setUniform4f(const char* name, vec4 arg);
 };
 
 void setUniform1f(GLuint shaderId, const char* name, float arg1);
@@ -54,5 +58,9 @@ void setUniform3iv(GLuint shaderId, const char* name, int count, int* arg1);
 void setUniform4iv(GLuint shaderId, const char* name, int count, int* arg1);
 
 void setUniformMatrix4f(GLuint shaderId, const char* name, mat4 arg);
+
+void setUniform2f(const char* name, vec2 arg);
+void setUniform3f(const char* name, vec3 arg);
+void setUniform4f(const char* name, vec4 arg);
 
 GLint getUniform(GLuint shaderId, const char* name);

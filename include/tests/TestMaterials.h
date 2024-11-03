@@ -89,6 +89,11 @@ namespace test {
 		vec3 m_Ambient;
 		vec3 m_Diffuse;
 		vec3 m_Specular;
+
+		vec3 m_LightAmbient;
+		vec3 m_LightDiffuse;
+		vec3 m_LightSpecular;
+
 		float m_Shininess;
 
 		//Object
