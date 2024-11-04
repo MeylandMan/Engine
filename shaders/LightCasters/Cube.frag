@@ -7,15 +7,16 @@ struct Material {
 };
 
 struct Light {
-vec3 position;
-vec3 ambient;
-vec3 diffuse;
-vec3 specular;
+	vec3 position;
+	vec3 direction;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
 };
+
 
 out vec4 fragColor;
 
-uniform vec3 u_LightPosition;
 uniform vec4 u_LightColor;
 
 uniform vec3 u_ViewPosition;
@@ -28,6 +29,8 @@ in vec3 v_Normal;
 
 in vec2 v_TexCoords;
 
+uniform int u_LightChoice;
+
 void main()
 {
 	vec3 lightColor = u_LightColor.xyz;
@@ -36,7 +39,13 @@ void main()
 	vec3 ambiant =  light.ambient * vec3(texture(material.diffuse, v_TexCoords));
 
 	// Diffuse
-	vec3 lightDir = normalize(u_LightPosition - FragPos);
+	vec3 lightDir = vec3(1.);
+
+	if(u_LightChoice == 0)
+		lightDir = normalize(-light.direction);
+	else if(u_LightChoice == 1)
+		lightDir = normalize(light.position - FragPos);
+
 	float NdotL = max(dot(normalize(v_Normal), lightDir), 0.0);
 	vec3 diffuse = light.diffuse * (NdotL *  vec3(texture(material.diffuse, v_TexCoords)));
 

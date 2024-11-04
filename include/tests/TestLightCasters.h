@@ -83,11 +83,14 @@ namespace test {
 		vao m_ObjVao;
 		Shader m_ObjShader;
 
+		unsigned int lightChoice = 0;
+		
 		// Light
 		vao m_LightVao;
 		Shader m_LightShader;
 		vec4 LightColor;
 		vec3 m_LightPosition;
+		vec3 m_LightDirection;
 		vec3 m_LightScale;
 		vec3 m_LightRotation;
 		mat4 m_LightModel;
@@ -105,9 +108,9 @@ namespace test {
 
 		//Object
 		vec4 ObjColor;
-		vec3 m_ObjPosition;
+		vec3 m_ObjPosition[10];
 		vec3 m_ObjScale;
-		vec3 m_ObjRotation;
+		vec3 m_ObjRotation[10];
 		mat4 m_ObjModel;
 		Texture m_ObjTexture;
 		Texture m_ObjTextureSpecular;

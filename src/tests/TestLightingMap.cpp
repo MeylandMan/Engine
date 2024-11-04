@@ -97,8 +97,10 @@ namespace test {
 	}
 
 	void TestLightingMap::onImGUI() {
+
 		ImGui::ColorEdit4("Light Color", &LightColor.x);
 		ImGui::SliderFloat3("Light position", &m_LightPosition.x, -10.f, 10.f);
+		ImGui::SliderFloat3("Object rotation", &m_ObjRotation.x, -90.f, 90.f);
 
 		ImGui::SliderFloat("shininess", &m_Shininess, 0.f, 64.f);
 	}

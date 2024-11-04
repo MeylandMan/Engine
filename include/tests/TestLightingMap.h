@@ -110,6 +110,7 @@ namespace test {
 		vec3 m_ObjScale;
 		vec3 m_ObjRotation;
 		mat4 m_ObjModel;
+		mat4 m_ObjNormalModel;
 		Texture m_ObjTexture;
 		Texture m_ObjTextureSpecular;
 	};
