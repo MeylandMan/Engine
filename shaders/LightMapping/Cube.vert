@@ -15,9 +15,11 @@ uniform mat4 u_Proj;
 void main()
 {
 	mat4 MATRIX_VIEW_PROJECTION = u_Model * u_View * u_Proj;
+	mat4 VIEW_PROJECTION = u_View * u_Proj;
 
-	gl_Position = vec4(in_Position, 1) * MATRIX_VIEW_PROJECTION;
 	FragPos = vec3(u_Model * vec4(in_Position, 1.0));
+	
+	gl_Position = vec4(FragPos, 1) * VIEW_PROJECTION;
 
 	v_Normal = mat3(transpose(inverse(u_Model))) * in_Normal;
 	v_TexCoords = in_Textcoords;

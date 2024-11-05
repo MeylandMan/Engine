@@ -17,20 +17,21 @@ namespace test {
 	public:
 		TestLightCasters();
 
+		void onUpdate(float deltaTime) override;
 		void onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) override;
 		void onImGUI() override;
 	private:
 		float m_Vertices[288] = {
 			// POSITION			  TEXTURES COORDS		NORMALS
-			-0.5f, -0.5f, -0.5f,	0.0f, 0.0f,		0.0f, 0.0f, 1.0f,
-			 0.5f, -0.5f, -0.5f,	1.0f, 0.0f,		0.0f, 0.0f, 1.0f, // FRONT
-			 0.5f,  0.5f, -0.5f,	1.0f, 1.0f,		0.0f, 0.0f, 1.0f,
-			-0.5f,  0.5f, -0.5f,	0.0f, 1.0f,		0.0f, 0.0f, 1.0f,
+			-0.5f, -0.5f, -0.5f,	0.0f, 0.0f,		0.0f, 0.0f, -1.0f,
+			 0.5f, -0.5f, -0.5f,	1.0f, 0.0f,		0.0f, 0.0f, -1.0f, // FRONT
+			 0.5f,  0.5f, -0.5f,	1.0f, 1.0f,		0.0f, 0.0f, -1.0f,
+			-0.5f,  0.5f, -0.5f,	0.0f, 1.0f,		0.0f, 0.0f, -1.0f,
 
-			-0.5f, -0.5f,  0.5f,	1.0f, 0.0f,		0.0f, 0.0f, -1.0f,
-			 0.5f, -0.5f,  0.5f,	0.0f, 0.0f,		0.0f, 0.0f, -1.0f, // BACK
-			 0.5f,  0.5f,  0.5f,	0.0f, 1.0f,		0.0f, 0.0f, -1.0f,
-			-0.5f,  0.5f,  0.5f,	1.0f, 1.0f,		0.0f, 0.0f, -1.0f,
+			-0.5f, -0.5f,  0.5f,	1.0f, 0.0f,		0.0f, 0.0f, 1.0f,
+			 0.5f, -0.5f,  0.5f,	0.0f, 0.0f,		0.0f, 0.0f, 1.0f, // BACK
+			 0.5f,  0.5f,  0.5f,	0.0f, 1.0f,		0.0f, 0.0f, 1.0f,
+			-0.5f,  0.5f,  0.5f,	1.0f, 1.0f,		0.0f, 0.0f, 1.0f,
 
 			-0.5f, -0.5f, -0.5f,	1.0f, 0.0f,		-1.0f, 0.0f, 0.0f,
 			-0.5f,  0.5f, -0.5f,	1.0f, 1.0f,		-1.0f, 0.0f, 0.0f, // LEFT

@@ -60,8 +60,8 @@ namespace test {
 			m_ObjShader.setUniformMatrix4f("u_View", *view);
 			m_ObjShader.setUniformMatrix4f("u_Proj", m_Projection);
 
-			m_ObjShader.setUniform3f("u_LightPosition", m_LightPosition);
-			m_ObjShader.setUniform4f("u_LightColor", LightColor);
+			m_ObjShader.setUniform3f("light.position", m_LightPosition);
+			m_ObjShader.setUniform4f("light.color", LightColor);
 
 			m_ObjShader.setUniform3f("u_ViewPosition", camera->getPosition());
 

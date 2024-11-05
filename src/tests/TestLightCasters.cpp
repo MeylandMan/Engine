@@ -40,6 +40,19 @@ namespace test {
 		m_LightVao.AddBuffer(m_Vbo, m_Layout);
 	}
 
+	void TestLightCasters::onUpdate(float deltaTime) {
+		/*
+		{
+			LightColor.x = sin(deltaTime * 2.f);
+			LightColor.y = sin(deltaTime * 0.7f);
+			LightColor.z = sin(deltaTime * 1.3f);
+		}
+		*/
+
+		m_LightDiffuse = vec3(LightColor.x, LightColor.y, LightColor.z) * vec3(0.5f, 0.5f, 0.5f);
+		m_LightAmbient = m_LightDiffuse * vec3(0.2f, 0.2f, 0.2f);
+	}
+
 	void TestLightCasters::onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) {
 		int WINDOW_WIDTH = 0, WINDOW_HEIGHT = 0;
 
@@ -64,7 +77,7 @@ namespace test {
 
 			m_ObjShader.setUniform3f("light.position", m_LightPosition);
 			m_ObjShader.setUniform3f("light.direction", m_LightDirection);
-			m_ObjShader.setUniform4f("u_LightColor", LightColor);
+			m_ObjShader.setUniform4f("light.color", LightColor);
 			m_ObjShader.setUniform1i("u_LightChoice", lightChoice);
 			
 			m_ObjShader.setUniform3f("u_ViewPosition", camera->getPosition());
@@ -105,6 +118,8 @@ namespace test {
 
 	void TestLightCasters::onImGUI() {
 		ImGui::ColorEdit4("Light Color", &LightColor.x);
+		ImGui::SliderFloat3("Box position 3", &m_ObjPosition[1].x, -10.f, 10.f);
+
 		if (ImGui::Button("Directional Light"))
 			lightChoice = 0;
 		else if (ImGui::Button("Point Light")) {
