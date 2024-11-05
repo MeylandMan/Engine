@@ -12,13 +12,7 @@ namespace test {
 		for (unsigned int i = 0; i < 10; i++)
 		{
 			float angle = 20.0f * i * 1.2;
-			float z = -1.5f * i;
-
-			float x = std::powf(-1.2f, i) * std::cos(i + 15);
-			float y = std::powf(-1.1f, i) * std::sin(i + 37);
-
 			m_ObjRotation[i] = vec3(angle, angle, angle);
-			m_ObjPosition[i] = vec3(x, y, z);
 		}
 
 		m_LightDirection = vec3(-0.2f, -1.0f, -0.3f);

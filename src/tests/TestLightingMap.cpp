@@ -1,5 +1,6 @@
 #include "tests/TestLightingMap.h"
 
+
 /*
 	Might be useful if I use a Normal Matrix for better realism. Might cause your pc to blow up though...
 */
@@ -23,7 +24,7 @@ namespace test {
 		m_Layout.PushShort<float>(2, 1);
 		m_Layout.PushShort<float>(3, 1);
 		m_ObjVao.AddBuffer(m_Vbo, m_Layout);
-
+		
 		m_LightVao.AddBuffer(m_Vbo, m_Layout);
 	}
 	void TestLightingMap::onUpdate(float deltaTime) {
@@ -49,6 +50,8 @@ namespace test {
 
 		m_Projection = Projection(DEFAULT_FOV, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, DEFAULT_ZNEAR, DEFAULT_ZFAR);
 
+
+		// World Transformation
 
 
 		// Object
@@ -100,6 +103,7 @@ namespace test {
 
 		ImGui::ColorEdit4("Light Color", &LightColor.x);
 		ImGui::SliderFloat3("Light position", &m_LightPosition.x, -10.f, 10.f);
+		ImGui::SliderFloat3("Object position", &m_ObjPosition.x, -90.f, 90.f);
 		ImGui::SliderFloat3("Object rotation", &m_ObjRotation.x, -90.f, 90.f);
 
 		ImGui::SliderFloat("shininess", &m_Shininess, 0.f, 64.f);
