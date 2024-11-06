@@ -35,7 +35,7 @@ namespace test {
 		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 		glClearColor(0.11f, 0.113f, 0.12f, 1.f);
 
-		m_Projection = glm::perspective(glm::radians(camera->Zoom), (float)WINDOW_WIDTH / (float)WINDOW_WIDTH, 0.1f, 100.f);
+		m_Projection = glm::perspective(glm::radians(camera->Zoom), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.f);
 
 		m_Shader.setUniformMatrix4f("u_View", *view);
 		m_Shader.setUniformMatrix4f("u_Proj", m_Projection);
@@ -54,6 +54,7 @@ namespace test {
 			m_LightModel = glm::mat4(1.0f);
 			m_LightModel = glm::translate(m_LightModel, m_LightPosition);
 			m_LightModel = glm::rotate(m_LightModel, glm::radians(0.f), glm::vec3(1.0f, 0.3f, 0.5f));
+			m_LightModel = glm::scale(m_LightModel, m_LightScale);
 			m_Shader.setUniformMatrix4f("u_Model", m_LightModel);
 
 			renderer.Draw(m_ObjVao, m_Ibo, m_Shader);
@@ -62,10 +63,12 @@ namespace test {
 		//Object
 		{
 			m_Shader.setUniform4f("u_ObjectColor", ObjColor);
-
+			
 			m_ObjModel = glm::mat4(1.0f);
 			m_ObjModel = glm::translate(m_ObjModel, m_ObjPosition);
 			m_ObjModel = glm::rotate(m_ObjModel, glm::radians(0.f), glm::vec3(1.0f, 0.3f, 0.5f));
+			m_ObjModel = glm::scale(m_ObjModel, m_ObjScale);
+
 			m_Shader.setUniformMatrix4f("u_Model", m_ObjModel);
 
 			renderer.Draw(m_ObjVao, m_Ibo, m_Shader);

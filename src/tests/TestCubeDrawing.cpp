@@ -28,8 +28,8 @@ namespace test {
 
 		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-		m_Projection = glm::perspective(glm::radians(camera->Zoom), (float)WINDOW_WIDTH / (float)WINDOW_WIDTH, 0.1f, 100.f);
-
+		//m_Projection = glm::perspective(glm::radians(camera->Zoom), (float)WINDOW_WIDTH / (float)WINDOW_WIDTH, 0.1f, 100.f);
+		m_Projection = glm::perspective(glm::radians(camera->Zoom), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.f);
 		m_Model = glm::mat4(1.0f);
 		m_Model = glm::translate(m_Model, m_Position);
 		m_Model = glm::rotate(m_Model, glm::radians(0.f), glm::vec3(1.0f, 0.3f, 0.5f));

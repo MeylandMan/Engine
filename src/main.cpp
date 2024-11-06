@@ -110,7 +110,7 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 	lastY = ypos;
 
 	if (is_locked) {
-		cam.ProcessMouseMovement(-xoffset, yoffset);
+		cam.ProcessMouseMovement(xoffset, yoffset);
 	}
 }
 
