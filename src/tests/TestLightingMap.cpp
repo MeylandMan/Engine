@@ -50,10 +50,6 @@ namespace test {
 
 		m_Projection = Projection(DEFAULT_FOV, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, DEFAULT_ZNEAR, DEFAULT_ZFAR);
 
-
-		// World Transformation
-
-
 		// Object
 		{
 			m_ObjShader.bind();

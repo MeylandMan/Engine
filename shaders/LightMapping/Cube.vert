@@ -17,7 +17,7 @@ void main()
 	mat4 MATRIX_VIEW_PROJECTION = u_Model * u_View * u_Proj;
 	mat4 VIEW_PROJECTION = u_View * u_Proj;
 
-	FragPos = vec3(u_Model * vec4(in_Position, 1.0));
+	FragPos = (vec4(in_Position, 1.0) * u_Model).xyz;
 	
 	gl_Position = vec4(FragPos, 1) * VIEW_PROJECTION;
 

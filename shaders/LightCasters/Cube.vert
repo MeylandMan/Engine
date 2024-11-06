@@ -14,7 +14,7 @@ uniform mat4 u_Proj;
 
 void main()
 {
-	FragPos = (u_Model * vec4(in_Position, 1.0)).xyz;
+	FragPos = (vec4(in_Position, 1.0) * u_Model).xyz;
 	mat4 MATRIX_VIEW_PROJECTION = u_Model * u_View * u_Proj;
 	mat4 VIEW_PROJECTION = u_View * u_Proj;
 

@@ -53,7 +53,7 @@ namespace test {
 		glfwGetFramebufferSize(window, &WINDOW_WIDTH, &WINDOW_HEIGHT);
 
 		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-		glClearColor(0.11f, 0.113f, 0.12f, 1.f);
+		glClearColor(0.05f, 0.05f, 0.05f, 1.f);
 
 		m_Projection = Projection(DEFAULT_FOV, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, DEFAULT_ZNEAR, DEFAULT_ZFAR);
 
@@ -71,6 +71,14 @@ namespace test {
 
 			m_ObjShader.setUniform3f("light.position", m_LightPosition);
 			m_ObjShader.setUniform3f("light.direction", m_LightDirection);
+			m_ObjShader.setUniform1f("light.cutOff", std::cosf(deg_to_rad(0.f)));
+
+			if (lightChoice == 2) {
+				m_ObjShader.setUniform3f("light.position", camera->getPosition());
+				m_ObjShader.setUniform3f("light.direction", camera->getTarget());
+				m_ObjShader.setUniform1f("light.cutOff", std::cosf(deg_to_rad(15.f)));
+			}
+			
 			m_ObjShader.setUniform4f("light.color", LightColor);
 			m_ObjShader.setUniform1i("u_LightChoice", lightChoice);
 			
@@ -79,6 +87,11 @@ namespace test {
 			m_ObjShader.setUniform1i("material.diffuse", 0);
 			m_ObjShader.setUniform1i("material.specular", 1);
 			m_ObjShader.setUniform1f("material.shininess", m_Shininess);
+
+			m_ObjShader.setUniform1f("light.constant", constant);
+			m_ObjShader.setUniform1f("light.linear", linear);
+			m_ObjShader.setUniform1f("light.quadratic", quadric);
+
 
 			m_ObjShader.setUniform3f("light.ambient", m_LightAmbient);
 			m_ObjShader.setUniform3f("light.diffuse", m_LightDiffuse); // darkened
@@ -96,7 +109,7 @@ namespace test {
 		}
 
 		// Light
-		if(lightChoice != 0) {
+		if(lightChoice == 1) {
 			m_LightShader.bind();
 
 			m_LightShader.setUniformMatrix4f("u_View", *view);
@@ -111,17 +124,15 @@ namespace test {
 	}
 
 	void TestLightCasters::onImGUI() {
-		ImGui::ColorEdit4("Light Color", &LightColor.x);
-		ImGui::SliderFloat3("Box position 3", &m_ObjPosition[1].x, -10.f, 10.f);
 
 		if (ImGui::Button("Directional Light"))
 			lightChoice = 0;
 		else if (ImGui::Button("Point Light")) {
-			m_LightPosition = vec3(0.f, 0.f, 0.f);
+			m_LightPosition = vec3();
 			lightChoice = 1;
 		}
 		else if (ImGui::Button("Spot Light")) {
-			m_LightPosition = vec3(0.f, 0.f, 0.f);
+			m_LightPosition = vec3();
 			lightChoice = 2;
 		}
 			
@@ -132,6 +143,9 @@ namespace test {
 			break;
 		case 1:
 			ImGui::SliderFloat3("Light position", &m_LightPosition.x, -10.f, 10.f);
+			ImGui::SliderFloat("Light constant", &constant, 0.1f, 1.f);
+			ImGui::SliderFloat("Light linear", &linear, 0.1f, 1.f);
+			ImGui::SliderFloat("Light quadric", &quadric, 0.1f, 1.f);
 			break;
 		case 2:
 			ImGui::SliderFloat3("Light position", &m_LightPosition.x, -10.f, 10.f);

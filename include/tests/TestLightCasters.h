@@ -12,6 +12,9 @@
 #define DEFAULT_ZFAR 100.0f
 #define DEFAULT_FOV 60.0f
 
+#define rad_to_deg(x) ((x) * 57.295754f)
+#define deg_to_rad(x) ((x) * 0.0174533f)
+
 namespace test {
 	class TestLightCasters : public Test {
 	public:
@@ -106,6 +109,10 @@ namespace test {
 		vec3 m_LightSpecular;
 
 		float m_Shininess;
+
+		float constant = 1.f;
+		float linear = 0.09f;
+		float quadric = 0.032;
 
 		//Object
 		vec4 ObjColor;
