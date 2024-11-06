@@ -5,7 +5,7 @@ namespace test {
 
 	}
 
-	void TestBasicLights::onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) {
+	void TestBasicLights::onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) {
 		
 	}
 

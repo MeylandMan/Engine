@@ -18,7 +18,7 @@ namespace test {
 		TestMaterials();
 
 		void onUpdate(float deltaTime) override;
-		void onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) override;
+		void onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) override;
 		void onImGUI() override;
 	private:
 		float m_Vertices[144] = {
@@ -77,7 +77,7 @@ namespace test {
 		VertexBufferLayout m_Layout;
 		vbo m_Vbo;
 		ibo m_Ibo;
-		mat4 m_Projection;
+		glm::mat4 m_Projection;
 
 		vao m_ObjVao;
 		Shader m_ObjShader;
@@ -85,28 +85,28 @@ namespace test {
 		// Light
 		vao m_LightVao;
 		Shader m_LightShader;
-		vec4 LightColor;
-		vec3 m_LightPosition;
-		vec3 m_LightScale;
-		vec3 m_LightRotation;
-		mat4 m_LightModel;
+		glm::vec4 LightColor;
+		glm::vec3 m_LightPosition;
+		glm::vec3 m_LightScale;
+		glm::vec3 m_LightRotation;
+		glm::mat4 m_LightModel;
 
-		vec3 m_Ambient;
-		vec3 m_Diffuse;
-		vec3 m_Specular;
+		glm::vec3 m_Ambient;
+		glm::vec3 m_Diffuse;
+		glm::vec3 m_Specular;
 
-		vec3 m_LightAmbient;
-		vec3 m_LightDiffuse;
-		vec3 m_LightSpecular;
+		glm::vec3 m_LightAmbient;
+		glm::vec3 m_LightDiffuse;
+		glm::vec3 m_LightSpecular;
 
 		float m_Shininess;
 
 		//Object
-		vec4 ObjColor;
-		vec3 m_ObjPosition;
-		vec3 m_ObjScale;
-		vec3 m_ObjRotation;
-		mat4 m_ObjModel;
+		glm::vec4 ObjColor;
+		glm::vec3 m_ObjPosition;
+		glm::vec3 m_ObjScale;
+		glm::vec3 m_ObjRotation;
+		glm::mat4 m_ObjModel;
 
 	};
 

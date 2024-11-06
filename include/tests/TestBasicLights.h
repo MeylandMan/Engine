@@ -11,7 +11,7 @@ namespace test {
 	public:
 		TestBasicLights();
 
-		void onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) override;
+		void onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) override;
 		void onImGUI() override;
 	};
 

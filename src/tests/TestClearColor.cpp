@@ -5,7 +5,7 @@ namespace test {
 
 	}
 
-	void TestClearColor::onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) {
+	void TestClearColor::onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) {
 		glClearColor(m_ClearColor[0], m_ClearColor[1], m_ClearColor[2], m_ClearColor[3]);
 		renderer.Clear();
 	}

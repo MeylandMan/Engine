@@ -46,7 +46,7 @@ extern "C"
 float view_y = 0.0f;
 
 
-Camera cam(vec3(0.f, 0.f, 3.f));
+Camera cam(glm::vec3(0.f, 0.f, 3.f));
 //vec3 Camera;
 //vec3 TargetTo;
 
@@ -204,7 +204,7 @@ int main(void)
 	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 #pragma endregion
 
-	mat4 view;
+	glm::mat4 view;
 	Renderer renderer;
 
 	bool show_another_window = false;

@@ -1,4 +1,4 @@
-#version 410 core
+#version 330 core
 
 layout (location = 0) in vec3 in_Position;
 layout (location = 1) in vec2 in_Textcoords;
@@ -14,12 +14,11 @@ uniform mat4 u_Proj;
 
 void main()
 {
-	mat4 MATRIX_VIEW_PROJECTION = u_Model * u_View * u_Proj;
-	mat4 VIEW_PROJECTION = u_View * u_Proj;
+	mat4 VIEW_PROJECTION = u_Proj * u_View;
 
-	FragPos = (vec4(in_Position, 1.0) * u_Model).xyz;
+	FragPos = (u_Model * vec4(in_Position, 1.0)).xyz;
 	
-	gl_Position = vec4(FragPos, 1) * VIEW_PROJECTION;
+	gl_Position = u_Proj * u_View * vec4(FragPos, 1.);
 
 	v_Normal = mat3(transpose(inverse(u_Model))) * in_Normal;
 	v_TexCoords = in_Textcoords;

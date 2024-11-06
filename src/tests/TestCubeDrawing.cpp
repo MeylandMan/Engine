@@ -4,7 +4,7 @@ namespace test {
 	TestCubeDrawing::TestCubeDrawing() : m_Ibo(ibo(indices, sizeof(indices))),
 		m_Vbo(vbo(m_Vertices, sizeof(m_Vertices))),
 		m_Texture(Texture("dirt.png")) {
-		m_Scale = vec3(1.f, 1.f, 1.f);
+		m_Scale = glm::vec3(1.f, 1.f, 1.f);
 
 		m_Shader.loadShaderProgramFromFile(SHADERS_PATH "DrawingCube" VERTEX_SHADER, SHADERS_PATH "DrawingCube" FRAGMENT_SHADER);
 		m_Shader.bind();
@@ -20,7 +20,7 @@ namespace test {
 		m_Shader.setUniform1i("u_Texture", 0);
 	}
 
-	void TestCubeDrawing::onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) {
+	void TestCubeDrawing::onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) {
 
 		int WINDOW_WIDTH = 0, WINDOW_HEIGHT = 0;
 
@@ -28,10 +28,11 @@ namespace test {
 
 		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-		m_Projection = Projection(camera->Zoom, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, DEFAULT_ZNEAR, DEFAULT_ZFAR);
+		m_Projection = glm::perspective(glm::radians(camera->Zoom), (float)WINDOW_WIDTH / (float)WINDOW_WIDTH, 0.1f, 100.f);
 
-		m_Projection = Projection(DEFAULT_FOV, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, DEFAULT_ZNEAR, DEFAULT_ZFAR);
-		m_Model = Transform(m_Scale, m_Rotation, m_Position);
+		m_Model = glm::mat4(1.0f);
+		m_Model = glm::translate(m_Model, m_Position);
+		m_Model = glm::rotate(m_Model, glm::radians(0.f), glm::vec3(1.0f, 0.3f, 0.5f));
 
 		m_Shader.setUniform1i("u_Texture", 0);
 

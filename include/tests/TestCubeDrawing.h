@@ -19,7 +19,7 @@ namespace test {
 	public:
 		TestCubeDrawing();
 
-		void onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) override;
+		void onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) override;
 		void onImGUI() override;
 	private:
 		/*
@@ -116,11 +116,11 @@ namespace test {
 		ibo m_Ibo;
 		Texture m_Texture;
 
-		vec3 m_Position;
-		vec3 m_Scale;
-		vec3 m_Rotation;
+		glm::vec3 m_Position;
+		glm::vec3 m_Scale;
+		glm::vec3 m_Rotation;
 
-		mat4 m_Model;
-		mat4 m_Projection;
+		glm::mat4 m_Model;
+		glm::mat4 m_Projection;
 	};
 }

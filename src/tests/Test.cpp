@@ -5,15 +5,7 @@ namespace test {
 
 	}
 
-	Testmenu::~Testmenu() {
-
-	}
-
-	void Testmenu::onUpdate(float deltaTime) {
-
-	}
-
-	void Testmenu::onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* cam) {
+	void Testmenu::onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* cam) {
 
 	}
 

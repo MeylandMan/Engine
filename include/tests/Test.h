@@ -19,17 +19,15 @@ namespace test {
 		virtual ~Test() {}
 
 		virtual void onUpdate(float deltaTime) {}
-		virtual void onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) {}
+		virtual void onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) {}
 		virtual void onImGUI() {}
 	};
 
 	class Testmenu : public Test {
 	public:
 		Testmenu(Test*& currentTestPointer);
-		~Testmenu();
 
-		void onUpdate(float deltaTime) override;
-		void onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) override;
+		void onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) override;
 		void onImGUI() override;
 
 		template<typename T>

@@ -17,7 +17,7 @@ namespace test {
 	public:
 		TestBasicLight();
 
-		void onRender(GLFWwindow* window, Renderer renderer, mat4* view, Camera* camera) override;
+		void onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) override;
 		void onImGUI() override;
 	private:
 		float m_Vertices[144] = {
@@ -76,24 +76,24 @@ namespace test {
 		VertexBufferLayout m_Layout;
 		vbo m_Vbo;
 		ibo m_Ibo;
-		mat4 m_Projection;
+		glm::mat4 m_Projection;
 
 		// Light
 		vao m_ObjVao;
-		vec4 LightColor;
-		vec3 m_LightPosition;
-		vec3 m_LightScale;
-		vec3 m_LightRotation;
-		mat4 m_LightModel;
+		glm::vec4 LightColor;
+		glm::vec3 m_LightPosition;
+		glm::vec3 m_LightScale;
+		glm::vec3 m_LightRotation;
+		glm::mat4 m_LightModel;
 
 		float specularStrength;
 		float ambiantStrength;
 		//Object
-		vec4 ObjColor;
-		vec3 m_ObjPosition;
-		vec3 m_ObjScale;
-		vec3 m_ObjRotation;
-		mat4 m_ObjModel;
+		glm::vec4 ObjColor;
+		glm::vec3 m_ObjPosition;
+		glm::vec3 m_ObjScale;
+		glm::vec3 m_ObjRotation;
+		glm::mat4 m_ObjModel;
 
 	};
 

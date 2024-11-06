@@ -2,6 +2,9 @@
 #include <glad/glad.h>
 #include <math/matrices.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 struct Shader
 {
 	GLuint id = 0;
@@ -40,6 +43,12 @@ struct Shader
 	void setUniform2f(const char* name, vec2 arg);
 	void setUniform3f(const char* name, vec3 arg);
 	void setUniform4f(const char* name, vec4 arg);
+
+	void setUniformMatrix4f(const char* name, glm::mat4 arg);
+
+	void setUniform2f(const char* name, glm::vec2 arg);
+	void setUniform3f(const char* name, glm::vec3 arg);
+	void setUniform4f(const char* name, glm::vec4 arg);
 };
 
 void setUniform1f(GLuint shaderId, const char* name, float arg1);
@@ -62,5 +71,11 @@ void setUniformMatrix4f(GLuint shaderId, const char* name, mat4 arg);
 void setUniform2f(const char* name, vec2 arg);
 void setUniform3f(const char* name, vec3 arg);
 void setUniform4f(const char* name, vec4 arg);
+
+void setUniformMatrix4f(GLuint shaderId, const char* name, glm::mat4 arg);
+
+void setUniform2f(const char* name, glm::vec2 arg);
+void setUniform3f(const char* name, glm::vec3 arg);
+void setUniform4f(const char* name, glm::vec4 arg);
 
 GLint getUniform(GLuint shaderId, const char* name);
