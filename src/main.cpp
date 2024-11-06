@@ -46,72 +46,82 @@ extern "C"
 float view_y = 0.0f;
 
 
-Camera cam(vec3(0.f, 0.f, 0.f), vec3(0.f,0.f,0.f));
+Camera cam(vec3(0.f, 0.f, 3.f));
 //vec3 Camera;
 //vec3 TargetTo;
 
 int WINDOW_WIDTH = 0, WINDOW_HEIGHT = 0;
-float look_dir, look_pitch;
 
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
 
+bool firstMouse = true;
+float lastX = WINDOW_WIDTH / 2.0f;
+float lastY = WINDOW_HEIGHT / 2.0f;
+
 bool is_locked = false;
-
-void centerCursorPosition(GLFWwindow* window) {
-	glfwSetCursorPos(window, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
-}
-
-void cursor_position(GLFWwindow* window) {
-	double xx, yy;
-	glfwGetCursorPos(window, &xx, &yy);
-
-	look_dir -= (xx - WINDOW_WIDTH / 2) / 10;
-
-	look_pitch += (yy - WINDOW_HEIGHT / 2) / 10;
-	look_pitch = std::clamp(look_pitch, -MAX_PITCH, MAX_PITCH);
-}
 
 void processInput(GLFWwindow* window)
 {
-
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, GLFW_TRUE);
-
-	float currentFrame = glfwGetTime();
-	deltaTime = currentFrame - lastFrame;
-	lastFrame = currentFrame;
-
-	float spd = 5.f * deltaTime;
-
+		glfwSetWindowShouldClose(window, true);
 	if (is_locked) {
-		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
-			cam.setPositionYaxis(cam.getPosition().y + spd);
-		else if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-			cam.setPositionYaxis(cam.getPosition().y - spd);
-
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) { // LEFT
-			cam.setPositionZaxis(cam.getPosition().z - sin(deg_to_rad(look_dir)) * spd);
-			cam.setPositionXaxis(cam.getPosition().x - cos(deg_to_rad(look_dir)) * spd);
-		}
-
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) { // DOWN
-			cam.setPositionZaxis(cam.getPosition().z + sin(deg_to_rad(look_dir)) * spd);
-			cam.setPositionXaxis(cam.getPosition().x + cos(deg_to_rad(look_dir)) * spd);
-		}
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) { // RIGHT
-			cam.setPositionZaxis(cam.getPosition().z + cos(deg_to_rad(look_dir)) * spd);
-			cam.setPositionXaxis(cam.getPosition().x - sin(deg_to_rad(look_dir)) * spd);
-		}
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) { // UP
-			cam.setPositionZaxis(cam.getPosition().z - cos(deg_to_rad(look_dir)) * spd);
-			cam.setPositionXaxis(cam.getPosition().x + sin(deg_to_rad(look_dir)) * spd);
-		}
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+			cam.ProcessKeyboard(FORWARD, deltaTime);
+		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+			cam.ProcessKeyboard(BACKWARD, deltaTime);
+		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+			cam.ProcessKeyboard(LEFT, deltaTime);
+		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+			cam.ProcessKeyboard(RIGHT, deltaTime);
 	}
+	
 
 }
 
-static void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+// glfw: whenever the window size changed (by OS or user resize) this callback function executes
+// ---------------------------------------------------------------------------------------------
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+	// make sure the viewport matches the new window dimensions; note that width and 
+	// height will be significantly larger than specified on retina displays.
+	glViewport(0, 0, width, height);
+}
+
+// glfw: whenever the mouse moves, this callback is called
+// -------------------------------------------------------
+void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
+{
+	
+	float xpos = static_cast<float>(xposIn);
+	float ypos = static_cast<float>(yposIn);
+
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+	lastX = xpos;
+	lastY = ypos;
+
+	if (is_locked) {
+		cam.ProcessMouseMovement(-xoffset, yoffset);
+	}
+}
+
+// glfw: whenever the mouse scroll wheel scrolls, this callback is called
+// ----------------------------------------------------------------------
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	cam.ProcessMouseScroll(static_cast<float>(yoffset));
+}
+
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
 		is_locked = !is_locked;
@@ -134,9 +144,12 @@ int main(void)
 #pragma endregion
 
 	//glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+	//glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //you might want to do this when testing the game for shipping
 
+#ifdef __APPLE__
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
 
 	window = glfwCreateWindow(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, "Maber", NULL, NULL); //Maber stand for Magical Number
 	if (!window)
@@ -148,7 +161,13 @@ int main(void)
 	glfwMakeContextCurrent(window);
 	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 	glfwSwapInterval(1);
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetScrollCallback(window, scroll_callback);
 	glfwSetKeyCallback(window, key_callback);
+
+	// tell GLFW to capture our mouse
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -206,24 +225,19 @@ int main(void)
 
 		processInput(window);
 		glfwPollEvents();
-
-
-		//Camera stuffs
 		if (is_locked) {
-			cursor_position(window);
-			centerCursorPosition(window);
-			cam.setTargetXaxis(cam.getPosition().x - cos(deg_to_rad(look_dir)));
-			cam.setTargetYaxis(cam.getPosition().y - sin(deg_to_rad(look_pitch)));
-			cam.setTargetZaxis(cam.getPosition().z - sin(deg_to_rad(look_dir)));
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		}
-
+		else {
+			glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		}
 
 		glfwGetFramebufferSize(window, &WINDOW_WIDTH, &WINDOW_HEIGHT);
 
 		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-		view = LookAt(cam.getPosition(), cam.getTarget(), vec3(0.0f, 1.0f, 0.0f));
-
+		view = cam.GetViewMatrix();
+		deltaTime = 1/io.Framerate;
 		// Start the Dear ImGui frame
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
@@ -233,7 +247,7 @@ int main(void)
 			
 			
 			if (CurrentTest) {
-				CurrentTest->onUpdate(glfwGetTime());
+				CurrentTest->onUpdate(deltaTime);
 
 				
 				renderer.Clear();
@@ -241,7 +255,7 @@ int main(void)
 
 				ImGui::Begin("Test");
 
-				ImGui::Text("Camera Position : Vector3(%.1f, %.1f, %.1f)", cam.getPosition().x, cam.getPosition().y, cam.getPosition().z);
+				ImGui::Text("Camera Position : Vector3(%.1f, %.1f, %.1f)", cam.Position.x, cam.Position.y, cam.Position.z);
 				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 				switch (menu_index) {
 				case 0:

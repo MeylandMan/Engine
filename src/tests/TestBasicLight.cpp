@@ -49,7 +49,7 @@ namespace test {
 			m_Shader.setUniform1f("specularStrength", specularStrength);
 			m_Shader.setUniform1f("ambiantStrength", ambiantStrength);
 
-			m_Shader.setUniform3f("u_ViewPosition", camera->getPosition().x, camera->getPosition().y, camera->getPosition().z);
+			m_Shader.setUniform3f("u_ViewPosition", camera->Position.x, camera->Position.y, camera->Position.z);
 
 			m_LightModel = Transform(m_LightScale, m_LightRotation, m_LightPosition);
 			m_Shader.setUniformMatrix4f("u_Model", m_LightModel);

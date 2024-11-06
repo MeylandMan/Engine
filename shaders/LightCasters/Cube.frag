@@ -73,7 +73,7 @@ void main()
 	fragColor = vec4(ambiant + diffuse + specular, 1.0);
 	float theta = dot(lightDir, normalize(-light.direction));
 
-	if(theta < light.cutOff && u_LightChoice == 2)
+	if(theta <= light.cutOff && u_LightChoice == 2)
 	{
 		fragColor = vec4(ambiant, 1.0);
 	}

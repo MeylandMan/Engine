@@ -72,17 +72,18 @@ namespace test {
 			m_ObjShader.setUniform3f("light.position", m_LightPosition);
 			m_ObjShader.setUniform3f("light.direction", m_LightDirection);
 			m_ObjShader.setUniform1f("light.cutOff", std::cosf(deg_to_rad(0.f)));
-
+			
 			if (lightChoice == 2) {
-				m_ObjShader.setUniform3f("light.position", camera->getPosition());
-				m_ObjShader.setUniform3f("light.direction", camera->getTarget());
+
+				m_ObjShader.setUniform3f("light.position", camera->Position);
+				m_ObjShader.setUniform3f("light.direction", camera->Front);
 				m_ObjShader.setUniform1f("light.cutOff", std::cosf(deg_to_rad(15.f)));
 			}
 			
 			m_ObjShader.setUniform4f("light.color", LightColor);
 			m_ObjShader.setUniform1i("u_LightChoice", lightChoice);
 			
-			m_ObjShader.setUniform3f("u_ViewPosition", camera->getPosition());
+			m_ObjShader.setUniform3f("u_ViewPosition", camera->Position);
 
 			m_ObjShader.setUniform1i("material.diffuse", 0);
 			m_ObjShader.setUniform1i("material.specular", 1);
@@ -142,7 +143,7 @@ namespace test {
 			ImGui::SliderFloat3("Light Direction", &m_LightDirection.x, -10.f, 10.f);
 			break;
 		case 1:
-			ImGui::SliderFloat3("Light position", &m_LightPosition.x, -10.f, 10.f);
+			ImGui::SliderFloat3("Light position", &m_LightPosition.x, -20.f, 20.f);
 			ImGui::SliderFloat("Light constant", &constant, 0.1f, 1.f);
 			ImGui::SliderFloat("Light linear", &linear, 0.1f, 1.f);
 			ImGui::SliderFloat("Light quadric", &quadric, 0.1f, 1.f);

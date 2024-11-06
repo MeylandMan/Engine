@@ -62,7 +62,7 @@ namespace test {
 			m_ObjShader.setUniform3f("light.position", m_LightPosition);
 			m_ObjShader.setUniform4f("light.color", LightColor);
 
-			m_ObjShader.setUniform3f("u_ViewPosition", camera->getPosition());
+			m_ObjShader.setUniform3f("u_ViewPosition", camera->Position);
 
 			m_ObjShader.setUniform1i("material.diffuse", 0);
 			m_ObjShader.setUniform1i("material.specular", 1);

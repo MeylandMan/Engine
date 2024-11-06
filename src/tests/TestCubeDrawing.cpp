@@ -28,6 +28,8 @@ namespace test {
 
 		glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
+		m_Projection = Projection(camera->Zoom, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, DEFAULT_ZNEAR, DEFAULT_ZFAR);
+
 		m_Projection = Projection(DEFAULT_FOV, (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, DEFAULT_ZNEAR, DEFAULT_ZFAR);
 		m_Model = Transform(m_Scale, m_Rotation, m_Position);
 
