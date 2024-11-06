@@ -69,7 +69,6 @@ namespace test {
 			m_ObjModel = glm::mat4(1.0f);
 			m_ObjModel = glm::translate(m_ObjModel, m_ObjPosition);
 			m_ObjModel = glm::rotate(m_ObjModel, glm::radians(0.f), glm::vec3(1.0f, 0.3f, 0.5f));
-			m_ObjModel = glm::scale(m_ObjModel, m_ObjScale);
 			m_ObjShader.setUniformMatrix4f("u_Model", m_ObjModel);
 
 			renderer.Draw(m_ObjVao, m_Ibo, m_ObjShader);
@@ -87,7 +86,6 @@ namespace test {
 
 			m_LightModel = glm::mat4(1.0f);
 			m_LightModel = glm::translate(m_LightModel, m_LightPosition);
-			m_LightModel = glm::rotate(m_LightModel, glm::radians(0.f), glm::vec3(1.0f, 0.3f, 0.5f));
 			m_LightModel = glm::scale(m_LightModel, m_LightScale);
 			m_LightShader.setUniformMatrix4f("u_Model", m_LightModel);
 
@@ -99,8 +97,7 @@ namespace test {
 
 		ImGui::ColorEdit4("Light Color", &LightColor.x);
 		ImGui::SliderFloat3("Light position", &m_LightPosition.x, -10.f, 10.f);
-		ImGui::SliderFloat3("Object position", &m_ObjPosition.x, -90.f, 90.f);
-		ImGui::SliderFloat3("Object rotation", &m_ObjRotation.x, -90.f, 90.f);
+
 
 		ImGui::SliderFloat("shininess", &m_Shininess, 0.f, 64.f);
 	}

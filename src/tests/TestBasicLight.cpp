@@ -52,8 +52,8 @@ namespace test {
 			m_Shader.setUniform3f("u_ViewPosition", camera->Position);
 
 			m_LightModel = glm::mat4(1.0f);
+
 			m_LightModel = glm::translate(m_LightModel, m_LightPosition);
-			m_LightModel = glm::rotate(m_LightModel, glm::radians(0.f), glm::vec3(1.0f, 0.3f, 0.5f));
 			m_LightModel = glm::scale(m_LightModel, m_LightScale);
 			m_Shader.setUniformMatrix4f("u_Model", m_LightModel);
 
@@ -66,8 +66,6 @@ namespace test {
 			
 			m_ObjModel = glm::mat4(1.0f);
 			m_ObjModel = glm::translate(m_ObjModel, m_ObjPosition);
-			m_ObjModel = glm::rotate(m_ObjModel, glm::radians(0.f), glm::vec3(1.0f, 0.3f, 0.5f));
-			m_ObjModel = glm::scale(m_ObjModel, m_ObjScale);
 
 			m_Shader.setUniformMatrix4f("u_Model", m_ObjModel);
 

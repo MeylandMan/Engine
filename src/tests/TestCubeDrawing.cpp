@@ -33,6 +33,7 @@ namespace test {
 		m_Model = glm::mat4(1.0f);
 		m_Model = glm::translate(m_Model, m_Position);
 		m_Model = glm::rotate(m_Model, glm::radians(0.f), glm::vec3(1.0f, 0.3f, 0.5f));
+		m_Model = glm::scale(m_Model, m_Scale);
 
 		m_Shader.setUniform1i("u_Texture", 0);
 
