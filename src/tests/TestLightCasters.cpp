@@ -18,8 +18,10 @@ namespace test {
 		ObjColor = glm::vec4(1.f, 0.5f, 0.31f, 1.f);
 		m_ObjScale = glm::vec3(1.f, 1.f, 1.f);
 
-		m_ObjShader.loadShaderProgramFromFile(SHADERS_PATH "LightCasters/Cube.vert", SHADERS_PATH "LightCasters/Cube.frag");
 		m_LightShader.loadShaderProgramFromFile(SHADERS_PATH "LightCasters/LightCube.vert", SHADERS_PATH "LightCasters/LightCube.frag");
+		m_ObjShader[0].loadShaderProgramFromFile(SHADERS_PATH "LightCasters/Cube.vert", SHADERS_PATH "LightCasters/DirectionalLight.frag");
+		m_ObjShader[1].loadShaderProgramFromFile(SHADERS_PATH "LightCasters/Cube.vert", SHADERS_PATH "LightCasters/PointLight.frag");
+		m_ObjShader[2].loadShaderProgramFromFile(SHADERS_PATH "LightCasters/Cube.vert", SHADERS_PATH "LightCasters/SpotLight.frag");
 
 		m_Layout.PushShort<float>(3, 1);
 		m_Layout.PushShort<float>(2, 1);
@@ -30,14 +32,6 @@ namespace test {
 	}
 
 	void TestLightCasters::onUpdate(float deltaTime) {
-		/*
-		{
-			LightColor.x = sin(deltaTime * 2.f);
-			LightColor.y = sin(deltaTime * 0.7f);
-			LightColor.z = sin(deltaTime * 1.3f);
-		}
-		*/
-
 		m_LightDiffuse = glm::vec3(LightColor.x, LightColor.y, LightColor.z) * glm::vec3(0.5f, 0.5f, 0.5f);
 		m_LightAmbient = m_LightDiffuse * glm::vec3(0.2f, 0.2f, 0.2f);
 	}
@@ -56,50 +50,47 @@ namespace test {
 
 		// Object
 		{
-			m_ObjShader.bind();
+			m_ObjShader[lightChoice].bind();
 
 			m_ObjTexture.Bind();
 			m_ObjTextureSpecular.Bind(1);
 
-			m_ObjShader.setUniformMatrix4f("u_View", *view);
-			m_ObjShader.setUniformMatrix4f("u_Proj", m_Projection);
+			m_ObjShader[lightChoice].setUniformMatrix4f("u_Model", glm::mat4(1.f));
+			m_ObjShader[lightChoice].setUniformMatrix4f("u_View", *view);
+			m_ObjShader[lightChoice].setUniformMatrix4f("u_Proj", m_Projection);
 
-			m_ObjShader.setUniform3f("light.position", m_LightPosition);
-			m_ObjShader.setUniform3f("light.direction", m_LightDirection);
-			m_ObjShader.setUniform1f("light.cutOff", std::cosf(deg_to_rad(0.f)));
-			
+			m_ObjShader[lightChoice].setUniform3f("light.position", m_LightPosition);
+			m_ObjShader[lightChoice].setUniform3f("light.direction", m_LightDirection);
+
+			m_ObjShader[lightChoice].setUniform4f("light.color", LightColor);
+			m_ObjShader[lightChoice].setUniform3f("light.ambient", m_LightAmbient);
+			m_ObjShader[lightChoice].setUniform3f("light.diffuse", m_LightDiffuse); // darkened
+			m_ObjShader[lightChoice].setUniform3f("light.specular", m_LightSpecular);
+
+			m_ObjShader[lightChoice].setUniform1f("light.constant", constant);
+			m_ObjShader[lightChoice].setUniform1f("light.linear", linear);
+			m_ObjShader[lightChoice].setUniform1f("light.quadratic", quadric);
+
+			m_ObjShader[lightChoice].setUniform1i("material.diffuse", 0);
+			m_ObjShader[lightChoice].setUniform1i("material.specular", 1);
+			m_ObjShader[lightChoice].setUniform1f("material.shininess", m_Shininess);
+
+			m_ObjShader[lightChoice].setUniform3f("u_ViewPosition", camera->Position);
+
 			if (lightChoice == 2) {
 
-				m_ObjShader.setUniform3f("light.position", camera->Position);
-				m_ObjShader.setUniform3f("light.direction", camera->Front);
-				m_ObjShader.setUniform1f("light.cutOff", std::cosf(deg_to_rad(15.f)));
+				m_ObjShader[2].setUniform3f("light.position", camera->Position);
+				m_ObjShader[2].setUniform3f("light.direction", camera->Front);
+				m_ObjShader[2].setUniform1f("light.cutOff", std::cosf(deg_to_rad(15.f)));
 			}
-			
-			m_ObjShader.setUniform4f("light.color", LightColor);
-			m_ObjShader.setUniform1i("u_LightChoice", lightChoice);
-			
-			m_ObjShader.setUniform3f("u_ViewPosition", camera->Position);
 
-			m_ObjShader.setUniform1i("material.diffuse", 0);
-			m_ObjShader.setUniform1i("material.specular", 1);
-			m_ObjShader.setUniform1f("material.shininess", m_Shininess);
-
-			m_ObjShader.setUniform1f("light.constant", constant);
-			m_ObjShader.setUniform1f("light.linear", linear);
-			m_ObjShader.setUniform1f("light.quadratic", quadric);
-
-
-			m_ObjShader.setUniform3f("light.ambient", m_LightAmbient);
-			m_ObjShader.setUniform3f("light.diffuse", m_LightDiffuse); // darkened
-			m_ObjShader.setUniform3f("light.specular", m_LightSpecular);
-
-			for (unsigned int i = 0; i < 10; i++)
+			for (unsigned int j = 0; j < 10; j++)
 			{
 				m_ObjModel = glm::mat4(1.0f);
-				m_ObjModel = glm::translate(m_ObjModel, m_ObjPosition[i]);
+				m_ObjModel = glm::translate(m_ObjModel, m_ObjPosition[j]);
 				m_ObjModel = glm::rotate(m_ObjModel, glm::radians(0.f), glm::vec3(1.0f, 0.3f, 0.5f));
-				m_ObjShader.setUniformMatrix4f("u_Model", m_ObjModel);
-				renderer.Draw(m_ObjVao, m_Ibo, m_ObjShader);
+				m_ObjShader[lightChoice].setUniformMatrix4f("u_Model", m_ObjModel);
+				renderer.Draw(m_ObjVao, m_Ibo, m_ObjShader[lightChoice]);
 			}
 
 			m_ObjTexture.Unbind();

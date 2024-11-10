@@ -85,10 +85,10 @@ namespace test {
 
 		VertexBufferLayout m_Layout;
 		vao m_ObjVao;
-		Shader m_ObjShader;
+		Shader m_ObjShader[3];
 
 		unsigned int lightChoice = 0;
-		
+
 		// Light
 		vao m_LightVao;
 		Shader m_LightShader;
