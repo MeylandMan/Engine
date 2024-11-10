@@ -81,14 +81,17 @@ namespace test {
 
 				m_ObjShader[2].setUniform3f("light.position", camera->Position);
 				m_ObjShader[2].setUniform3f("light.direction", camera->Front);
-				m_ObjShader[2].setUniform1f("light.cutOff", std::cosf(deg_to_rad(15.f)));
+				m_ObjShader[2].setUniform1f("light.cutOff", std::cosf(deg_to_rad(CutOff)));
+				m_ObjShader[2].setUniform1f("light.outerCutOff", std::cosf(deg_to_rad(CutOff+5.f)));
 			}
 
-			for (unsigned int j = 0; j < 10; j++)
+			for (unsigned int i = 0; i < 10; i++)
 			{
 				m_ObjModel = glm::mat4(1.0f);
-				m_ObjModel = glm::translate(m_ObjModel, m_ObjPosition[j]);
-				m_ObjModel = glm::rotate(m_ObjModel, glm::radians(0.f), glm::vec3(1.0f, 0.3f, 0.5f));
+				m_ObjModel = glm::translate(m_ObjModel, m_ObjPosition[i]);
+				float angle = 20.0f * i;
+				m_ObjModel = glm::rotate(m_ObjModel, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+				m_ObjModel = glm::scale(m_ObjModel, glm::vec3(1.f));
 				m_ObjShader[lightChoice].setUniformMatrix4f("u_Model", m_ObjModel);
 				renderer.Draw(m_ObjVao, m_Ibo, m_ObjShader[lightChoice]);
 			}
@@ -108,6 +111,7 @@ namespace test {
 			m_LightModel = glm::mat4(1.0f);
 			m_LightModel = glm::translate(m_LightModel, m_LightPosition);
 			m_LightModel = glm::rotate(m_LightModel, glm::radians(0.f), glm::vec3(1.0f, 0.3f, 0.5f));
+			m_LightModel = glm::scale(m_LightModel, glm::vec3(0.1f));
 			m_LightShader.setUniformMatrix4f("u_Model", m_LightModel);
 
 			renderer.Draw(m_LightVao, m_Ibo, m_LightShader);
@@ -139,7 +143,10 @@ namespace test {
 			ImGui::SliderFloat("Light quadric", &quadric, 0.1f, 1.f);
 			break;
 		case 2:
-			ImGui::SliderFloat3("Light position", &m_LightPosition.x, -10.f, 10.f);
+			ImGui::SliderFloat("Light constant", &constant, 0.1f, 1.f);
+			ImGui::SliderFloat("Light linear", &linear, 0.1f, 1.f);
+			ImGui::SliderFloat("Light quadric", &quadric, 0.1f, 1.f);
+			ImGui::SliderFloat("Light CutOff", &CutOff, 15.f, 90.f);
 			break;
 		}
 	}
