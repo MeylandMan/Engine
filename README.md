@@ -13,10 +13,10 @@ collaborate on this project. I want to learn new things by my own experience.
 Basic
   - [x] Drawing a cube
   - [x] Change background color
-  - [ ] Basic Lighting
-  - [ ] Materials
-  - [ ] Lighting Maps
-  - [ ] Light Casters
+  - [x] Basic Lighting
+  - [x] Materials
+  - [x] Lighting Maps
+  - [x] Light Casters
   - [ ] Loading Models
 
 There will be more updates next time. This was just a prototype to have the basic things in a openGL pipeline.
