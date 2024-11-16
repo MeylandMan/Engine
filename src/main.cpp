@@ -146,7 +146,7 @@ int main(void)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); //you might want to do this when testing the game for shipping
-
+	glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
@@ -256,6 +256,7 @@ int main(void)
 				ImGui::Begin("Test");
 
 				ImGui::Text("Camera Position : Vector3(%.1f, %.1f, %.1f)", cam.Position.x, cam.Position.y, cam.Position.z);
+				ImGui::Text("Camera Direction : Vector3(%.1f, %.1f, %.1f)", cam.Front.x, cam.Front.y, cam.Front.z);
 				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
 				switch (menu_index) {
 				case 0:

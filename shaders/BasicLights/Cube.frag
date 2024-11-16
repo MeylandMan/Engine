@@ -28,7 +28,7 @@ struct PointLight {
 	vec3 specular;
 };
 
-#define NR_POINT_LIGHTS 4
+#define NR_POINT_LIGHTS 2
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 
 struct SpotLight {
@@ -56,15 +56,28 @@ in vec2 v_TexCoords;
 uniform vec3 u_ViewPosition;
 
 uniform Material material;
-uniform Light light;
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
-vec3 CalcSpotLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
+vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 
 void main()
 {
-	fragColor = vec4(ambiant + diffuse + specular, 1.0);
+	// properties
+	vec3 norm = normalize(v_Normal);
+	vec3 viewDir = normalize(u_ViewPosition - FragPos);
+	vec3 result = vec3(1.);
+
+	// phase 1: Directional lighting
+	result = CalcDirLight(dirLight, norm, viewDir);
+	// phase 2: Point lights
+	for(int i = 0; i < NR_POINT_LIGHTS; i++)
+		result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
+	// phase 3: Spot lights
+	for(int i = 0; i < NR_SPOT_LIGHTS; i++)
+		result += CalcSpotLight(spotLights[i], norm, FragPos, viewDir);
+
+	fragColor = vec4(result, 1.0);
 }
 
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir) {
@@ -111,7 +124,7 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {
 	return (ambient + diffuse + specular);
 }
 
-vec3 CalcSpotLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {
+vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {
 	
 	vec3 lightDir = normalize(light.position - fragPos);
 
@@ -134,7 +147,7 @@ vec3 CalcSpotLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir) {
 	// combine
 	vec3 ambient =  light.ambient * texture(material.diffuse, v_TexCoords).rgb;
 	vec3 diffuse = light.diffuse * NdotL *  texture(material.diffuse, v_TexCoords).rgb;
-	vec3 specular = lightColor * light.specular * texture(material.specular, v_TexCoords).rgb * spec;
+	vec3 specular = light.specular * texture(material.specular, v_TexCoords).rgb * spec;
 
 	ambient *= att;
 	diffuse *= att;

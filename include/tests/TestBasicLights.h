@@ -85,7 +85,7 @@ namespace test {
 
 		VertexBufferLayout m_Layout;
 		vao m_ObjVao;
-		Shader m_ObjShader[3];
+		Shader m_ObjShader;
 
 		unsigned int lightChoice = 0;
 
@@ -93,8 +93,15 @@ namespace test {
 		vao m_LightVao;
 		Shader m_LightShader;
 		glm::vec4 LightColor;
-		glm::vec3 m_LightPosition;
-		glm::vec3 m_LightDirection;
+		glm::vec3 m_PointLightPosition[2] = {
+			glm::vec3(0.7f, 0.2f, 2.0f),
+			glm::vec3(2.3f, -3.3f, -4.0f),
+		};
+		glm::vec3 m_SpotLightPosition;
+
+		glm::vec3 m_DirLightDirection;
+		glm::vec3 m_SpotLightDirection;
+
 		glm::vec3 m_LightScale;
 		glm::vec3 m_LightRotation;
 		glm::mat4 m_LightModel;
