@@ -9,10 +9,7 @@ struct Material {
 
 struct Light {
 	vec4 color;
-    vec3 position;  
-    vec3 direction;
-    float cutOff;
-    float outerCutOff;
+    vec3 position;
   
     vec3 ambient;
     vec3 diffuse;

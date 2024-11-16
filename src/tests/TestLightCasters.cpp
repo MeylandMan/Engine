@@ -59,28 +59,39 @@ namespace test {
 			m_ObjShader[lightChoice].setUniformMatrix4f("u_View", *view);
 			m_ObjShader[lightChoice].setUniformMatrix4f("u_Proj", m_Projection);
 
-			m_ObjShader[lightChoice].setUniform3f("light.position", m_LightPosition);
-			m_ObjShader[lightChoice].setUniform3f("light.direction", m_LightDirection);
+			
+			
 
 			m_ObjShader[lightChoice].setUniform4f("light.color", LightColor);
 			m_ObjShader[lightChoice].setUniform3f("light.ambient", m_LightAmbient);
 			m_ObjShader[lightChoice].setUniform3f("light.diffuse", m_LightDiffuse); // darkened
 			m_ObjShader[lightChoice].setUniform3f("light.specular", m_LightSpecular);
 
-			m_ObjShader[lightChoice].setUniform1f("light.constant", constant);
-			m_ObjShader[lightChoice].setUniform1f("light.linear", linear);
-			m_ObjShader[lightChoice].setUniform1f("light.quadratic", quadric);
+			
 
 			m_ObjShader[lightChoice].setUniform1i("material.diffuse", 0);
 			m_ObjShader[lightChoice].setUniform1i("material.specular", 1);
 			m_ObjShader[lightChoice].setUniform1f("material.shininess", m_Shininess);
 
 			m_ObjShader[lightChoice].setUniform3f("u_ViewPosition", camera->Position);
+			if (lightChoice == 0)
+				m_ObjShader[lightChoice].setUniform3f("light.direction", m_LightDirection);
+			else if (lightChoice == 1) {
+				m_ObjShader[lightChoice].setUniform3f("light.position", m_LightPosition);
 
-			if (lightChoice == 2) {
+				m_ObjShader[lightChoice].setUniform1f("light.constant", constant);
+				m_ObjShader[lightChoice].setUniform1f("light.linear", linear);
+				m_ObjShader[lightChoice].setUniform1f("light.quadratic", quadric);
+			}
+			else if (lightChoice == 2) {
 
 				m_ObjShader[2].setUniform3f("light.position", camera->Position);
 				m_ObjShader[2].setUniform3f("light.direction", camera->Front);
+
+				m_ObjShader[lightChoice].setUniform1f("light.constant", constant);
+				m_ObjShader[lightChoice].setUniform1f("light.linear", linear);
+				m_ObjShader[lightChoice].setUniform1f("light.quadratic", quadric);
+
 				m_ObjShader[2].setUniform1f("light.cutOff", std::cosf(deg_to_rad(CutOff)));
 				m_ObjShader[2].setUniform1f("light.outerCutOff", std::cosf(deg_to_rad(CutOff+5.f)));
 			}

@@ -266,6 +266,7 @@ int main(void)
 						menuTest->RegisterTest<test::TestMaterials>("Materials");
 						menuTest->RegisterTest<test::TestLightingMap>("Lighting maps");
 						menuTest->RegisterTest<test::TestLightCasters>("Light Casters");
+						menuTest->RegisterTest<test::TestBasicLights>("Multiple lights");
 						menuTest->RegisterTest<test::TestLoadModel>("Loading Models");
 
 						CurrentTest = menuTest;
