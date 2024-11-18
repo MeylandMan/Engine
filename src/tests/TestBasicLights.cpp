@@ -27,12 +27,15 @@ namespace test {
 		m_LightVao.AddBuffer(m_Vbo, m_Layout);
 
 		m_DirLight = createDirLight(VECTOR_ZERO, VECTOR_ZERO, VECTOR_ZERO, VECTOR_ZERO);
+		addSpotLight(createSpotLight(VECTOR_ZERO, VECTOR_ZERO, VECTOR_ZERO, VECTOR_ZERO, VECTOR_ZERO, 0.f, 0.f, 0.f, 0.f, 0.f));
 	}
-
+	/*
 	void TestBasicLights::onUpdate(float deltaTime) {
 		m_LightDiffuse = glm::vec3(LightColor.x, LightColor.y, LightColor.z) * glm::vec3(0.5f, 0.5f, 0.5f);
 		m_LightAmbient = m_LightDiffuse * glm::vec3(0.2f, 0.2f, 0.2f);
 	}
+	*/
+	
 
 	void TestBasicLights::addDirLight(DirLight dirLight) { m_DirLight = dirLight; }
 
@@ -93,16 +96,37 @@ namespace test {
 			m_ObjShader.setUniform1f("pointLights[1].quadratic", 0.032f);
 
 			// spotLight
-			m_ObjShader.setUniform3f("spotLights[0].position", camera->Position);
-			m_ObjShader.setUniform3f("spotLights[0].direction", camera->Front);
-			m_ObjShader.setUniform3f("spotLights[0].ambient", 0.0f, 0.0f, 0.0f);
-			m_ObjShader.setUniform3f("spotLights[0].diffuse", 1.0f, 1.0f, 1.0f);
-			m_ObjShader.setUniform3f("spotLights[0].specular", 1.0f, 1.0f, 1.0f);
-			m_ObjShader.setUniform1f("spotLights[0].constant", 1.0f);
-			m_ObjShader.setUniform1f("spotLights[0].linear", 0.09f);
-			m_ObjShader.setUniform1f("spotLights[0].quadratic", 0.032f);
-			m_ObjShader.setUniform1f("spotLights[0].cutOff", glm::cos(glm::radians(12.5f)));
-			m_ObjShader.setUniform1f("spotLights[0].outerCutOff", glm::cos(glm::radians(15.0f)));
+			/*
+			* if (camera_spot) {
+				m_SpotLights[0].position = camera->Position; m_SpotLights[0].direction = camera->Front;
+				m_SpotLights[0].ambient = VECTOR_ZERO; m_SpotLights[0].diffuse = VECTOR_UNIT; m_SpotLights[0].specular = VECTOR_UNIT;
+				m_SpotLights[0].constant = 1.f; m_SpotLights[0].linear = 0.09f; m_SpotLights[0].quadratic = 0.032f;
+				m_SpotLights[0].cutOff = glm::cos(glm::radians(12.5f)); m_SpotLights[0].outerCutOff = glm::cos(glm::radians(15.0f));
+			}
+			else {
+				m_SpotLights[0].position = VECTOR_ZERO; m_SpotLights[0].direction = VECTOR_ZERO;
+				m_SpotLights[0].ambient = VECTOR_ZERO; m_SpotLights[0].diffuse = VECTOR_ZERO; m_SpotLights[0].specular = VECTOR_ZERO;
+				m_SpotLights[0].constant = 0.f; m_SpotLights[0].linear = 0.f; m_SpotLights[0].quadratic = 0.f;
+				m_SpotLights[0].cutOff = 0.f; m_SpotLights[0].outerCutOff = 0.f;
+			}
+			*/
+			m_SpotLights[0].position = camera->Position; m_SpotLights[0].direction = camera->Front;
+			m_SpotLights[0].ambient = VECTOR_ZERO; m_SpotLights[0].diffuse = VECTOR_UNIT; m_SpotLights[0].specular = VECTOR_UNIT;
+			m_SpotLights[0].constant = 1.f; m_SpotLights[0].linear = 0.09f; m_SpotLights[0].quadratic = 0.032f;
+			m_SpotLights[0].cutOff = glm::cos(glm::radians(12.5f)); m_SpotLights[0].outerCutOff = glm::cos(glm::radians(15.0f));
+
+			logSpotLightState(1);
+			m_ObjShader.setUniform3f("spotLights[0].position", m_SpotLights[0].position);
+			m_ObjShader.setUniform3f("spotLights[0].direction", m_SpotLights[0].direction);
+			m_ObjShader.setUniform3f("spotLights[0].ambient", m_SpotLights[0].ambient);
+			m_ObjShader.setUniform3f("spotLights[0].diffuse", m_SpotLights[0].diffuse);
+			m_ObjShader.setUniform3f("spotLights[0].specular", m_SpotLights[0].specular);
+			m_ObjShader.setUniform1f("spotLights[0].constant", m_SpotLights[0].constant);
+			m_ObjShader.setUniform1f("spotLights[0].linear", m_SpotLights[0].linear);
+			m_ObjShader.setUniform1f("spotLights[0].quadratic", m_SpotLights[0].quadratic);
+			m_ObjShader.setUniform1f("spotLights[0].cutOff", m_SpotLights[0].cutOff);
+			m_ObjShader.setUniform1f("spotLights[0].outerCutOff", m_SpotLights[0].outerCutOff);
+			
 
 			m_ObjShader.setUniform1i("material.diffuse", 0);
 			m_ObjShader.setUniform1i("material.specular", 1);
@@ -143,7 +167,7 @@ namespace test {
 	void  TestBasicLights::onImGUI() {
 		if(ImGui::Button("Add Point Light")) {}
 		if (ImGui::Button("Add Spot Light")) {}
-		//ImGui::Checkbox("Camera Spot Light", false);
+		ImGui::Checkbox("Camera Spot Light", &camera_spot);
 
 		// Directional Light
 		ImGui::Text("Directional light");

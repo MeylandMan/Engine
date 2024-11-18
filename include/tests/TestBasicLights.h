@@ -13,6 +13,7 @@
 #define DEFAULT_FOV 60.0f
 
 #define VECTOR_ZERO glm::vec3(0.f)
+#define VECTOR_UNIT glm::vec3(0.f)
 
 #define rad_to_deg(x) ((x) * 57.295754f)
 #define deg_to_rad(x) ((x) * 0.0174533f)
@@ -82,7 +83,20 @@ namespace test {
 		void addPointLight(PointLight pointLight);
 		void addSpotLight(SpotLight spotLight);
 
-		void onUpdate(float deltaTime) override;
+		void logSpotLightState(unsigned int ID) {
+			std::cout << "SpotLight " << ID << " Position : " << m_SpotLights[ID].position.x << ", " << m_SpotLights[ID].position.y << ", " << m_SpotLights[ID].position.z << ", " << std::endl;
+			std::cout << "SpotLight " << ID << " Direction : " << m_SpotLights[ID].direction.x << ", " << m_SpotLights[ID].direction.y << ", " << m_SpotLights[ID].direction.z << ", " << std::endl;
+			std::cout << "SpotLight " << ID << " Ambient : " << m_SpotLights[ID].ambient.x << ", " << m_SpotLights[ID].ambient.y << ", " << m_SpotLights[ID].ambient.z << ", " << std::endl;
+			std::cout << "SpotLight " << ID << " Diffuse : " << m_SpotLights[ID].diffuse.x << ", " << m_SpotLights[ID].diffuse.y << ", " << m_SpotLights[ID].diffuse.z << ", " << std::endl;
+			std::cout << "SpotLight " << ID << " Specular : " << m_SpotLights[ID].specular.x << ", " << m_SpotLights[ID].specular.y << ", " << m_SpotLights[ID].specular.z << ", " << std::endl;
+			std::cout << "SpotLight " << ID << " constant : " << m_SpotLights[ID].constant << std::endl;
+			std::cout << "SpotLight " << ID << " linear : " << m_SpotLights[ID].linear << std::endl;
+			std::cout << "SpotLight " << ID << " quadratic : " << m_SpotLights[ID].quadratic << std::endl;
+			std::cout << "SpotLight " << ID << " cutOff : " << m_SpotLights[ID].cutOff << std::endl;
+			std::cout << "SpotLight " << ID << " outerCutOff : " << m_SpotLights[ID].outerCutOff << std::endl;
+			std::cout << "------------------------------------------------------" << std::endl;
+		}
+		//void onUpdate(float deltaTime) override;
 		void onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) override;
 		void onImGUI() override;
 	private:
@@ -94,6 +108,7 @@ namespace test {
 		int m_PointLightID = -1;
 		int m_SpotLightID = -1;
 
+		bool camera_spot = true;
 		float m_Vertices[288] = {
 			// POSITION			  TEXTURES COORDS		NORMALS
 			-0.5f, -0.5f, -0.5f,	0.0f, 0.0f,		0.0f, 0.0f, -1.0f,
