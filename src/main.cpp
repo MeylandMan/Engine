@@ -150,8 +150,10 @@ int main(void)
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-
-	window = glfwCreateWindow(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, "Maber", NULL, NULL); //Maber stand for Magical Number
+	int width, height, channels;
+	unsigned char* image = stbi_load(RESOURCES_PATH "../icon.png", &width, &height, &channels, 0);
+	
+	window = glfwCreateWindow(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT, "Mabble", NULL, NULL);
 	if (!window)
 	{
 		glfwTerminate();
@@ -168,6 +170,17 @@ int main(void)
 
 	// tell GLFW to capture our mouse
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	GLFWimage icon;
+	icon.width = width;
+	icon.height = height;
+	icon.pixels = image;
+
+	// Defining the window's icon
+	glfwSetWindowIcon(window, 1, &icon);
+
+	// Freeing space after used the image
+	stbi_image_free(image);
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
