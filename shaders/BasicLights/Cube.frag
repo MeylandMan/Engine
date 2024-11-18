@@ -28,7 +28,7 @@ struct PointLight {
 	vec3 specular;
 };
 
-#define NR_POINT_LIGHTS 2
+#define NR_POINT_LIGHTS 5
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 
 struct SpotLight {
@@ -46,7 +46,7 @@ struct SpotLight {
     float quadratic;
 };
 
-#define NR_SPOT_LIGHTS 1
+#define NR_SPOT_LIGHTS 5
 uniform SpotLight spotLights[NR_SPOT_LIGHTS];
 
 in vec3 FragPos;

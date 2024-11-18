@@ -1,7 +1,7 @@
 #include "tests/TestBasicLights.h"
 
 namespace test {
-	TestBasicLights::TestBasicLights() : m_Vbo(vbo(m_Vertices, sizeof(m_Vertices))), m_Ibo(ibo(indices, sizeof(indices))),
+	TestBasicLights::TestBasicLights() : m_ObjVao(vao()), m_Vbo(vbo(m_Vertices, sizeof(m_Vertices))), m_Ibo(ibo(indices, sizeof(indices))),
 		m_Ambient(glm::vec3(1.f, 0.5f, 0.31f)), m_Diffuse(glm::vec3(1.f, 0.5f, 0.31f)), m_Specular(glm::vec3(0.5f, 0.5f, 0.5f)), m_Shininess(32.f),
 		m_LightAmbient(glm::vec3(0.2f, 0.2f, 0.2f)), m_LightDiffuse(glm::vec3(0.5f, 0.5f, 0.5f)), m_LightSpecular(glm::vec3(1.0f, 1.0f, 1.0f)),
 		m_ObjTexture("container2.png"), m_ObjTextureSpecular("container2_specular.png") {
@@ -71,7 +71,7 @@ namespace test {
 			//m_ObjShader.setUniform1i("NR_POINT_LIGHTS", 2);
 			//m_ObjShader.setUniform1i("NR_SPOT_LIGHTS", 1);
 
-			// point light 1
+			/*
 			m_ObjShader.setUniform3f("pointLights[0].position", m_PointLightPosition[0]);
 			m_ObjShader.setUniform3f("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
 			m_ObjShader.setUniform3f("pointLights[0].diffuse", 0.8f, 0.8f, 0.8f);
@@ -79,14 +79,10 @@ namespace test {
 			m_ObjShader.setUniform1f("pointLights[0].constant", 1.0f);
 			m_ObjShader.setUniform1f("pointLights[0].linear", 0.09f);
 			m_ObjShader.setUniform1f("pointLights[0].quadratic", 0.032f);
+			*/
+			
 			// point light 2
-			m_ObjShader.setUniform3f("pointLights[1].position", m_PointLightPosition[1]);
-			m_ObjShader.setUniform3f("pointLights[1].ambient", 0.05f, 0.05f, 0.05f);
-			m_ObjShader.setUniform3f("pointLights[1].diffuse", 0.8f, 0.8f, 0.8f);
-			m_ObjShader.setUniform3f("pointLights[1].specular", 1.0f, 1.0f, 1.0f);
-			m_ObjShader.setUniform1f("pointLights[1].constant", 1.0f);
-			m_ObjShader.setUniform1f("pointLights[1].linear", 0.09f);
-			m_ObjShader.setUniform1f("pointLights[1].quadratic", 0.032f);
+			
 
 			// spotLight
 			if (camera_spot) {
@@ -101,16 +97,46 @@ namespace test {
 				m_SpotLights[0].cutOff = 0.f; m_SpotLights[0].outerCutOff = 0.f;
 			}
 
-			m_ObjShader.setUniform3f("spotLights[0].position", m_SpotLights[0].position);
-			m_ObjShader.setUniform3f("spotLights[0].direction", m_SpotLights[0].direction);
-			m_ObjShader.setUniform3f("spotLights[0].ambient", m_SpotLights[0].ambient);
-			m_ObjShader.setUniform3f("spotLights[0].diffuse", m_SpotLights[0].diffuse);
-			m_ObjShader.setUniform3f("spotLights[0].specular", m_SpotLights[0].specular);
-			m_ObjShader.setUniform1f("spotLights[0].constant", m_SpotLights[0].constant);
-			m_ObjShader.setUniform1f("spotLights[0].linear", m_SpotLights[0].linear);
-			m_ObjShader.setUniform1f("spotLights[0].quadratic", m_SpotLights[0].quadratic);
-			m_ObjShader.setUniform1f("spotLights[0].cutOff", glm::cos(glm::radians(m_SpotLights[0].cutOff)));
-			m_ObjShader.setUniform1f("spotLights[0].outerCutOff", glm::cos(glm::radians(m_SpotLights[0].outerCutOff)));
+			for (unsigned int i = 0; i < 5; i++) {
+
+				std::string temp = std::format("pointLights[{}].position", i);
+				m_ObjShader.setUniform3f(temp.c_str(), m_PointLightPosition[1]);
+				temp = std::format("pointLights[{}].ambient", i);
+				m_ObjShader.setUniform3f(temp.c_str(), 0.05f, 0.05f, 0.05f);
+				temp = std::format("pointLights[{}].diffuse", i);
+				m_ObjShader.setUniform3f(temp.c_str(), 0.8f, 0.8f, 0.8f);
+				temp = std::format("pointLights[{}].specular", i);
+				m_ObjShader.setUniform3f(temp.c_str(), 1.0f, 1.0f, 1.0f);
+				temp = std::format("pointLights[{}].constant", i);
+				m_ObjShader.setUniform1f(temp.c_str(), 1.0f);
+				temp = std::format("pointLights[{}].linear", i);
+				m_ObjShader.setUniform1f(temp.c_str(), 0.09f);
+				temp = std::format("pointLights[{}].quadratic", i);
+				m_ObjShader.setUniform1f(temp.c_str(), 0.032f);
+
+				temp = std::format("spotLights[{}].position", i);
+				m_ObjShader.setUniform3f(temp.c_str(), m_SpotLights[0].position);
+				temp = std::format("spotLights[{}].direction", i);
+				m_ObjShader.setUniform3f(temp.c_str(), m_SpotLights[0].direction);
+				temp = std::format("spotLights[{}].ambient", i);
+				m_ObjShader.setUniform3f(temp.c_str(), m_SpotLights[0].ambient);
+				temp = std::format("spotLights[{}].diffuse", i);
+				m_ObjShader.setUniform3f(temp.c_str(), m_SpotLights[0].diffuse);
+				temp = std::format("spotLights[{}].specular", i);
+				m_ObjShader.setUniform3f(temp.c_str(), m_SpotLights[0].specular);
+				temp = std::format("spotLights[{}].constant", i);
+				m_ObjShader.setUniform1f(temp.c_str(), m_SpotLights[0].constant);
+				temp = std::format("spotLights[{}].linear", i);
+				m_ObjShader.setUniform1f(temp.c_str(), m_SpotLights[0].linear);
+				temp = std::format("spotLights[{}].quadratic", i);
+				m_ObjShader.setUniform1f(temp.c_str(), m_SpotLights[0].quadratic);
+				temp = std::format("spotLights[{}].cutOff", i);
+				m_ObjShader.setUniform1f(temp.c_str(), glm::cos(glm::radians(m_SpotLights[0].cutOff)));
+				temp = std::format("spotLights[{}].outerCutOff", i);
+				m_ObjShader.setUniform1f(temp.c_str(), glm::cos(glm::radians(m_SpotLights[0].outerCutOff)));
+			}
+			
+
 
 			m_ObjShader.setUniform1i("material.diffuse", 0);
 			m_ObjShader.setUniform1i("material.specular", 1);
