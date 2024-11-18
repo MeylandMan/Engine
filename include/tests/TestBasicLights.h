@@ -18,12 +18,63 @@
 namespace test {
 	class TestBasicLights : public Test {
 	public:
+		struct DirLight {
+			float ID;
+			vec3 Position;
+			vec3 direction;
+
+			vec3 ambient;
+			vec3 diffuse;
+			vec3 specular;
+		};
+
+		struct PointLight {
+			float ID;
+			vec3 Position;
+
+			vec3 ambient;
+			vec3 diffuse;
+			vec3 specular;
+
+			float constant;
+			float linear;
+			float quadratic;
+		};
+
+		struct SpotLight {
+			float ID;
+			vec3 Position;
+			vec3 direction;
+
+			vec3 ambient;
+			vec3 diffuse;
+			vec3 specular;
+
+			float constant;
+			float linear;
+			float quadratic;
+			
+			float cutOff;
+			float outerCutOff;
+		};
 		TestBasicLights();
+
+		void addDirLight(DirLight pointLight);
+		void addPointLight(PointLight pointLight);
+		void addSpotLight(SpotLight pointLight);
 
 		void onUpdate(float deltaTime) override;
 		void onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) override;
 		void onImGUI() override;
 	private:
+		DirLight m_DirLight;
+		std::vector<PointLight> m_PointLights;
+		std::vector<SpotLight> m_SpotLights;
+
+		float m_DirLightID;
+		float m_PointLightID;
+		float m_SpotLightID;
+
 		float m_Vertices[288] = {
 			// POSITION			  TEXTURES COORDS		NORMALS
 			-0.5f, -0.5f, -0.5f,	0.0f, 0.0f,		0.0f, 0.0f, -1.0f,
