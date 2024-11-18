@@ -78,6 +78,34 @@ namespace test {
 		}
 	}
 
+	void TestBasicLights::removePointLight(unsigned int ID) {
+		PointLight pointLight;
+		pointLight.is_on = false;
+		pointLight.position = VECTOR_ZERO;
+		pointLight.ambient = VECTOR_ZERO;
+		pointLight.diffuse = VECTOR_ZERO;
+		pointLight.specular = VECTOR_ZERO;
+		pointLight.constant = 1.f;
+		pointLight.linear = 1.f;
+		pointLight.quadratic = 1.f;
+		m_PointLights[ID] = pointLight;
+	}
+	void TestBasicLights::removeSpotLight(unsigned int ID) {
+		SpotLight spotLight;
+		spotLight.is_on = false;
+		spotLight.position = VECTOR_ZERO;
+		spotLight.direction = VECTOR_ZERO;
+		spotLight.ambient = VECTOR_ZERO;
+		spotLight.diffuse = VECTOR_ZERO;
+		spotLight.specular = VECTOR_ZERO;
+		spotLight.constant = 1.f;
+		spotLight.linear = 1.f;
+		spotLight.quadratic = 1.f;
+
+		spotLight.cutOff = 0.f;
+		spotLight.outerCutOff = 0.f;
+		m_SpotLights[ID] = spotLight;
+	}
 	void TestBasicLights::onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) {
 		int WINDOW_WIDTH = 0, WINDOW_HEIGHT = 0;
 
