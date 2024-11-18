@@ -93,12 +93,12 @@ namespace test {
 				m_SpotLights[0].position = camera->Position; m_SpotLights[0].direction = camera->Front;
 				m_SpotLights[0].ambient = VECTOR_ZERO; m_SpotLights[0].diffuse = VECTOR_UNIT; m_SpotLights[0].specular = VECTOR_UNIT;
 				m_SpotLights[0].constant = 1.f; m_SpotLights[0].linear = 0.09f; m_SpotLights[0].quadratic = 0.032f;
-				m_SpotLights[0].cutOff = glm::cos(glm::radians(12.5f)); m_SpotLights[0].outerCutOff = glm::cos(glm::radians(15.0f));
+				m_SpotLights[0].cutOff = 12.5f; m_SpotLights[0].outerCutOff = 15.0f;
 			}
 			else {
-				m_SpotLights[0].position = VECTOR_ZERO; m_SpotLights[0].direction = camera->Front;
-				m_SpotLights[0].ambient = VECTOR_ZERO; m_SpotLights[0].diffuse = VECTOR_UNIT; m_SpotLights[0].specular = VECTOR_UNIT;
-				m_SpotLights[0].constant = 0.f; m_SpotLights[0].linear = 0.f; m_SpotLights[0].quadratic = 0.f;
+				m_SpotLights[0].position = VECTOR_ZERO; m_SpotLights[0].direction = VECTOR_ZERO;
+				m_SpotLights[0].ambient = VECTOR_ZERO; m_SpotLights[0].diffuse = VECTOR_ZERO; m_SpotLights[0].specular = VECTOR_ZERO;
+				m_SpotLights[0].constant = 1.f; m_SpotLights[0].linear = 1.f; m_SpotLights[0].quadratic = 1.f;
 				m_SpotLights[0].cutOff = 0.f; m_SpotLights[0].outerCutOff = 0.f;
 			}
 
@@ -110,9 +110,8 @@ namespace test {
 			m_ObjShader.setUniform1f("spotLights[0].constant", m_SpotLights[0].constant);
 			m_ObjShader.setUniform1f("spotLights[0].linear", m_SpotLights[0].linear);
 			m_ObjShader.setUniform1f("spotLights[0].quadratic", m_SpotLights[0].quadratic);
-			m_ObjShader.setUniform1f("spotLights[0].cutOff", m_SpotLights[0].cutOff);
-			m_ObjShader.setUniform1f("spotLights[0].outerCutOff", m_SpotLights[0].outerCutOff);
-			
+			m_ObjShader.setUniform1f("spotLights[0].cutOff", glm::cos(glm::radians(m_SpotLights[0].cutOff)));
+			m_ObjShader.setUniform1f("spotLights[0].outerCutOff", glm::cos(glm::radians(m_SpotLights[0].outerCutOff)));
 
 			m_ObjShader.setUniform1i("material.diffuse", 0);
 			m_ObjShader.setUniform1i("material.specular", 1);
@@ -153,8 +152,19 @@ namespace test {
 	void  TestBasicLights::onImGUI() {
 		if(ImGui::Button("Add Point Light")) {}
 		if (ImGui::Button("Add Spot Light")) {}
-		ImGui::Checkbox("Camera Spot Light", &camera_spot);
 
+		//Camera Spot Light
+		ImGui::Checkbox("Camera Spot Light", &camera_spot);
+		if (camera_spot) {
+			ImGui::Begin("Camera");
+			ImGui::SliderFloat3("Ambient :", &m_SpotLights[0].ambient.x, 0.f, 1.f);
+			ImGui::SliderFloat3("Diffuse :", &m_SpotLights[0].diffuse.x, 0.f, 1.f);
+			ImGui::SliderFloat3("Specular :", &m_SpotLights[0].specular.x, 0.f, 1.f);
+
+			ImGui::SliderFloat3("CutOff :", &m_SpotLights[0].cutOff, 0.f, 90.f);
+			ImGui::SliderFloat3("outerCutOff :", &m_SpotLights[0].specular.x, 0.f, 90.f);
+			ImGui::End();
+		}
 		// Directional Light
 		ImGui::Text("Directional light");
 		ImGui::SliderFloat3("Direction :", &m_DirLight.direction.x, -1.f, 1.f);

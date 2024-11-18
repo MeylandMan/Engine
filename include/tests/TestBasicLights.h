@@ -18,45 +18,45 @@
 #define rad_to_deg(x) ((x) * 57.295754f)
 #define deg_to_rad(x) ((x) * 0.0174533f)
 
-#define ERROR_ID if (ID > 5) { std::cout << "Error. size of the array 5. Trying to take data in " << ID << std::endl; return; }
+#define ERROR_ID if (ID > 4) { std::cout << "Error. size of the array 5. Trying to take data in " << ID << std::endl; return; }
 
 namespace test {
 	class TestBasicLights : public Test {
 	public:
 		struct DirLight {
-			glm::vec3 direction;
+			glm::vec3 direction = VECTOR_ZERO;
 
-			glm::vec3 ambient;
-			glm::vec3 diffuse;
-			glm::vec3 specular;
+			glm::vec3 ambient = VECTOR_ZERO;
+			glm::vec3 diffuse = VECTOR_ZERO;
+			glm::vec3 specular = VECTOR_ZERO;
 		};
 
 		struct PointLight {
-			glm::vec3 position;
+			glm::vec3 position = VECTOR_ZERO;
 
-			glm::vec3 ambient;
-			glm::vec3 diffuse;
-			glm::vec3 specular;
+			glm::vec3 ambient = VECTOR_ZERO;
+			glm::vec3 diffuse = VECTOR_ZERO;
+			glm::vec3 specular = VECTOR_ZERO;
 
-			float constant;
-			float linear;
-			float quadratic;
+			float constant = 1.f;
+			float linear = 1.f;
+			float quadratic = 1.f;
 		};
 
 		struct SpotLight {
-			glm::vec3 position;
-			glm::vec3 direction;
+			glm::vec3 position = VECTOR_ZERO;
+			glm::vec3 direction = VECTOR_ZERO;
 
-			glm::vec3 ambient;
-			glm::vec3 diffuse;
-			glm::vec3 specular;
+			glm::vec3 ambient = VECTOR_ZERO;
+			glm::vec3 diffuse = VECTOR_ZERO;
+			glm::vec3 specular = VECTOR_ZERO;
 
-			float constant;
-			float linear;
-			float quadratic;
+			float constant = 1.f;
+			float linear = 1.f;
+			float quadratic = 1.f;
 			
-			float cutOff;
-			float outerCutOff;
+			float cutOff = 0.f;
+			float outerCutOff = 0.f;
 		};
 		TestBasicLights();
 

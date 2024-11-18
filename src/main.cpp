@@ -271,6 +271,7 @@ int main(void)
 				ImGui::Text("Camera Position : Vector3(%.1f, %.1f, %.1f)", cam.Position.x, cam.Position.y, cam.Position.z);
 				ImGui::Text("Camera Direction : Vector3(%.1f, %.1f, %.1f)", cam.Front.x, cam.Front.y, cam.Front.z);
 				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+				//56
 				switch (menu_index) {
 				case 0:
 					if (ImGui::Button("Basic")) {
