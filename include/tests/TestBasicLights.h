@@ -85,6 +85,9 @@ namespace test {
 		void addPointLight();
 		void addSpotLight();
 
+		void removePointLight(unsigned int ID);
+		void removeSpotLight(unsigned int ID);
+
 		void logSpotLightState(unsigned int ID) {
 			ERROR_ID
 			std::cout << "SpotLight " << ID << " Position : " << m_SpotLights[ID].position.x << ", " << m_SpotLights[ID].position.y << ", " << m_SpotLights[ID].position.z << ", " << std::endl;

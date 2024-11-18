@@ -294,6 +294,11 @@ namespace test {
 			ImGui::SliderFloat("constant :", &m_PointLights[i].constant, 0.1f, 1.f);
 			ImGui::SliderFloat("linear :", &m_PointLights[i].linear, 0.1f, 1.f);
 			ImGui::SliderFloat("quadratic :", &m_PointLights[i].quadratic, 0.1f, 1.f);
+			if (ImGui::Button("remove")) {
+				removePointLight(i);
+				std::cout << "Removed the Point Light " << i << std::endl;
+			}
+				
 		}
 		ImGui::End();
 
@@ -315,6 +320,12 @@ namespace test {
 
 			ImGui::SliderFloat("cutOff :", &m_SpotLights[i].cutOff, 0.f, 90.f);
 			ImGui::SliderFloat("outerCutOff :", &m_SpotLights[i].outerCutOff, 0.f, 90.f);
+
+			if (ImGui::Button("remove")) {
+				removeSpotLight(i);
+				std::cout << "Removed the Spoit Light " << i << std::endl;
+			}
+				
 		}
 		ImGui::End();
 	}
