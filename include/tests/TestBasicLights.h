@@ -18,11 +18,12 @@
 #define rad_to_deg(x) ((x) * 57.295754f)
 #define deg_to_rad(x) ((x) * 0.0174533f)
 
+#define ERROR_ID if (ID > 5) { std::cout << "Error. size of the array 5. Trying to take data in " << ID << std::endl; return; }
+
 namespace test {
 	class TestBasicLights : public Test {
 	public:
 		struct DirLight {
-			unsigned int ID;
 			glm::vec3 direction;
 
 			glm::vec3 ambient;
@@ -31,7 +32,6 @@ namespace test {
 		};
 
 		struct PointLight {
-			unsigned int ID;
 			glm::vec3 position;
 
 			glm::vec3 ambient;
@@ -44,7 +44,6 @@ namespace test {
 		};
 
 		struct SpotLight {
-			unsigned int ID;
 			glm::vec3 position;
 			glm::vec3 direction;
 
@@ -80,10 +79,11 @@ namespace test {
 		}
 
 		void addDirLight(DirLight dirLight);
-		void addPointLight(PointLight pointLight);
-		void addSpotLight(SpotLight spotLight);
+		void addPointLight(unsigned int ID, PointLight pointLight);
+		void addSpotLight(unsigned int ID, SpotLight spotLight);
 
 		void logSpotLightState(unsigned int ID) {
+			ERROR_ID
 			std::cout << "SpotLight " << ID << " Position : " << m_SpotLights[ID].position.x << ", " << m_SpotLights[ID].position.y << ", " << m_SpotLights[ID].position.z << ", " << std::endl;
 			std::cout << "SpotLight " << ID << " Direction : " << m_SpotLights[ID].direction.x << ", " << m_SpotLights[ID].direction.y << ", " << m_SpotLights[ID].direction.z << ", " << std::endl;
 			std::cout << "SpotLight " << ID << " Ambient : " << m_SpotLights[ID].ambient.x << ", " << m_SpotLights[ID].ambient.y << ", " << m_SpotLights[ID].ambient.z << ", " << std::endl;
@@ -101,12 +101,8 @@ namespace test {
 		void onImGUI() override;
 	private:
 		DirLight m_DirLight;
-		std::vector<PointLight> m_PointLights;
-		std::vector<SpotLight> m_SpotLights;
-
-		int m_DirLightID = -1;
-		int m_PointLightID = -1;
-		int m_SpotLightID = -1;
+		PointLight m_PointLights[5];
+		SpotLight m_SpotLights[5];
 
 		bool camera_spot = true;
 		float m_Vertices[288] = {
