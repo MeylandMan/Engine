@@ -13,7 +13,7 @@
 #define DEFAULT_FOV 60.0f
 
 #define VECTOR_ZERO glm::vec3(0.f)
-#define VECTOR_UNIT glm::vec3(0.f)
+#define VECTOR_UNIT glm::vec3(1.f)
 
 #define rad_to_deg(x) ((x) * 57.295754f)
 #define deg_to_rad(x) ((x) * 0.0174533f)
@@ -103,6 +103,7 @@ namespace test {
 		DirLight m_DirLight;
 		PointLight m_PointLights[5];
 		SpotLight m_SpotLights[5];
+		glm::vec3 m_ClProperties[3];
 
 		bool camera_spot = true;
 		float m_Vertices[288] = {
