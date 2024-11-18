@@ -93,7 +93,7 @@ namespace test {
 				m_SpotLights[0].position = camera->Position; m_SpotLights[0].direction = camera->Front;
 				m_SpotLights[0].ambient = m_ClProperties[0]; m_SpotLights[0].diffuse = m_ClProperties[1]; m_SpotLights[0].specular = m_ClProperties[2];
 				m_SpotLights[0].constant = 1.f; m_SpotLights[0].linear = 0.09f; m_SpotLights[0].quadratic = 0.032f;
-				m_SpotLights[0].cutOff = 12.5f; m_SpotLights[0].outerCutOff = 15.0f;
+				m_SpotLights[0].cutOff = m_ClCutOff[0]; m_SpotLights[0].outerCutOff = m_ClCutOff[1];
 			} else {
 				m_SpotLights[0].position = VECTOR_ZERO; m_SpotLights[0].direction = VECTOR_ZERO;
 				m_SpotLights[0].ambient = VECTOR_ZERO; m_SpotLights[0].diffuse = VECTOR_ZERO; m_SpotLights[0].specular = VECTOR_ZERO;
@@ -150,7 +150,11 @@ namespace test {
 
 	void  TestBasicLights::onImGUI() {
 		if(ImGui::Button("Add Point Light")) {}
+		ImGui::Begin("Point Lights");
+		ImGui::End();
 		if (ImGui::Button("Add Spot Light")) {}
+		ImGui::Begin("Spot Lights");
+		ImGui::End();
 
 		//Camera Spot Light
 		ImGui::Checkbox("Camera Spot Light", &camera_spot);
@@ -160,8 +164,9 @@ namespace test {
 			ImGui::SliderFloat3("Diffuse :", &m_ClProperties[1].x, 0.f, 1.f);
 			ImGui::SliderFloat3("Specular :", &m_ClProperties[2].x, 0.f, 1.f);
 
-			ImGui::SliderFloat("CutOff :", &m_SpotLights[0].cutOff, 0.f, 90.f);
-			ImGui::SliderFloat("outerCutOff :", &m_SpotLights[0].specular.x, 0.f, 90.f);
+			ImGui::SliderFloat("CutOff :", &m_ClCutOff[0], 0.f, 90.f);
+			ImGui::SliderFloat("outerCutOff :", &m_ClCutOff[1], 0.f, 90.f);
+			ImGui::Text("outerCutOff needs always to be higher than cutOff\nif you want it to work properly");
 			ImGui::End();
 		}
 		// Directional Light

@@ -103,7 +103,8 @@ namespace test {
 		DirLight m_DirLight;
 		PointLight m_PointLights[5];
 		SpotLight m_SpotLights[5];
-		glm::vec3 m_ClProperties[3];
+		glm::vec3 m_ClProperties[3]{ glm::vec3(0.f), glm::vec3(1.f), glm::vec3(1.f) };
+		float m_ClCutOff[2] = { 12.5f, 15.f };
 
 		bool camera_spot = true;
 		float m_Vertices[288] = {
