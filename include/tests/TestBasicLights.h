@@ -33,6 +33,7 @@ namespace test {
 		};
 
 		struct PointLight {
+			bool is_on = false;
 			glm::vec3 position = VECTOR_ZERO;
 
 			glm::vec3 ambient = VECTOR_ZERO;
@@ -45,6 +46,7 @@ namespace test {
 		};
 
 		struct SpotLight {
+			bool is_on = false;
 			glm::vec3 position = VECTOR_ZERO;
 			glm::vec3 direction = VECTOR_ZERO;
 
@@ -80,8 +82,8 @@ namespace test {
 		}
 
 		void addDirLight(DirLight dirLight);
-		void addPointLight(unsigned int ID, PointLight pointLight);
-		void addSpotLight(unsigned int ID, SpotLight spotLight);
+		void addPointLight();
+		void addSpotLight();
 
 		void logSpotLightState(unsigned int ID) {
 			ERROR_ID
