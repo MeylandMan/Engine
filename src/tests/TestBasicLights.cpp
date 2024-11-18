@@ -25,11 +25,25 @@ namespace test {
 		m_ObjVao.AddBuffer(m_Vbo, m_Layout);
 
 		m_LightVao.AddBuffer(m_Vbo, m_Layout);
+
+		m_DirLight = createDirLight(VECTOR_ZERO, VECTOR_ZERO, VECTOR_ZERO, VECTOR_ZERO);
 	}
 
 	void TestBasicLights::onUpdate(float deltaTime) {
 		m_LightDiffuse = glm::vec3(LightColor.x, LightColor.y, LightColor.z) * glm::vec3(0.5f, 0.5f, 0.5f);
 		m_LightAmbient = m_LightDiffuse * glm::vec3(0.2f, 0.2f, 0.2f);
+	}
+
+	void TestBasicLights::addDirLight(DirLight dirLight) { m_DirLight = dirLight; }
+
+	void TestBasicLights::addPointLight(PointLight pointLight) { 
+		pointLight.ID = m_PointLightID + 1;
+		m_PointLights.push_back(pointLight);
+
+	}
+	void TestBasicLights::addSpotLight(SpotLight spotLight) { 
+		spotLight.ID = m_SpotLightID + 1;
+		m_SpotLights.push_back(spotLight);
 	}
 
 	void TestBasicLights::onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) {
@@ -53,10 +67,14 @@ namespace test {
 			m_ObjShader.setUniformMatrix4f("u_Proj", m_Projection);
 			m_ObjShader.setUniform3f("u_ViewPosition", camera->Position);
 
-			m_ObjShader.setUniform3f("dirLight.direction", -0.2f, -1.0f, -0.3f);
-			m_ObjShader.setUniform3f("dirLight.ambient", 0.05f, 0.05f, 0.05f);
-			m_ObjShader.setUniform3f("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
-			m_ObjShader.setUniform3f("dirLight.specular", 0.5f, 0.5f, 0.5f);
+			m_ObjShader.setUniform3f("dirLight.direction", m_DirLight.direction);
+			m_ObjShader.setUniform3f("dirLight.ambient", m_DirLight.ambient);
+			m_ObjShader.setUniform3f("dirLight.diffuse", m_DirLight.diffuse);
+			m_ObjShader.setUniform3f("dirLight.specular", m_DirLight.specular);
+
+			//m_ObjShader.setUniform1i("NR_POINT_LIGHTS", 2);
+			//m_ObjShader.setUniform1i("NR_SPOT_LIGHTS", 1);
+
 			// point light 1
 			m_ObjShader.setUniform3f("pointLights[0].position", m_PointLightPosition[0]);
 			m_ObjShader.setUniform3f("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
@@ -123,6 +141,16 @@ namespace test {
 	}
 
 	void  TestBasicLights::onImGUI() {
-		
+		if(ImGui::Button("Add Point Light")) {}
+		if (ImGui::Button("Add Spot Light")) {}
+		//ImGui::Checkbox("Camera Spot Light", false);
+
+		// Directional Light
+		ImGui::Text("Directional light");
+		ImGui::SliderFloat3("Direction :", &m_DirLight.direction.x, -1.f, 1.f);
+
+		ImGui::SliderFloat3("Ambient :", &m_DirLight.ambient.x, 0.f, 1.f);
+		ImGui::SliderFloat3("Diffuse :", &m_DirLight.diffuse.x, 0.f, 1.f);
+		ImGui::SliderFloat3("Specular :", &m_DirLight.specular.x, 0.f, 1.f);
 	}
 }

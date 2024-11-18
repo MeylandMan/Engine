@@ -12,6 +12,8 @@
 #define DEFAULT_ZFAR 100.0f
 #define DEFAULT_FOV 60.0f
 
+#define VECTOR_ZERO glm::vec3(0.f)
+
 #define rad_to_deg(x) ((x) * 57.295754f)
 #define deg_to_rad(x) ((x) * 0.0174533f)
 
@@ -19,22 +21,21 @@ namespace test {
 	class TestBasicLights : public Test {
 	public:
 		struct DirLight {
-			float ID;
-			vec3 Position;
-			vec3 direction;
+			unsigned int ID;
+			glm::vec3 direction;
 
-			vec3 ambient;
-			vec3 diffuse;
-			vec3 specular;
+			glm::vec3 ambient;
+			glm::vec3 diffuse;
+			glm::vec3 specular;
 		};
 
 		struct PointLight {
-			float ID;
-			vec3 Position;
+			unsigned int ID;
+			glm::vec3 position;
 
-			vec3 ambient;
-			vec3 diffuse;
-			vec3 specular;
+			glm::vec3 ambient;
+			glm::vec3 diffuse;
+			glm::vec3 specular;
 
 			float constant;
 			float linear;
@@ -42,13 +43,13 @@ namespace test {
 		};
 
 		struct SpotLight {
-			float ID;
-			vec3 Position;
-			vec3 direction;
+			unsigned int ID;
+			glm::vec3 position;
+			glm::vec3 direction;
 
-			vec3 ambient;
-			vec3 diffuse;
-			vec3 specular;
+			glm::vec3 ambient;
+			glm::vec3 diffuse;
+			glm::vec3 specular;
 
 			float constant;
 			float linear;
@@ -59,9 +60,27 @@ namespace test {
 		};
 		TestBasicLights();
 
-		void addDirLight(DirLight pointLight);
+		DirLight createDirLight(glm::vec3 Direction, glm::vec3 Ambient, glm::vec3 Diffuse, glm::vec3 Specular) {
+			DirLight dir;
+			dir.direction = Direction; dir.ambient = Ambient; dir.diffuse = Diffuse; dir.specular = Specular;
+			return dir;
+		}
+		PointLight createPointLight(glm::vec3 Position, glm::vec3 Direction, glm::vec3 Ambient, glm::vec3 Diffuse, glm::vec3 Specular, float constant, float linear, float quadratic) {
+			PointLight point;
+			point.position = Position; point.ambient = Ambient; point.diffuse = Diffuse; point.specular = Specular;
+			point.constant = constant; point.linear = linear; point.quadratic = quadratic;
+			return point;
+		}
+		SpotLight createSpotLight(glm::vec3 Position, glm::vec3 Direction, glm::vec3 Ambient, glm::vec3 Diffuse, glm::vec3 Specular, float constant, float linear, float quadratic, float cutOff, float cutOffRange) {
+			SpotLight spot;
+			spot.position = Position; spot.direction = Direction; spot.ambient = Ambient; spot.diffuse = Diffuse; spot.specular = Specular;
+			spot.constant = constant; spot.linear = linear; spot.quadratic = quadratic; spot.cutOff = cutOff; spot.outerCutOff = cutOffRange;
+			return spot;
+		}
+
+		void addDirLight(DirLight dirLight);
 		void addPointLight(PointLight pointLight);
-		void addSpotLight(SpotLight pointLight);
+		void addSpotLight(SpotLight spotLight);
 
 		void onUpdate(float deltaTime) override;
 		void onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) override;
@@ -71,9 +90,9 @@ namespace test {
 		std::vector<PointLight> m_PointLights;
 		std::vector<SpotLight> m_SpotLights;
 
-		float m_DirLightID;
-		float m_PointLightID;
-		float m_SpotLightID;
+		int m_DirLightID = -1;
+		int m_PointLightID = -1;
+		int m_SpotLightID = -1;
 
 		float m_Vertices[288] = {
 			// POSITION			  TEXTURES COORDS		NORMALS
