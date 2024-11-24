@@ -231,4 +231,5 @@ namespace test {
 		Texture m_ObjTexture;
 		Texture m_ObjTextureSpecular;
 	};
+	
 }

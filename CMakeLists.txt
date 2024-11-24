@@ -36,7 +36,7 @@ target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC FRAGMENT_SHADER="/frag
 #target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC VERTEX_SHADER="./vertex.vert")
 #target_compile_definitions("${CMAKE_PROJECT_NAME}" PUBLIC FRAGMENT_SHADER="./fragment.frag")
 
-target_sources("${CMAKE_PROJECT_NAME}" PRIVATE ${MY_SOURCES}  "include/renderer/renderer.h" "include/renderer/textures.h" "include/renderer/vao.h" "include/renderer/vbo.h" "include/renderer/Vertex.h" "include/renderer/VertexBufferLayout.h" "include/tests/Test.h" "src/tests/TestClearColor.cpp")
+target_sources("${CMAKE_PROJECT_NAME}" PRIVATE ${MY_SOURCES})
 
 
 if(MSVC) # If using the VS compiler...

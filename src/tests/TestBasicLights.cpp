@@ -199,7 +199,7 @@ namespace test {
 				temp = std::format("spotLights[{}].outerCutOff", i);
 				m_ObjShader.setUniform1f(temp.c_str(), glm::cos(glm::radians(m_SpotLights[i].outerCutOff)));
 			}
-			
+
 
 
 			m_ObjShader.setUniform1i("material.diffuse", 0);
@@ -238,7 +238,7 @@ namespace test {
 
 				renderer.Draw(m_LightVao, m_Ibo, m_LightShader);
 			}
-			
+
 
 			if (m_SpotLights[i].is_on) {
 				m_LightModel = glm::mat4(1.0f);
@@ -249,15 +249,15 @@ namespace test {
 
 				renderer.Draw(m_LightVao, m_Ibo, m_LightShader);
 			}
-			
+
 		}
 	}
 
 	void  TestBasicLights::onImGUI() {
 		if (ImGui::Button("Add Point Light")) { addPointLight(); }
-		
+
 		if (ImGui::Button("Add Spot Light")) { addSpotLight(); }
-		
+
 
 		//Camera Spot Light
 		ImGui::Checkbox("Camera Spot Light", &camera_spot);
@@ -298,7 +298,16 @@ namespace test {
 				removePointLight(i);
 				std::cout << "Removed the Point Light " << i << std::endl;
 			}
-				
+			/*
+			if (m_PointLights[0].is_on && m_PointLights[1].is_on) {
+				float* pointPtr = &m_PointLights[0].position.x;
+				float* pointPtr2 = &m_PointLights[1].position.x;
+
+				pointPtr += 0.001f;
+				pointPtr2 -= 0.001f;
+			}
+			*/
+			
 		}
 		ImGui::End();
 
