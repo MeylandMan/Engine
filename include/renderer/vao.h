@@ -9,7 +9,7 @@ public:
 	vao();
 	~vao();
 
-	void AddBuffer(vbo& vb, const VertexBufferLayout& layout);
+	void AddBuffer(vbo& vb, const VertexBufferLayout& layout) const;
 	void Bind() const;
 	void Unbind() const;
 	unsigned int GetID() const;

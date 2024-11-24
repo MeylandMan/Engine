@@ -61,7 +61,7 @@ float lastY = WINDOW_HEIGHT / 2.0f;
 
 bool is_locked = false;
 
-void processInput(GLFWwindow* window)
+static void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
@@ -81,7 +81,7 @@ void processInput(GLFWwindow* window)
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
 	// make sure the viewport matches the new window dimensions; note that width and 
 	// height will be significantly larger than specified on retina displays.
@@ -90,7 +90,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 // glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
-void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
+static void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 {
 	
 	float xpos = static_cast<float>(xposIn);
@@ -116,7 +116,7 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called
 // ----------------------------------------------------------------------
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	cam.ProcessMouseScroll(static_cast<float>(yoffset));
 }
@@ -350,7 +350,5 @@ int main(void)
 		glfwPollEvents();
 	}
 	delete CurrentTest;
-	if (CurrentTest != menuTest)
-		delete menuTest;
 	return 0;
 }

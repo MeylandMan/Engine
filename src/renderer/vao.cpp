@@ -10,7 +10,7 @@ vao::~vao() {
 	glDeleteVertexArrays(1, &ID);
 }
 
-void vao::AddBuffer(vbo& vb, const VertexBufferLayout& layout) {
+void vao::AddBuffer(vbo& vb, const VertexBufferLayout& layout) const {
 
 	Bind();
 

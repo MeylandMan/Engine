@@ -1,10 +1,12 @@
 #pragma once
 #include <glad/glad.h>
+#include<vector>
 
 class ibo
 {
 public:
 	ibo(const unsigned int* data, unsigned int count);
+	ibo(std::vector<unsigned int>* data);
 	~ibo();
 
 	void Bind() const;
