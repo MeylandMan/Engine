@@ -285,21 +285,21 @@ namespace test {
 		for (unsigned int i = 0; i < 5; i++) {
 			if (m_PointLights[i].is_on == false)
 				continue;
-			std::string temp = std::to_string(i);
 			ImGui::Text("Point Light %.0f", (float)i);
-			temp.c_str();
-			ImGui::SliderFloat3("position : ##" + temp, &m_PointLights[i].position.x, -10.f, 10.f);
-			ImGui::SliderFloat3("ambient : ##" + temp, &m_PointLights[i].ambient.x, 0.f, 1.f);
-			ImGui::SliderFloat3("diffuse : ##" + temp, &m_PointLights[i].diffuse.x, 0.f, 1.f);
-			ImGui::SliderFloat3("specular : ##" + temp, &m_PointLights[i].specular.x, 0.f, 1.f);
+			ImGui::PushID(i);
+			ImGui::SliderFloat3("position : ##", &m_PointLights[i].position.x, -10.f, 10.f);
+			ImGui::SliderFloat3("ambient : ##", &m_PointLights[i].ambient.x, 0.f, 1.f);
+			ImGui::SliderFloat3("diffuse : ##", &m_PointLights[i].diffuse.x, 0.f, 1.f);
+			ImGui::SliderFloat3("specular : ##", &m_PointLights[i].specular.x, 0.f, 1.f);
 
-			ImGui::SliderFloat("constant : ##" + temp, &m_PointLights[i].constant, 0.1f, 1.f);
-			ImGui::SliderFloat("linear : ##" + temp, &m_PointLights[i].linear, 0.1f, 1.f);
-			ImGui::SliderFloat("quadratic : ##" + temp, &m_PointLights[i].quadratic, 0.1f, 1.f);
-			if (ImGui::Button("remove ##" + temp)) {
+			ImGui::SliderFloat("constant : ##", &m_PointLights[i].constant, 0.1f, 1.f);
+			ImGui::SliderFloat("linear : ##", &m_PointLights[i].linear, 0.1f, 1.f);
+			ImGui::SliderFloat("quadratic : ##", &m_PointLights[i].quadratic, 0.1f, 1.f);
+			if (ImGui::Button("remove")) {
 				removePointLight(i);
 				std::cout << "Removed the Point Light " << i << std::endl;
 			}
+			ImGui::PopID();
 		}
 		ImGui::End();
 
@@ -308,27 +308,26 @@ namespace test {
 		for (unsigned int i = 0; i < 5; i++) {
 			if (m_SpotLights[i].is_on == false || i == 0)
 				continue;
-			std::string temp = std::to_string(i);
 			ImGui::Text("Spot Light %.0f", (float)i);
-			temp.c_str();
-			ImGui::SliderFloat3("position : ##" + temp, &m_SpotLights[i].position.x, -10.f, 10.f);
-			ImGui::SliderFloat3("direction : ##" + temp, &m_SpotLights[i].direction.x, -1.f, 1.f);
-			ImGui::SliderFloat3("ambient : ##" + temp, &m_SpotLights[i].ambient.x, 0.f, 1.f);
-			ImGui::SliderFloat3("diffuse : ##" + temp, &m_SpotLights[i].diffuse.x, 0.f, 1.f);
-			ImGui::SliderFloat3("specular : ##" + temp, &m_SpotLights[i].specular.x, 0.f, 1.f);
+			ImGui::PushID(i);
+			ImGui::SliderFloat3("position :", &m_SpotLights[i].position.x, -10.f, 10.f);
+			ImGui::SliderFloat3("direction :", &m_SpotLights[i].direction.x, -1.f, 1.f);
+			ImGui::SliderFloat3("ambient :", &m_SpotLights[i].ambient.x, 0.f, 1.f);
+			ImGui::SliderFloat3("diffuse :", &m_SpotLights[i].diffuse.x, 0.f, 1.f);
+			ImGui::SliderFloat3("specular :", &m_SpotLights[i].specular.x, 0.f, 1.f);
 
-			ImGui::SliderFloat("constant : ##" + temp, &m_SpotLights[i].constant, 0.1f, 1.f);
-			ImGui::SliderFloat("linear : ##" + temp, &m_SpotLights[i].linear, 0.1f, 1.f);
-			ImGui::SliderFloat("quadratic : ##" + temp, &m_SpotLights[i].quadratic, 0.1f, 1.f);
+			ImGui::SliderFloat("constant :", &m_SpotLights[i].constant, 0.1f, 1.f);
+			ImGui::SliderFloat("linear :", &m_SpotLights[i].linear, 0.1f, 1.f);
+			ImGui::SliderFloat("quadratic :", &m_SpotLights[i].quadratic, 0.1f, 1.f);
 
-			ImGui::SliderFloat("cutOff : ##" + temp, &m_SpotLights[i].cutOff, 0.f, 90.f);
-			ImGui::SliderFloat("outerCutOff : ##" + temp, &m_SpotLights[i].outerCutOff, 0.f, 90.f);
+			ImGui::SliderFloat("cutOff :", &m_SpotLights[i].cutOff, 0.f, 90.f);
+			ImGui::SliderFloat("outerCutOff :", &m_SpotLights[i].outerCutOff, 0.f, 90.f);
 
-			if (ImGui::Button("remove ##" + temp)) {
+			if (ImGui::Button("remove")) {
 				removeSpotLight(i);
-				std::cout << "Removed the Spoit Light " << i << std::endl;
+				std::cout << "Removed the Spot Light " << i << std::endl;
 			}
-				
+			ImGui::PopID();
 		}
 		ImGui::End();
 	}
