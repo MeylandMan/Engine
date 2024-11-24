@@ -7,8 +7,8 @@ Mesh::Mesh(std::vector<ShortTVertex> vertices, std::vector<ibo> indices, std::ve
 	setupMesh();
 }
 
-void Mesh::Draw(Shader& shader) {
-
+void Mesh::Draw(Renderer* renderer, Shader& shader) {
+	
 }
 void Mesh::setupMesh() {
 	m_MeshVAO = vao();
