@@ -10,14 +10,15 @@
 #include <renderer/VertexBufferLayout.h>
 #include <vector>
 #include <renderer/Vertex.h>
-
-
+#include<renderer/mesh.h>
+#include<string>
 
 class Renderer
 {
 public:
 
 	void Draw(const vao& va, const ibo& ib, Shader& shader) const;
+	void DrawMesh(Mesh* mesh, Shader& shader) const;
 	void Clear() const;
 
 private:
