@@ -25,3 +25,9 @@ private:
 	int m_Width, m_Height, m_BPP;
 
 };
+
+struct	MeshTexture {
+	unsigned int id;
+	std::string type;
+	std::string path;
+};

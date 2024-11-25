@@ -10,7 +10,7 @@
 #include <renderer/VertexBufferLayout.h>
 #include <vector>
 #include <renderer/Vertex.h>
-#include<renderer/mesh.h>
+#include<renderer/model.h>
 #include<string>
 
 class Renderer
