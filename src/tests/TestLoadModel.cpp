@@ -22,11 +22,10 @@ namespace test {
 		m_Shader.setUniformMatrix4f("u_View", *view);
 		m_Shader.setUniformMatrix4f("u_Proj", m_Projection);
 
-
+		m_ModelMatrix = glm::mat4(1.0f);
 		m_ModelMatrix = glm::translate(m_ModelMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
-		m_ModelMatrix = glm::scale(m_ModelMatrix, glm::vec3(1.0f, 1.0f, 1.0f));
+		m_ModelMatrix = glm::scale(m_ModelMatrix, glm::vec3(1.f));
 		m_Shader.setUniformMatrix4f("u_Model", m_ModelMatrix);
-
 		m_Model.Draw(m_Shader);
 	}
 

@@ -13,10 +13,10 @@ using namespace std;
 
 class Mesh {
 public:
-    Mesh(vector<ShortTVertex> vertices, vector<unsigned int> indices, vector<MeshTexture> textures);
+    Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<MeshTexture> textures);
     void Draw(Shader& shader);
 public:
-    vector<ShortTVertex> vertices;
+    vector<Vertex> vertices;
     vector<unsigned int> indices;
     vector<MeshTexture> textures;
     unsigned int VAO;

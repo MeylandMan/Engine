@@ -9,10 +9,9 @@ namespace test {
 		m_Shader.loadShaderProgramFromFile(SHADERS_PATH "DrawingCube" VERTEX_SHADER, SHADERS_PATH "DrawingCube" FRAGMENT_SHADER);
 		m_Shader.bind();
 
-		m_Layout.Push<float>(3);
-		m_Layout.Push<float>(4);
-		m_Layout.Push<float>(2);
-		m_Layout.Push<float>(3);
+		m_Layout.PushShort<float>(3, 1);
+		m_Layout.PushShort<float>(2, 1);
+		m_Layout.PushShort<float>(3, 1);
 		m_Vao.AddBuffer(m_Vbo, m_Layout);
 
 		m_Texture.Bind();
@@ -31,8 +30,9 @@ namespace test {
 		//m_Projection = glm::perspective(glm::radians(camera->Zoom), (float)WINDOW_WIDTH / (float)WINDOW_WIDTH, 0.1f, 100.f);
 		m_Projection = glm::perspective(glm::radians(camera->Zoom), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.f);
 		m_Model = glm::mat4(1.0f);
+
 		m_Model = glm::translate(m_Model, m_Position);
-		m_Model = glm::rotate(m_Model, glm::radians(0.f), glm::vec3(1.0f, 0.3f, 0.5f));
+		m_Model = glm::rotate(m_Model, glm::radians(0.f), m_Rotation);
 		m_Model = glm::scale(m_Model, m_Scale);
 
 		m_Shader.setUniform1i("u_Texture", 0);
@@ -46,7 +46,7 @@ namespace test {
 
 	void TestCubeDrawing::onImGUI() {
 		ImGui::SliderFloat3("Position : ", &m_Position.x, -10.f, 10.f);
-		ImGui::SliderFloat3("Rotation : ", &m_Rotation.x, -360.f, 360.f);
+		ImGui::SliderFloat3("Rotation : ", &m_Rotation.x, -90.f, 90.f);
 		ImGui::SliderFloat3("Scale : ", &m_Scale.x, 0.f, 5.f);
 	}
 }

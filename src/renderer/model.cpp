@@ -2,8 +2,11 @@
 
 void Model::Draw(Shader& shader)
 {
-    for (unsigned int i = 0; i < meshes.size(); i++)
+    for (unsigned int i = 0; i < meshes.size(); i++) {
         meshes[i].Draw(shader);
+        m_DrawCall = i;
+    }
+    m_DrawCall++;
 }
 
 void Model::loadModel(string const& path)
@@ -43,14 +46,14 @@ void Model::processNode(aiNode* node, const aiScene* scene)
 Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 {
     // data to fill
-    vector<ShortTVertex> vertices;
+    vector<Vertex> vertices;
     vector<unsigned int> indices;
     vector<MeshTexture> textures;
 
     // walk through each of the mesh's vertices
     for (unsigned int i = 0; i < mesh->mNumVertices; i++)
     {
-        ShortTVertex vertex;
+        Vertex vertex;
         vec3 vector; // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
         // positions
         vector.x = mesh->mVertices[i].x;
@@ -111,11 +114,11 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
     vector<MeshTexture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
     textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
     // 2. specular maps
-    vector<MeshTexture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-    textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+    //vector<MeshTexture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+    //textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
     // 3. normal maps
-    std::vector<MeshTexture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
-    textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+    //std::vector<MeshTexture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+    //textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
     // 4. height maps
     std::vector<MeshTexture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
     textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
