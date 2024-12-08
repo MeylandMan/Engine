@@ -17,7 +17,7 @@ namespace test {
 	void TestLoadModel::onUpdate(float deltaTime) {
 		if (m_NegateYCoordinate != m_PreviousCheck) {
 			m_PreviousCheck = m_NegateYCoordinate;
-			m_Model->negateTexCoordY(m_ModelPath, m_NegateYCoordinate);
+			//m_Model->negateTexCoordY(m_ModelPath, m_NegateYCoordinate);
 		}
 	}
 	void TestLoadModel::onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) {
