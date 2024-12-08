@@ -1,10 +1,7 @@
 #pragma once
 
 #include "tests/Test.h"
-
-#include <imgui.h>
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl3.h>
+#include <backends/imfilebrowser.h>
 
 #define DEFAULT_WINDOW_WIDTH 1280
 #define DEFAULT_WINDOW_HEIGHT 720
@@ -23,15 +20,25 @@ namespace test {
 	public:
 		TestLoadModel();
 
+		void onUpdate(float deltaTime) override;
 		void onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) override;
 		void onImGUI() override;
 	private:
-		string m_ModelPath = RESOURCES_PATH "objects/backpack/backpack.obj";
+		ImGui::FileBrowser fileDialog;
+		string m_ModelPath = "C:/Users/Client/Documents/GitHub/Engine/resources/objects/Toon Link/Toon Link.obj";
 		Shader m_Shader;
-		Model m_Model;
+		Model* m_Model;
 
 		glm::mat4 m_ModelMatrix;
 		glm::mat4 m_Projection;
+
+		glm::vec3 m_ModelPosition = VECTOR_ZERO;
+		glm::vec3 m_ModelRotation = VECTOR_ZERO;
+		glm::vec3 m_ModelScale = glm::vec3(1.f);
+
+		bool m_PolygonMode = false;
+		bool m_NegateYCoordinate = false;
+		bool m_PreviousCheck = false;
 	};
 
 }

@@ -13,7 +13,7 @@ using namespace std;
 
 class Mesh {
 public:
-    Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<MeshTexture> textures);
+    Mesh(vector<Vertex>& vertices, vector<unsigned int>& indices, vector<MeshTexture>& textures);
     void Draw(Shader& shader);
 public:
     vector<Vertex> vertices;

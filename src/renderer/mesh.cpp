@@ -1,6 +1,6 @@
 #include<renderer/mesh.h>
 
-Mesh::Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<MeshTexture> textures)
+Mesh::Mesh(vector<Vertex>& vertices, vector<unsigned int>& indices, vector<MeshTexture>& textures)
 {
     this->vertices = vertices;
     this->indices = indices;

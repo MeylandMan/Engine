@@ -2,8 +2,7 @@
 
 Texture::Texture(const std::string& path) : m_FilePath(path), m_LocalBuffer(nullptr), m_Width(0), m_Height(0), m_BPP(0) {
 	stbi_set_flip_vertically_on_load(1);
-	std::string p = RESOURCES_PATH;
-	m_FilePath = p + "textures/" + path;
+	m_FilePath = RESOURCES_PATH "textures/" + path;
 
 	m_LocalBuffer = stbi_load(m_FilePath.c_str(), &m_Width, &m_Height, &m_BPP, 4);
 

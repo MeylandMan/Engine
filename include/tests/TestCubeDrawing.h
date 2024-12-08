@@ -2,12 +2,6 @@
 
 #include "tests/Test.h"
 
-#include <GLFW/glfw3.h>
-
-#include <imgui.h>
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl3.h>
-
 #define DEFAULT_WINDOW_WIDTH 1280
 #define DEFAULT_WINDOW_HEIGHT 720
 #define DEFAULT_ZNEAR 0.1f

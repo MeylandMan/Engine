@@ -1,1 +1,1 @@
-#version 330 coreout vec4 fragColor;in vec2 v_TexCoords;uniform sampler2D texture_diffuse1;void main(){    fragColor = texture(texture_diffuse1, v_TexCoords);}
+#version 410 coreout vec4 fragColor;in vec2 v_TexCoords;uniform sampler2D texture_diffuse1;uniform sampler2D texture_specular1;uniform sampler2D texture_normal1;void main(){    vec4 result = texture(texture_diffuse1, v_TexCoords) * texture(texture_specular1, v_TexCoords) * texture(texture_normal1, v_TexCoords);    fragColor = texture(texture_diffuse1, v_TexCoords);}
