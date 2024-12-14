@@ -7,7 +7,7 @@ vao::vao() {
 }
 
 vao::~vao() {
-	glDeleteVertexArrays(1, &ID);
+	deleteVAO();
 }
 
 void vao::AddBuffer(vbo& vb, const VertexBufferLayout& layout) const {

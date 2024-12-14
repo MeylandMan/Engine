@@ -14,6 +14,13 @@ public:
 	inline unsigned int GetCount() const { return m_Count; }
 
 private:
+	ibo CreateEBO(const unsigned int* data, unsigned int count) {
+		ibo ib(data, count);
+		return ib;
+	}
+	void deleteEBO() {
+		glDeleteBuffers(1, &ID);
+	}
 	unsigned int ID;
 	unsigned int m_Count;
 };

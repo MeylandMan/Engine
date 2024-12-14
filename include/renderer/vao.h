@@ -15,5 +15,10 @@ public:
 	unsigned int GetID() const;
 
 private:
+	vao CreateVAO() {
+		vao vv;
+		return vv;
+	}
+	void deleteVAO() { glDeleteVertexArrays(1, &ID); }
 	unsigned int ID;
 };

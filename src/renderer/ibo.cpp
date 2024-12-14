@@ -17,7 +17,7 @@ ibo::ibo(std::vector<unsigned int>* data) : m_Count(data->size()) {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Count * sizeof(unsigned int), &data[0], GL_STATIC_DRAW);
 }
 
-ibo::~ibo() { glDeleteBuffers(1, &ID); }
+ibo::~ibo() { deleteEBO(); }
 
 
 void ibo::Bind() const { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ID); }

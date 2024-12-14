@@ -14,7 +14,7 @@ vbo::vbo(std::vector<ShortTVertex>* data) {
 }
 
 vbo::~vbo() {
-	glDeleteBuffers(1, &ID);
+	deleteVBO();
 }
 
 
