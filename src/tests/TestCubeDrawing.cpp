@@ -1,10 +1,9 @@
 #include "tests/TestCubeDrawing.h"
 
 namespace test {
-	TestCubeDrawing::TestCubeDrawing() : m_Ibo(ibo(indices, sizeof(indices))),
-		m_Vbo(vbo(m_Vertices, sizeof(m_Vertices))),
-		m_Texture(Texture("dirt.png")) {
+	TestCubeDrawing::TestCubeDrawing() {
 		m_Scale = glm::vec3(1.f, 1.f, 1.f);
+		
 
 		m_Shader.loadShaderProgramFromFile(SHADERS_PATH "DrawingCube" VERTEX_SHADER, SHADERS_PATH "DrawingCube" FRAGMENT_SHADER);
 		m_Shader.bind();
@@ -32,7 +31,9 @@ namespace test {
 		m_Model = glm::mat4(1.0f);
 
 		m_Model = glm::translate(m_Model, m_Position);
-		m_Model = glm::rotate(m_Model, glm::radians(0.f), m_Rotation);
+		m_Model = glm::rotate(m_Model, glm::radians(m_Rotation.x), glm::vec3(1.f, 0.f, 0.f));
+		m_Model = glm::rotate(m_Model, glm::radians(m_Rotation.y), glm::vec3(0.f, -1.f, 0.f));
+		m_Model = glm::rotate(m_Model, glm::radians(m_Rotation.z), glm::vec3(0.f, 0.f, 1.f));
 		m_Model = glm::scale(m_Model, m_Scale);
 
 		m_Shader.setUniform1i("u_Texture", 0);

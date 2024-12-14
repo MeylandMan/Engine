@@ -15,7 +15,12 @@ namespace test {
 	class TestLightCasters : public Test {
 	public:
 		TestLightCasters();
-
+		~TestLightCasters() { 
+			for (unsigned int i = 0; i < 3; i++) {
+				m_ObjShader[i].clear();
+			}
+			m_LightShader.clear();
+		}
 		void onUpdate(float deltaTime) override;
 		void onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) override;
 		void onImGUI() override;

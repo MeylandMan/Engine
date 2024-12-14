@@ -25,9 +25,9 @@ namespace test {
 		void onImGUI() override;
 	private:
 		ImGui::FileBrowser fileDialog;
-		string m_ModelPath = "C:/Users/Client/Documents/GitHub/Engine/resources/objects/Toon Link/Toon Link.obj";
+		string m_ModelPath = RESOURCES_PATH "objects/Toon Link/Toon Link.obj";
 		Shader m_Shader;
-		Model* m_Model;
+		Model m_Model = Model(m_ModelPath);
 
 		glm::mat4 m_ModelMatrix;
 		glm::mat4 m_Projection;

@@ -12,6 +12,7 @@ namespace test {
 	class TestMaterials : public Test {
 	public:
 		TestMaterials();
+		~TestMaterials() { m_ObjShader.clear(); m_LightShader.clear(); }
 
 		void onUpdate(float deltaTime) override;
 		void onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) override;

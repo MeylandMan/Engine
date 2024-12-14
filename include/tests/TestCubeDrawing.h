@@ -12,44 +12,10 @@ namespace test {
 	class TestCubeDrawing : public Test {
 	public:
 		TestCubeDrawing();
-
+		~TestCubeDrawing() { m_Shader.clear(); }
 		void onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) override;
 		void onImGUI() override;
 	private:
-		/*
-		float m_Vertices[312] = {
-			// POSITION					  COLOR				TEXTURES COORDS		TEXTURE INDEX
-			-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,	0.0f, 0.0f,				0.f,		0.0f, 0.0f, 0.0f,
-			 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				0.f,		0.0f, 0.0f, 0.0f, // FRONT
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				0.f,		0.0f, 0.0f, 0.0f,
-			-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				0.f,		0.0f, 0.0f, 0.0f,
-
-			-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,	1.0f, 0.0f,				1.f,		0.0f, 0.0f, 0.0f,
-			 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				1.f,		0.0f, 0.0f, 0.0f, // BACK
-			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				1.f,		0.0f, 0.0f, 0.0f,
-			-0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				1.f,		0.0f, 0.0f, 0.0f,
-
-			-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				2.f,		0.0f, 0.0f, 0.0f,
-			-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				2.f,		0.0f, 0.0f, 0.0f, // LEFT
-			-0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				2.f,		0.0f, 0.0f, 0.0f,
-			-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				2.f,		0.0f, 0.0f, 0.0f,
-
-			 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				2.f,		0.0f, 0.0f, 0.0f,
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				2.f,		0.0f, 0.0f, 0.0f, // RIGHT
-			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				2.f,		0.0f, 0.0f, 0.0f,
-			 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				2.f,		0.0f, 0.0f, 0.0f,
-
-			-0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				4.f,		0.0f, 0.0f, 0.0f,
-			 0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				4.f,		0.0f, 0.0f, 0.0f, // DOWN
-			 0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				4.f,		0.0f, 0.0f, 0.0f,
-			-0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				4.f,		0.0f, 0.0f, 0.0f,
-
-			 0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,				3.f,		0.0f, 0.0f, 0.0f,
-			-0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,				3.f,		0.0f, 0.0f, 0.0f, // UP
-			-0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,				3.f,		0.0f, 0.0f, 0.0f,
-			 0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f,				3.f,		0.0f, 0.0f, 0.0f,
-		};
-		*/
 
 		float m_Vertices[312] = {
 			// POSITION			TEXTURES COORDS		Normals
@@ -105,14 +71,14 @@ namespace test {
 		};
 		Shader m_Shader;
 		vao m_Vao;
-		vbo m_Vbo;
+		vbo m_Vbo = vbo(m_Vertices, sizeof(m_Vertices));
 		VertexBufferLayout m_Layout;
-		ibo m_Ibo;
-		Texture m_Texture;
+		ibo m_Ibo = ibo(indices, sizeof(indices));
+		Texture m_Texture = Texture("dirt.png");
 
-		glm::vec3 m_Position;
+		glm::vec3 m_Position = glm::vec3(0.f);
 		glm::vec3 m_Scale;
-		glm::vec3 m_Rotation;
+		glm::vec3 m_Rotation = glm::vec3(0.f);
 
 		glm::mat4 m_Model;
 		glm::mat4 m_Projection;

@@ -12,6 +12,7 @@ namespace test {
 	class TestBasicLight : public Test {
 	public:
 		TestBasicLight();
+		~TestBasicLight() { m_Shader.clear(); }
 
 		void onRender(GLFWwindow* window, Renderer renderer, glm::mat4* view, Camera* camera) override;
 		void onImGUI() override;

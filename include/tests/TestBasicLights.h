@@ -63,6 +63,7 @@ namespace test {
 			float outerCutOff = 0.f;
 		};
 		TestBasicLights();
+		~TestBasicLights() { m_ObjShader.clear(); m_LightShader.clear(); }
 
 		DirLight createDirLight(glm::vec3 Direction, glm::vec3 Ambient, glm::vec3 Diffuse, glm::vec3 Specular) {
 			DirLight dir;

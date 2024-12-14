@@ -10,7 +10,7 @@ vbo::vbo(const void* data, unsigned int size) {
 vbo::vbo(std::vector<ShortTVertex>* data) {
 	glGenBuffers(1, &ID);
 	glBindBuffer(GL_ARRAY_BUFFER, ID);
-	glBufferData(GL_ARRAY_BUFFER, data->size()*sizeof(ShortTVertex), &data[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, data->size() * sizeof(ShortTVertex), &data[0], GL_STATIC_DRAW);
 }
 
 vbo::~vbo() {

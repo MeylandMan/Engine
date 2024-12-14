@@ -10,6 +10,21 @@ Mesh::Mesh(vector<Vertex>& vertices, vector<unsigned int>& indices, vector<MeshT
     setupMesh();
 }
 
+Mesh::~Mesh() {
+    //deleteMesh();
+}
+
+void Mesh::deleteMesh() {
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
+    for (MeshTexture texture : textures) {
+        glDeleteTextures(1, &texture.id);
+        texture.id = 0;
+    }
+    VAO = VBO = EBO = 0;
+}
+
 void Mesh::Draw(Shader & shader)
 {
     // bind appropriate textures
@@ -26,11 +41,11 @@ void Mesh::Draw(Shader & shader)
         if (name == "texture_diffuse")
             number = std::to_string(diffuseNr++);
         else if (name == "texture_specular")
-            number = std::to_string(specularNr++); // transfer unsigned int to string
+            number = std::to_string(specularNr++);
         else if (name == "texture_normal")
-            number = std::to_string(normalNr++); // transfer unsigned int to string
+            number = std::to_string(normalNr++);
         else if (name == "texture_height")
-            number = std::to_string(heightNr++); // transfer unsigned int to string
+            number = std::to_string(heightNr++);
 
         // now set the sampler to the correct texture unit
         shader.setUniform1i((name + number).c_str(), i);
@@ -50,6 +65,7 @@ void Mesh::Draw(Shader & shader)
 void Mesh::setupMesh()
 {
     // create buffers/arrays
+
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -64,7 +80,7 @@ void Mesh::setupMesh()
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
-
+    
     // set the vertex attribute pointers
     // vertex Positions
     glEnableVertexAttribArray(0);
