@@ -49,7 +49,7 @@ namespace test {
 
 		m_ModelMatrix = glm::scale(m_ModelMatrix, m_ModelScale);
 		m_Shader.setUniformMatrix4f("u_Model", m_ModelMatrix);
-		renderer.DrawModel(m_Model, m_Shader);
+		m_Model.Draw(m_Shader);
 	}
 
 	void TestLoadModel::onImGUI() {

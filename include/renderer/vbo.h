@@ -31,6 +31,7 @@ public:
 			//ID is now 0.
 			std::swap(ID, other.ID);
 		}
+		return *this;
 	}
 	
 	void Bind() const;

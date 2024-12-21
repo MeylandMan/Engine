@@ -2,7 +2,6 @@
 
 #include <renderer/renderer.h>
 #include <functional>
-#include <iostream>
 
 #include <GLFW/glfw3.h>
 

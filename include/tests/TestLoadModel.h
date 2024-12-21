@@ -1,7 +1,8 @@
 #pragma once
 
 #include "tests/Test.h"
-
+#include<renderer/model.h>
+#include<backends/imfilebrowser.h>
 
 #define DEFAULT_WINDOW_WIDTH 1280
 #define DEFAULT_WINDOW_HEIGHT 720
@@ -14,6 +15,8 @@
 
 #define rad_to_deg(x) ((x) * 57.295754f)
 #define deg_to_rad(x) ((x) * 0.0174533f)
+
+using namespace std;
 
 namespace test {
 	class TestLoadModel : public Test {
