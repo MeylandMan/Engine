@@ -8,7 +8,7 @@
 #include<renderer/textures.h>
 #include<renderer/VertexBufferLayout.h>
 #include<string>
-#include <algorithm>
+
 
 using namespace std;
 
@@ -21,9 +21,10 @@ public:
     vector<Vertex> vertices;
     vector<unsigned int> indices;
     vector<MeshTexture> textures;
-    unsigned int VAO = 0;
+    unsigned int VAO;
 private:
-    unsigned int VBO = 0, EBO = 0;
+    unsigned int VBO, EBO;
+
     void setupMesh();
     void deleteMesh();
 };

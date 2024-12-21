@@ -38,6 +38,7 @@ namespace test {
 
 		m_Shader.setUniformMatrix4f("u_View", *view);
 		m_Shader.setUniformMatrix4f("u_Proj", m_Projection);
+		m_Shader.setUniform1i("u_NegativeTexCoord", m_NegateYCoordinate);
 
 		m_ModelMatrix = glm::mat4(1.0f);
 		m_ModelMatrix = glm::translate(m_ModelMatrix, m_ModelPosition);
@@ -59,11 +60,6 @@ namespace test {
 		if (fileDialog.HasSelected())
 		{
 			m_ModelPath = fileDialog.GetSelected().string();
-			for (char& c : m_ModelPath) {
-				if (c == '\\') {
-					c = '/';
-				}
-			}
 			m_Model = Model(m_ModelPath);
 			fileDialog.ClearSelected();
 		}
@@ -73,5 +69,6 @@ namespace test {
 		ImGui::SliderFloat3("Position", &m_ModelPosition.x, -10.f, 10.f);
 		ImGui::SliderFloat3("Rotation", &m_ModelRotation.x, -90.f, 90.f);
 		ImGui::SliderFloat3("Scale", &m_ModelScale.x, 0.1f, 2.f);
+		ImGui::Text("Negate : %.0f", &m_NegateYCoordinate);
 	}
 }

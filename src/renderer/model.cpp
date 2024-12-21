@@ -9,8 +9,10 @@ void Model::Draw(Shader& shader)
     m_DrawCall++;
 }
 
-void Model::loadModel(string const& path)
+void Model::loadModel(string& path)
 {
+
+    removeBackHash(path);
     // read file via ASSIMP
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
@@ -150,6 +152,7 @@ vector<MeshTexture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType t
             MeshTexture texture;
             texture.id = TextureFromFile(str.C_Str(), this->directory);
             texture.type = typeName;
+            
             texture.path = str.C_Str();
             textures.push_back(texture);
             textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecessary load duplicate textures.
@@ -158,17 +161,51 @@ vector<MeshTexture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType t
     return textures;
 }
 
+void removeBackHash(string& str) {
+
+    for (char& c : str) {
+        if (c == '\\') {
+            c = '/';
+        }
+    }
+}
+
+void removeBackHash(const char* str) {
+    if (str == nullptr) {
+        return;
+    }
+
+    // Create a editable buffer
+    size_t length = std::strlen(str);
+    char* buffer = new char[length + 1]; // +1 for the null char
+    std::strcpy(buffer, str);
+
+    for (size_t i = 0; i < length; ++i) {
+        if (buffer[i] == '\\') {
+            buffer[i] = '/';
+        }
+    }
+
+    // Free the memory
+    delete[] buffer;
+}
+
 unsigned int TextureFromFile(const char* path, const string& directory, bool gamma)
 {
     string filename = string(path);
+    removeBackHash(filename);
+    removeBackHash(path);
+
     filename = directory + '/' + filename;
+    
 
     unsigned int textureID;
     glGenTextures(1, &textureID);
 
     int width, height, nrComponents;
     unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
-    
+    cout << "data: " << data << endl;
+
     if (data)
     {
         GLenum format;
@@ -192,7 +229,7 @@ unsigned int TextureFromFile(const char* path, const string& directory, bool gam
     }
     else
     {
-        std::cout << "Texture failed to load at path: " << path << std::endl;
+        cout << "Texture failed to load at path: " << filename << endl;
         stbi_image_free(data);
     }
 

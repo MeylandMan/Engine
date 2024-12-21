@@ -7,12 +7,6 @@ vbo::vbo(const void* data, unsigned int size) {
 	glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
 }
 
-vbo::vbo(std::vector<ShortTVertex>* data) {
-	glGenBuffers(1, &ID);
-	glBindBuffer(GL_ARRAY_BUFFER, ID);
-	glBufferData(GL_ARRAY_BUFFER, data->size() * sizeof(ShortTVertex), &data[0], GL_STATIC_DRAW);
-}
-
 vbo::~vbo() {
 	deleteVBO();
 }

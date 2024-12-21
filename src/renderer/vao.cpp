@@ -25,7 +25,7 @@ void vao::AddBuffer(vbo& vb, const VertexBufferLayout& layout) const {
 		glVertexAttribPointer(i, element.count, element.type, element.normalized, layout.GetStride(), (const void*)offset);
 		offset += element.count * VertexBufferElement::GetSizeOfType(element.type);
 	}
-
+	Unbind();
 }
 
 void vao::Bind() const {

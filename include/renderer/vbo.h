@@ -7,10 +7,32 @@ class  vbo
 {
 public:
 	vbo(const void* data, unsigned int size);
-	vbo(std::vector<ShortTVertex>* data);
-
 	~vbo();
 
+	/*	
+	
+	*/
+	//Delete the copy constructor/assignment.
+	vbo(const vbo&) = delete;
+	vbo& operator=(const vbo&) = delete;
+
+	vbo(vbo&& other) : ID(other.ID)
+	{
+		other.ID = NULL;
+	}
+
+	vbo& operator=(vbo&& other)
+	{
+		//ALWAYS check for self-assignment.
+		if (this != &other)
+		{
+			deleteVBO();
+
+			//ID is now 0.
+			std::swap(ID, other.ID);
+		}
+	}
+	
 	void Bind() const;
 	void Unbind() const;
 	GLuint ID;

@@ -268,6 +268,7 @@ int main(void)
 
 				ImGui::Begin("Test");
 
+				ImGui::Text("Viewport : %.0f, %.0f", WINDOW_WIDTH, WINDOW_HEIGHT);
 				ImGui::Text("Camera Position : Vector3(%.1f, %.1f, %.1f)", cam.Position.x, cam.Position.y, cam.Position.z);
 				ImGui::Text("Camera Direction : Vector3(%.1f, %.1f, %.1f)", cam.Front.x, cam.Front.y, cam.Front.z);
 				ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);

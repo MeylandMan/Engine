@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math/math_main.h>
+#include <algorithm>
 
 #define MAX_BONE_INFLUENCE 4
 struct Vertex {
